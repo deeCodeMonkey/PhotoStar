@@ -7,6 +7,7 @@ import Navbar from '../ui/Navbar';
 import Sidebar from '../ui/Sidebar';
 import Footer from '../ui/Footer';
 import PhotoList from '../ui/PhotoList';
+import AddPhoto from '../ui/AddPhoto';
 
 export const routes = (
     <div>
@@ -24,6 +25,7 @@ export const routes = (
 
                         <div className="col-md-9">
                             <Switch>          
+                                <Route path="/photos/add" component={AddPhoto} />
                                 <Route path="/photos" component={PhotoList} />
                                 <Route path="/" component={Home} />
                             </Switch>

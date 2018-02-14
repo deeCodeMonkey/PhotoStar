@@ -33,7 +33,7 @@ export default class Sidebar extends Component {
 
         return (
             <div>
-                <h3>Product Categories</h3>
+                <h3>Categories</h3>
                 <div className="list-group" >
                     {this.renderCategories()}
                 </div>
