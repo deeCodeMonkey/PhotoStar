@@ -18,9 +18,11 @@ if (Meteor.isServer) {
 
 //runs on server and client, will need to import to client and server 
 Meteor.methods({
-    'photos.insert': function (name) {
+    'photos.insert': function (name, description, category) {
         Photos.insert({
-            name
+            name,
+            description,
+            category
         });
     }
 });
