@@ -18,11 +18,13 @@ if (Meteor.isServer) {
 
 //runs on server and client, will need to import to client and server 
 Meteor.methods({
-    'photos.insert': function (name, description, category) {
+    'photos.insert': function (name, description, category, file) {
         Photos.insert({
             name,
             description,
-            category
+            category,
+            file,
+            createdAt: new Date()
         });
     }
 });
@@ -31,28 +33,4 @@ Meteor.methods({
 
 
 
-
-////to run on client only
-//if (Meteor.isClient) {
-
-//}
-
-
-//Products = new Mongo.Collection('products');
-
-//ProductsImages = new FS.Collection('ProductsImages', {
-//    stores: [new FS.Store.GridFS('ProductsImages')]
-//});
-
-////to show images when insecure removed
-////what is allowed by users
-//ProductsImages.allow({
-//    insert: function (fileId, doc) {
-//        return true;
-//    },
-//    //to view
-//    download: function (fileId, doc) {
-//        return true;
-//    }
-//});
 

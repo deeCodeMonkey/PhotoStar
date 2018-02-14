@@ -19,7 +19,7 @@ const Navbar = () => {
                     <div id="navbar" className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
                             <li><Link to="/">Home</Link></li>
-                            <li><Link to="/photos">Products</Link></li>
+                            <li><Link to="/photos">Photos</Link></li>
 
 
                             <li><Link to="/photos/add">Add Photo</Link></li>

@@ -15,13 +15,11 @@ export const routes = (
             <div>
                 <Navbar />
 
-
                 <div className="container">
                     <div className="row">
                         <div className="col-md-3">
                             <Sidebar />
                         </div>
-
 
                         <div className="col-md-9">
                             <Switch>          

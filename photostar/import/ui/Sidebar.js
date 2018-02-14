@@ -43,18 +43,3 @@ export default class Sidebar extends Component {
 }
 
 
-//export default createContainer(() => {
-
-//    Meteor.subscribe('allCategories');
-//    return {
-//        //categories: Categories.find({}, {
-//        //    sort: {
-//        //        name: 1
-//        //    }
-//        //}).fetch().map((category) => {
-//        //    return {
-//        //        ...category
-//        //    }
-//        //})
-//    };
-//}, Sidebar);

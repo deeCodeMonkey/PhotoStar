@@ -1,9 +1,11 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
+import { FS } from 'meteor/cfs:base-package';
 
 import { Photos } from '../api/photos';
 import { Categories } from '../api/categories';
+import { ImageStore } from '../api/imageStore';
 
 class AddPhoto extends Component {
 
@@ -33,15 +35,37 @@ class AddPhoto extends Component {
         const name = e.target.name.value;
         const description = e.target.description.value;
         const category = e.target.category.value;
-        //const file = e.target.file.value;
-        if (name) {
-            Meteor.call('photos.insert', name, description, category);
-            e.target.name.value = '';
-            //e.target.file.value = '';
-            e.target.description.value = '';
-            e.target.category.value = 0;
+
+        const image = e.target.image.files[0];
+
+        if (image) {
+            
+            fsFile = new FS.File(image)
+            
+            //for (var i = 0, ln = fsFile.length; i < ln; i++) {
+                ImageStore.insert(fsFile, function (err, fileObj) {
+                    // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+                    if (!err) {
+                        console.log('fileObj=====', fileObj);
+                        const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
+                        Meteor.call('photos.insert', name, description, category, photoImage);
+                    } else {
+                        throw new Meteor.Error(err);
+                    }
+                });
+            //}
         }
+        else {
+            const photoImage = '/img/noimage.png';
+            Meteor.call('photos.insert', name, description, category, photoImage);
+        }
+
+        e.target.image.value = null;
+        e.target.name.value = '';
+        e.target.description.value = '';
+        e.target.category.value = 0;
     }
+
 
     render() {
 
@@ -59,13 +83,12 @@ class AddPhoto extends Component {
                         <select className="form-control" name="category">
                             <option value="0">--Select Category--</option>
                             {this.renderCategories()}
-                           
                         </select>
                     </div>
-                    
+
                     <div className="form-group">
                         <label>Photo</label>
-                        <input type="file" name="photo" id="photo" />
+                        <input type="file" name="image" id="image" />
                     </div>
 
                     <div className="form-group">
@@ -87,40 +110,3 @@ export default AddPhoto;
 
 
 
-/*
-
-
-
-
-
- <form onSubmit={onSubmit()} className="add_product" enctype="multipart/form-data">
-                <div className="form-group">
-                    <label>Title</label>
-                    <input type="text" name="name" className="form-control" placeholder="Photo Title" />
-                </div>
-                <div className="form-group">
-                    <label>Category</label>
-                    <select className="form-control" name="category">
-
-                        <option value="0">--Select Category--</option>
-
-                   
-<option value="{{slug}}">{{ name }}</option>
-
-                    </select >
-                </div >
-    <div className="form-group">
-        <label>Photo</label>
-        <input type="file" name="productImage" id="productImage" />
-    </div>
-    <div className="form-group">
-        <label>Description</label>
-        <textarea name="description" className="form-control"></textarea>
-    </div>
-    <div>
-        <button classNameName="btn btn-success" >Add Photo</button>
-        <a href="/" className="btn btn-default">Close</a>
-    </div>
-            </form >
-
-*/
