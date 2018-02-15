@@ -5,7 +5,7 @@ const Home = () => {
 
     return (
         <div>
-            HOME component
+            HOME component- Top 3 photos
         </div>
     );
 }

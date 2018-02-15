@@ -24,6 +24,7 @@ export const routes = (
                         <div className="col-md-9">
                             <Switch>          
                                 <Route path="/photos/add" component={AddPhoto} />
+                                <Route path="/categories/:category" component={PhotoList} />
                                 <Route path="/photos" component={PhotoList} />
                                 <Route path="/" component={Home} />
                             </Switch>

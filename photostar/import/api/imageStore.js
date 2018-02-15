@@ -31,17 +31,21 @@ if (Meteor.isServer) {
 ////runs on server and client, will need to import to client and server 
 //Meteor.methods({
 //    'image.insert': function (image) {
-//        //for (var i = 0, ln = image.length; i < ln; i++) {
-//        ImageStore.insert(image, function (err, result) {
+
+//        fsFile = new FS.File(image)
+
+//        //for (var i = 0, ln = fsFile.length; i < ln; i++) {
+//        ImageStore.insert(fsFile, function (err, fileObj) {
+//            // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
 //            if (!err) {
-//                // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-//                const photoImage = '/cfs/files/photoImage/' + result._id;
-//                return photoImage;
+//                console.log('fileObj=====', fileObj);
+//                const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
+//                Meteor.call('photos.insert', name, description, category, photoImage);
 //            } else {
-//                console.log('Error ', err);
+//                throw new Meteor.Error(err);
 //            }
-//            });
-//        //}
+//        });
+//            //}
 //    }
 //});
 

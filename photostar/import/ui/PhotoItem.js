@@ -1,16 +1,27 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom';
 
-//presentational component with no props
 const PhotoItem = (props) => {
 
+    truncateText = (text, length) => {
+        let newText = text.substring(0, length);
+        if (text.length > 150) {
+            return `${newText} ...`;
+        }
+        return `${newText}`;
+    }
+
     return (
-        <div>
-            <h3>{props.photo.name}</h3>
+        <div className="row photo-row">
             <div className="col-md-2">
-                <img className="full" src={props.photo.file} />
+                <img className="img-thumbnail" src={props.photo.file} />
             </div>
             <div className="col-md-10">
-
+                <h4>{props.photo.name}</h4>
+                <p>Average Rating: Rating</p>
+                <p>{truncateText(props.photo.description, 150)}</p>
+                <Link to={`/photos/reviews/${props.photo._id}`} className="btn btn-default">Read Reviews</Link>
+                <Link to={`/photos/reviews/add/${props.photo._id}`} className="btn btn-primary">Add Review</Link>
             </div>
         </div>
     );

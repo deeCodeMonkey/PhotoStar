@@ -46,7 +46,7 @@ class AddPhoto extends Component {
                 ImageStore.insert(fsFile, function (err, fileObj) {
                     // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
                     if (!err) {
-                        console.log('fileObj=====', fileObj);
+                        //console.log('fileObj=====', fileObj);
                         const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
                         Meteor.call('photos.insert', name, description, category, photoImage);
                     } else {
@@ -56,8 +56,9 @@ class AddPhoto extends Component {
             //}
         }
         else {
-            const photoImage = '/img/noimage.png';
-            Meteor.call('photos.insert', name, description, category, photoImage);
+            //const photoImage = '';
+            //Meteor.call('photos.insert', name, description, category, photoImage);
+            console.log('Photo required.');
         }
 
         e.target.image.value = null;

@@ -9,16 +9,30 @@ import PhotoItem from './PhotoItem';
 export default class PhotoList extends Component {
 
     state = {
-        photos: []
+        photos: [],
+        category: ''
+    }
+
+    filterPhotos = (category) => {
+        const photos = category ?
+            Photos.find({ category }).fetch()
+            : Photos.find().fetch();
+
+        this.setState({ photos, category });
     }
 
     componentDidMount() {
         //access updated list of categories
         Tracker.autorun(() => {
             Meteor.subscribe('allPhotos');
-            const photos = Photos.find().fetch();
-            this.setState({ photos });
+            //filter by category
+            this.filterPhotos(this.props.match.params.category);
         });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //to navigate between categories
+        this.filterPhotos(nextProps.match.params.category);
     }
 
     renderPhotos = () => {
@@ -33,8 +47,8 @@ export default class PhotoList extends Component {
 
         return (
             <div>
-                <h3>Photos</h3>
-                <div className="list-group" >
+                <h3>{this.state.category} Photos</h3>
+                <div className="container" >
                     {this.renderPhotos()}
                 </div>
             </div>
