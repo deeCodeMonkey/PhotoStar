@@ -39,7 +39,12 @@ Meteor.methods({
                 }
             }
         );
-    }
+    },
+    'photo.review': function (photoId) {
+        Photos.find({
+            _id: photoId
+        }).fetch();
+    },
 });
 
 

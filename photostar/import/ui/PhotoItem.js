@@ -14,7 +14,7 @@ const PhotoItem = (props) => {
     return (
         <div className="row photo-row">
             <div className="col-md-2">
-                <img className="img-thumbnail" src={props.photo.file} />
+                <Link to={`/review/${props.photo._id}`}><img className="img-thumbnail" src={props.photo.file} /></Link>
             </div>
             <div className="col-md-10">
                 <h4>{props.photo.name}</h4>

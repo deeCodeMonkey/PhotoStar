@@ -5,4 +5,5 @@ import { routes } from '../import/routes/Layout';
 
 Meteor.startup(() => {
     ReactDOM.render(routes, document.getElementById('app'));
+    
 });
