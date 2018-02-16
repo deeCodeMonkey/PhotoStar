@@ -1,7 +1,8 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
+import { BrowserHistory, Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
-class AddReview extends Component {
+const AddReview = (props) => {
 
     onSubmit = (e, photoId) => {
         e.preventDefault();
@@ -9,19 +10,15 @@ class AddReview extends Component {
         const body = e.target.body.value;
 
         Meteor.call('photos.review.insert', photoId, rating, body); 
-        this.props.history.push(`/review/${photoId}`);
+        props.history.push(`/review/${photoId}`);
     }
-
-
-    render() {
-        console.log('add review', this.props);
 
         return (
             <div>
-                <h3>Add A Review For <strong>{this.props.match.params.photoName}</strong></h3>
-                <form className="new-review" onSubmit={(e) => this.onSubmit(e, this.props.match.params.photoId)}>
+                <h3>Add A Review For <strong>{props.match.params.photoName}</strong></h3>
+                <form className="new-review" onSubmit={(e) => onSubmit(e, props.match.params.photoId)}>
                     <div className="form-group">
-                        <label>Rating</label>
+                        <label>Star Rating</label>
                         <select className="form-control" name="rating">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -37,14 +34,13 @@ class AddReview extends Component {
 
                     <div>
                         <input type="submit" name="submit" className="btn btn-success" value="Submit Review" />
-                        <a href="/" className="btn btn-default">Close</a>
+                        <Link to={`/review/${props.match.params.photoId}`} className="btn btn-default">Close</Link>
                     </div>
 
                 </form>
                
             </div>
         );
-    }
 }
 
 export default AddReview;

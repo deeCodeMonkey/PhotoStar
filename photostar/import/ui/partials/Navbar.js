@@ -14,14 +14,12 @@ const Navbar = () => {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="{{pathFor 'home'}}">PhotoStar</a>
+                        <Link className="navbar-brand" to="/photos">PhotoStar</Link>
                     </div>
                     <div id="navbar" className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/photos">Photos</Link></li>
-
-
+                            <li><Link to="/">Top Photos</Link></li>
+                            <li><Link to="/photos/:userId">My Photos</Link></li>
                             <li><Link to="/photos/add">Add Photo</Link></li>
 
                         </ul>

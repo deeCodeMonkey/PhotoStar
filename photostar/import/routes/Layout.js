@@ -24,26 +24,27 @@ export const routes = (
                         <div className="col-md-3">
                             <Sidebar />
                         </div>
-                    
+
                         <div className="col-md-9">
-                            <Switch>   
+                            <Switch>
                                 <Route path="/review/add/:photoName/:photoId" component={AddReview} />
                                 <Route path="/review/:photoId" component={PhotoReview} />
-                               
+
                                 <Route path="/categories/:category" component={PhotoList} />
 
                                 <Route path="/photos/add" component={AddPhoto} />
+
                                 <Route path="/photos" component={PhotoList} />
 
-                                <Route path="/" component={Home} />
-                            </Switch>
+                                <Route exact path="/" component={Home} />
+                           </Switch>
+                        </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </BrowserRouter>
 
-        <Footer />
+            <Footer />
 
     </div>
-);
+        );
