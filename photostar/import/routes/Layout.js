@@ -2,12 +2,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
+import Navbar from '../ui/partials/Navbar';
+import Sidebar from '../ui/partials/Sidebar';
+import Footer from '../ui/partials/Footer';
 import Home from '../ui/Home';
-import Navbar from '../ui/Navbar';
-import Sidebar from '../ui/Sidebar';
-import Footer from '../ui/Footer';
 import PhotoList from '../ui/PhotoList';
 import AddPhoto from '../ui/AddPhoto';
+import AddReview from '../ui/AddReview';
+import PhotoReview from '../ui/PhotoReview';
+
+//<Redirect from="/photos/add" to="/photos" />
 
 export const routes = (
     <div>
@@ -20,12 +24,17 @@ export const routes = (
                         <div className="col-md-3">
                             <Sidebar />
                         </div>
-
+                    
                         <div className="col-md-9">
-                            <Switch>          
-                                <Route path="/photos/add" component={AddPhoto} />
+                            <Switch>   
+                                <Route path="/review/add/:photoName/:photoId" component={AddReview} />
+                                <Route path="/review/:photoId" component={PhotoReview} />
+                               
                                 <Route path="/categories/:category" component={PhotoList} />
+
+                                <Route path="/photos/add" component={AddPhoto} />
                                 <Route path="/photos" component={PhotoList} />
+
                                 <Route path="/" component={Home} />
                             </Switch>
                         </div>

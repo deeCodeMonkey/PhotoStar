@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import { Categories } from '../api/categories';
+import { Categories } from '../../api/categories';
 
 export default class Sidebar extends Component {
 

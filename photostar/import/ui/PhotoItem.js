@@ -20,8 +20,8 @@ const PhotoItem = (props) => {
                 <h4>{props.photo.name}</h4>
                 <p>Average Rating: Rating</p>
                 <p>{truncateText(props.photo.description, 150)}</p>
-                <Link to={`/photos/reviews/${props.photo._id}`} className="btn btn-default">Read Reviews</Link>
-                <Link to={`/photos/reviews/add/${props.photo._id}`} className="btn btn-primary">Add Review</Link>
+                <Link to={`/review/${props.photo._id}`} className="btn btn-default">Read Reviews</Link>
+                <Link to={`/review/add/${props.photo.name}/${props.photo._id}`} className="btn btn-primary">Add Review</Link>
             </div>
         </div>
     );

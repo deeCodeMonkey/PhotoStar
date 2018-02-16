@@ -26,6 +26,19 @@ Meteor.methods({
             file,
             createdAt: new Date()
         });
+    },
+    'photos.review.insert': function (photoId, rating, body) {
+        Photos.update({
+            _id: photoId    
+        }, {
+                $push: {
+                    reviews: {
+                        rating,
+                        body
+                    }
+                }
+            }
+        );
     }
 });
 
