@@ -27,9 +27,8 @@ Meteor.methods({
             createdAt: new Date()
         }, (error, result) => {
             if (error) {
-                console.log('ERROR', error);
+                console.log('MongoDB ERROR:', error);
             }
-            console.log('***Mongo db returns:' + result);
             return result;
             });
         return id;

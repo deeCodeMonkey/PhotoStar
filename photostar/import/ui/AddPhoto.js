@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { FS } from 'meteor/cfs:base-package';
 import { Session } from 'meteor/session';
@@ -31,7 +31,7 @@ class AddPhoto extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const description = e.target.description.value;
@@ -43,43 +43,46 @@ class AddPhoto extends Component {
 
             fsFile = new FS.File(image)
 
-            //for (var i = 0, ln = fsFile.length; i < ln; i++) {
-            ImageStore.insert(fsFile, function (err, fileObj) {
+            let file = await ImageStore.insert(fsFile, function (err, fileObj) {
                 // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
                 if (err) {
                     throw new Meteor.Error(err);
                 }
-
-                const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
-
-                Meteor.call('photos.insert',
-                    name,
-                    description,
-                    category,
-                    photoImage,
-                    (error, result) => { 
-                        if (error) {
-                            console.log('ERROR',error);
-                        } else {
-                            Session.set("results", result);
-                            console.log('*******RESULT*******', result);
-                        }
-                    });
-
-               
-
+                return fileObj;
             });
-            //}
+
+            const photoImage = '/cfs/files/ImageStore/' + file._id;
+            Meteor.call('photos.insert',
+                name,
+                description,
+                category,
+                photoImage,
+                (error, result) => {
+                    if (error) {
+                        console.log('ERROR', error);
+                    } else {
+                        //this.setState({ result });
+                        //Session.set('newPhotoId', result);
+                        //console.log('*******RESULT*******', result);
+                        this.props.history.push(`/review/${result}`);
+                       
+                        //window.location.href = "`/review/${result}`";
+                        //return result;
+                    }
+                });
+
         }
         else {
             console.log('Photo required.');
         }
 
+        //this.props.history.push(`/review/${Session.get('newPhotoId')}`);
+
         //this.props.history.push(`/review/${newPhotoId}`);
-        e.target.image.value = null;
-        e.target.name.value = '';
-        e.target.description.value = '';
-        e.target.category.value = 0;
+        //e.target.image.value = null;
+        //e.target.name.value = '';
+        //e.target.description.value = '';
+        //e.target.category.value = 0;
     }
 
 
