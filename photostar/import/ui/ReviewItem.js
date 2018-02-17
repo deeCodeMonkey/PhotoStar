@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 
-const ReviewItem = () => {
+const ReviewItem = (props) => {
 
     return (
         <div>
@@ -11,7 +11,9 @@ const ReviewItem = () => {
                     <img src="/img/star{{rating}}.png" />
                 </div>
                 <div className="col-md-2">
-                   
+                    {props.rating}
+                    {props.body}
+                    {props.createdAt}
                 </div>
         </div>
         <br />

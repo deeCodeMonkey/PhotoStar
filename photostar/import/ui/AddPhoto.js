@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { FS } from 'meteor/cfs:base-package';
+import { Session } from 'meteor/session';
 
 import { Photos } from '../api/photos';
 import { Categories } from '../api/categories';
@@ -39,28 +40,42 @@ class AddPhoto extends Component {
         const image = e.target.image.files[0];
 
         if (image) {
-            
+
             fsFile = new FS.File(image)
-            
+
             //for (var i = 0, ln = fsFile.length; i < ln; i++) {
-                ImageStore.insert(fsFile, function (err, fileObj) {
-                    // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-                    if (!err) {
-                        //console.log('fileObj=====', fileObj);
-                        const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
-                        Meteor.call('photos.insert', name, description, category, photoImage);
-                    } else {
-                        throw new Meteor.Error(err);
-                    }
-                });
+            ImageStore.insert(fsFile, function (err, fileObj) {
+                // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+                if (err) {
+                    throw new Meteor.Error(err);
+                }
+
+                const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
+
+                Meteor.call('photos.insert',
+                    name,
+                    description,
+                    category,
+                    photoImage,
+                    (error, result) => { 
+                        if (error) {
+                            console.log('ERROR',error);
+                        } else {
+                            Session.set("results", result);
+                            console.log('*******RESULT*******', result);
+                        }
+                    });
+
+               
+
+            });
             //}
         }
         else {
-            //const photoImage = '';
-            //Meteor.call('photos.insert', name, description, category, photoImage);
             console.log('Photo required.');
         }
 
+        //this.props.history.push(`/review/${newPhotoId}`);
         e.target.image.value = null;
         e.target.name.value = '';
         e.target.description.value = '';

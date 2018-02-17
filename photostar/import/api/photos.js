@@ -18,23 +18,31 @@ if (Meteor.isServer) {
 
 //runs on server and client, will need to import to client and server 
 Meteor.methods({
-    'photos.insert': function (name, description, category, file) {
-        Photos.insert({
+    'photos.insert': async function (name, description, category, file) {
+        let id = await Photos.insert({
             name,
             description,
             category,
             file,
             createdAt: new Date()
-        });
+        }, (error, result) => {
+            if (error) {
+                console.log('ERROR', error);
+            }
+            console.log('***Mongo db returns:' + result);
+            return result;
+            });
+        return id;
     },
-    'photos.review.insert': function (photoId, rating, body) {
+    'photos.review.insert': function (photoId, rating, body, reviewCreatedAt) {
         Photos.update({
-            _id: photoId    
+            _id: photoId
         }, {
                 $push: {
                     reviews: {
                         rating,
-                        body
+                        body,
+                        reviewCreatedAt
                     }
                 }
             }

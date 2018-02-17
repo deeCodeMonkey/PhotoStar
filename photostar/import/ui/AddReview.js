@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-import { BrowserHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
+import { moment } from "meteor/momentjs:moment";
 
 const AddReview = (props) => {
 
@@ -8,8 +9,9 @@ const AddReview = (props) => {
         e.preventDefault();
         const rating = e.target.rating.value;
         const body = e.target.body.value;
+        const reviewCreatedAt = moment(new Date()).format('LL, h:mm:ss a')
 
-        Meteor.call('photos.review.insert', photoId, rating, body); 
+        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt); 
         props.history.push(`/review/${photoId}`);
     }
 

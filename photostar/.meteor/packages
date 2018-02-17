@@ -28,3 +28,5 @@ accounts-ui
 accounts-password
 react-meteor-data
 #cfs:filesystem
+session
+
