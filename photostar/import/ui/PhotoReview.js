@@ -5,6 +5,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Photos } from '../api/photos';
 
+import { avgReview } from '../helpers/index';
+
 import ReviewItem from './ReviewItem';
 
 
@@ -23,28 +25,31 @@ class PhotoReview extends Component {
 
 
     render() {
-        
-        //console.log(this.props.photoProfile);
+
         if (!this.props.photoProfile) return null;
+        const { _id, file, name, description, reviews, category } = this.props.photoProfile;
 
         return (
             <div>
-                <h3>{this.props.photoProfile.category}</h3>
+                <h3>{category}</h3>
                 <div className="row product-row">
                     <div className="col-md-6">
-                        <img className="profile-photo" src={this.props.photoProfile.file} onLoad={this.handleImageLoaded}
+                        <img className="profile-photo" src={file} onLoad={this.handleImageLoaded}
                             onError={this.handleImageErrored} />
                         {(this.state.imageStatus === "Loading...") ?
                             <p>{this.state.imageStatus}</p> : ''}
                     </div>
 
                     <div className="col-md-6">
-                        <h4>Title: {this.props.photoProfile.name}</h4>
-                        <p>
-                            Average Rating: <img className="stars" src="/img/star{{getAvg reviews}}.png" />
-                            Number of Reviews:
-                        </p>
-                        <p>{this.props.photoProfile.description}</p>
+                        <h4>Title: {name}</h4>
+                        {reviews ?
+                            <p>
+                                Average Rating: {avgReview(reviews)} <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+                                ({reviews.length})
+                        </p> : 'No reviews.'
+                        }
+
+                        <p>{description}</p>
                     </div>
                 </div>
 
@@ -52,7 +57,7 @@ class PhotoReview extends Component {
                     <div className="col-md-12">
                         <div className="text-right">
 
-                            <Link to={`/review/add/${this.props.photoProfile.category}/${this.props.photoProfile._id}`} className="btn btn-success">Leave A Review</Link>
+                            <Link to={`/review/add/${category}/${_id}`} className="btn btn-success">Leave A Review</Link>
 
                         </div>
                     </div>
@@ -60,8 +65,8 @@ class PhotoReview extends Component {
                 <hr />
 
                 <h4>Reviews & Ratings</h4>
-                {this.props.photoProfile.reviews ?
-                    this.props.photoProfile.reviews.map((review, index) => {
+                {reviews ?
+                    reviews.map((review, index) => {
                         return (
                             <ReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} />
                         );

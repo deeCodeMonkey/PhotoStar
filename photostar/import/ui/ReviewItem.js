@@ -8,7 +8,7 @@ const ReviewItem = (props) => {
 
         <div className="row">
                 <div className="col-md-10">
-                    <img src={`/img/star${props.rating}.png`} />
+                    <img className="stars" src={`/img/star${props.rating}.png`} />
                 </div>
                 <div className="col-md-2">
                     {props.rating}

@@ -1,27 +1,33 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { truncateText } from '../helpers/index';
+import { avgReview } from '../helpers/index';
+
 const PhotoItem = (props) => {
 
-    truncateText = (text, length) => {
-        let newText = text.substring(0, length);
-        if (text.length > 150) {
-            return `${newText} ...`;
-        }
-        return `${newText}`;
-    }
+    const { _id, file, name, description, reviews } = props.photo;
 
     return (
         <div className="row photo-row">
             <div className="col-md-2">
-                <Link to={`/review/${props.photo._id}`}><img className="img-thumbnail" src={props.photo.file} /></Link>
+                <Link to={`/review/${_id}`}><img className="img-thumbnail" src={file} /></Link>
             </div>
-            <div className="col-md-10">
-                <h4>{props.photo.name}</h4>
-                <p>Average Rating: Rating</p>
-                <p>{truncateText(props.photo.description, 150)}</p>
-                <Link to={`/review/${props.photo._id}`} className="btn btn-default">Read Reviews</Link>
-                <Link to={`/review/add/${props.photo.name}/${props.photo._id}`} className="btn btn-primary">Add Review</Link>
+            <div className="col-md-6">
+                <h4>{name}</h4>
+                
+                {props.photo.reviews ?
+                    (<p>Average Rating:
+                        {props.avgReview(reviews)}
+                        <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+                        ({reviews.length})
+                    </p>)
+                        : 'No Reviews'
+                    }
+                
+                <p>{truncateText(description, 150)}</p>
+                <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
+                <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
             </div>
         </div>
     );

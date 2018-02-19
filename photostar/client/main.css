@@ -26,3 +26,8 @@ footer {
     height: 100%;
     width: 100%;
 }
+
+.stars {
+    margin-bottom: 5px;
+    width: 120px;
+}

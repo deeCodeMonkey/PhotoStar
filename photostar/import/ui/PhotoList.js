@@ -4,6 +4,8 @@ import { Tracker } from 'meteor/tracker';
 
 import { Photos } from '../api/photos';
 
+import { avgReview } from '../helpers/index';
+
 import PhotoItem from './PhotoItem';
 
 export default class PhotoList extends Component {
@@ -38,7 +40,7 @@ export default class PhotoList extends Component {
     renderPhotos = () => {
         return this.state.photos.map((photo) => {
             return (
-                <PhotoItem key={photo._id} photo={photo} />
+                <PhotoItem key={photo._id} photo={photo} avgReview={avgReview}/>
             );
         })
     }
