@@ -12,6 +12,14 @@ export default class MyPhotos extends Component {
         photos: []
     }
 
+    componentWillMount() {
+        Tracker.autorun(() => {
+            if (!Meteor.user()) {
+                this.props.history.push('/')
+            }
+        })
+    }
+
     componentDidMount() {
         Tracker.autorun(() => {
             Meteor.subscribe('allPhotos');

@@ -26,7 +26,11 @@ const PhotoItem = (props) => {
 
                 <p className="text-justify">{truncateText(description, 150)}</p>
                 <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
-                <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
+
+                {Meteor.userId() ?
+                    <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
+                    : ''
+                }
             </div>
         </div>
     );

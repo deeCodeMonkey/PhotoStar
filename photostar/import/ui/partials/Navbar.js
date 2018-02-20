@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Tracker } from 'meteor/tracker';
 
 import UserAccounts from '../UserAccounts';
@@ -22,7 +22,6 @@ class Navbar extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <nav className="navbar navbar-inverse navbar-fixed-top">

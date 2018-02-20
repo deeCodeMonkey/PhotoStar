@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { FS } from 'meteor/cfs:base-package';
 
@@ -11,6 +11,14 @@ class AddPhoto extends Component {
 
     state = {
         categories: []
+    }
+
+    componentWillMount() {
+        Tracker.autorun(() => {
+            if (!Meteor.user()) {
+                this.props.history.push('/')
+            } 
+        })
     }
 
     componentDidMount() {
@@ -78,7 +86,7 @@ class AddPhoto extends Component {
 
 
     render() {
-
+        
         return (
             <div>
                 <h3>Add Photo</h3>

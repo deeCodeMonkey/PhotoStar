@@ -26,7 +26,7 @@ class PhotoReview extends Component {
     render() {
 
         if (!this.props.photoProfile) return null;
-        const { _id, file, name, description, reviews, category } = this.props.photoProfile;
+        const { _id, file, name, description, reviews, category, userId } = this.props.photoProfile;
 
         return (
             <div className="container marg-t">
@@ -47,7 +47,14 @@ class PhotoReview extends Component {
                                 ({reviews.length})
                         </p> : <p> No reviews. </p>
                         }
-                        <Link to={`/review/add/${category}/${_id}`} className="btn btn-primary">Leave A Review</Link>
+
+                        {
+                            (Meteor.userId() && Meteor.userId() !== userId) ?
+                            <Link to={`/review/add/${category}/${_id}`} className="btn btn-primary">Leave A Review</Link>
+                            : ''
+                        }
+
+
                     </div>
                 </div>
                 <div className="row marg-tt">

@@ -15,6 +15,14 @@ import MyPhotos from '../ui/MyPhotos';
 
 //<Redirect from="/photos/add" to="/photos" />
 
+//render() {
+
+//    if (!this.state.loggedIn) {
+//        return <Redirect to="/photos" />;
+//    }
+
+
+
 export const routes = (
     <div>
         <BrowserRouter>
@@ -29,6 +37,7 @@ export const routes = (
 
                         <div className="col-md-9">
                             <Switch>
+
                                 <Route path="/review/add/:photoName/:photoId" component={AddReview} />
                                 <Route path="/review/:photoId" component={PhotoReview} />
 
@@ -49,4 +58,4 @@ export const routes = (
             <Footer />
 
     </div>
-        );
+);
