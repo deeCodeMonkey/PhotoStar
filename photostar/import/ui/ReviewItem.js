@@ -1,25 +1,25 @@
 ﻿import React from 'react';
+import { moment } from "meteor/momentjs:moment";
 
 const ReviewItem = (props) => {
 
     return (
-        <div>
-            review item component
-
-        <div className="row">
-                <div className="col-md-10">
-                    <img className="stars" src={`/img/star${props.rating}.png`} />
-                </div>
+        <div className="container">
+            <div className="row marg-tt">
                 <div className="col-md-2">
-                    {props.rating}
-                    {props.body}
-                    {props.createdAt}
+                    <img className="stars" src={`/img/star${props.rating}.png`} />
+                    <div className="d-block marg-l marg-t">
+                        by {props.reviewedBy} on {moment(props.createdAt).format('LL')}
+                    </div>
                 </div>
-        </div>
-        <br />
 
+                <div className="col-md-9 marg-l marg-t">
+                    "{props.body}"
+                    </div>
+            </div>
         </div>
     );
 }
 
 export default ReviewItem;
+

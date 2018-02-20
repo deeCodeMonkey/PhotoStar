@@ -3,28 +3,31 @@
 import { Photos } from '../api/photos';
 
 import PhotoItem from './PhotoItem';
+import { avgReview } from '../helpers/index';
 
 export default class Home extends Component {
 
     state = {
-        topPhotos: []
+        photos: [],
+        avgReview: []
     }
 
-    getTopPhotos = (photos) => {
-        //get photos and number of ratings
-        //get photo avg rating
-        //sort by highest avg, then number of ratings
-        //setState photos to obtain top 3 in descending order
- 
-        Photos.find({}).fetch();
-
-        this.setState({ topPhotos });
+    componentDidMount() {
+        //update for any changes
+        Tracker.autorun(() => {
+            //subscribe to possibly filtered collection
+            Meteor.subscribe('allPhotos');
+            //access collection with subscribe conditions
+            const results = Photos.find({}, { sort: { createdAt: -1 } }).fetch();
+            this.setState({ photos: results });
+        });
     }
 
-    renderPhotos = () => {
-        return this.state.topPhotos.map((photo) => {
+
+    renderPhotos = () => {      
+        return this.state.photos.map((photo) => {
             return (
-                <PhotoItem key={photo._id} photo={photo} avgReview={avgReview} />
+                <PhotoItem key={photo._id} photo={photo} />
             );
         })
     }
@@ -33,9 +36,10 @@ export default class Home extends Component {
 
         return (
             <div>
-                <h3>Top 3 Photos</h3>
+                <h3>All Photos</h3>
                 <div className="container" >
                     {this.renderPhotos()}
+
                 </div>
             </div>
         );

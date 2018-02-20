@@ -1,6 +1,7 @@
 ﻿import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Session } from 'meteor/session';
 
 import Navbar from '../ui/partials/Navbar';
 import Sidebar from '../ui/partials/Sidebar';
@@ -10,6 +11,7 @@ import PhotoList from '../ui/PhotoList';
 import AddPhoto from '../ui/AddPhoto';
 import AddReview from '../ui/AddReview';
 import PhotoReview from '../ui/PhotoReview';
+import MyPhotos from '../ui/MyPhotos';
 
 //<Redirect from="/photos/add" to="/photos" />
 
@@ -32,8 +34,8 @@ export const routes = (
 
                                 <Route path="/categories/:category" component={PhotoList} />
 
-                                <Route path="/photos/add" component={AddPhoto} />
-
+                                <Route path="/photos/:userId/add" component={AddPhoto} />
+                                <Route path="/photos/:userId" component={MyPhotos} />
                                 <Route path="/photos" component={PhotoList} />
 
                                 <Route exact path="/" component={Home} />

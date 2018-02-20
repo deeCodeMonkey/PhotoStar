@@ -28,6 +28,24 @@ footer {
 }
 
 .stars {
+    margin-left: 10px;
     margin-bottom: 5px;
     width: 120px;
+}
+
+#login-buttons {
+    margin: 18px;
+    font-size: 14px;
+}
+
+.marg-t {
+    margin-top: 10px;
+}
+
+.marg-tt {
+    margin-top: 30px;
+}
+
+.marg-l {
+    margin-left: 15px;
 }

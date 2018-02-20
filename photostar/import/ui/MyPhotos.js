@@ -6,33 +6,19 @@ import { Photos } from '../api/photos';
 
 import PhotoItem from './PhotoItem';
 
-export default class PhotoList extends Component {
+export default class MyPhotos extends Component {
 
     state = {
-        photos: [],
-        category: ''
-    }
-
-    filterPhotos = (category) => {
-        const photos = category ?
-            Photos.find({ category }).fetch()
-            : Photos.find({}, { sort: { createdAt: -1 } }).fetch();
-
-        this.setState({ photos, category });
+        photos: []
     }
 
     componentDidMount() {
-        //access updated list of categories
         Tracker.autorun(() => {
             Meteor.subscribe('allPhotos');
-            //filter by category
-            this.filterPhotos(this.props.match.params.category);
+            const results = Photos.find({'userId': Meteor.userId()}, { sort: { createdAt: -1 } }).fetch();
+            this.setState({ photos: results });
+            
         });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        //to navigate between categories
-        this.filterPhotos(nextProps.match.params.category);
     }
 
     renderPhotos = () => {
@@ -47,7 +33,7 @@ export default class PhotoList extends Component {
 
         return (
             <div>
-                <h3>{this.state.category} Photos</h3>
+                <h3>My Photos</h3>
                 <div className="container" >
                     {this.renderPhotos()}
                 </div>

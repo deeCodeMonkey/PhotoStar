@@ -7,11 +7,13 @@ const AddReview = (props) => {
 
     onSubmit = (e, photoId) => {
         e.preventDefault();
-        const rating = e.target.rating.value;
-        const body = e.target.body.value;
-        const reviewCreatedAt = moment(new Date()).format('LL, h:mm:ss a')
 
-        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt); 
+        const reviewedBy = Meteor.user().emails[0].address;
+        const rating = parseInt(e.target.rating.value);
+        const body = e.target.body.value;
+        const reviewCreatedAt = moment(new Date()).format('LL, h:mm:ss a');
+
+        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy); 
         props.history.push(`/review/${photoId}`);
     }
 

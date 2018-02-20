@@ -23,15 +23,13 @@ class PhotoReview extends Component {
         window.location.reload();
     }
 
-
     render() {
 
         if (!this.props.photoProfile) return null;
         const { _id, file, name, description, reviews, category } = this.props.photoProfile;
 
         return (
-            <div>
-                <h3>{category}</h3>
+            <div className="container marg-t">
                 <div className="row product-row">
                     <div className="col-md-6">
                         <img className="profile-photo" src={file} onLoad={this.handleImageLoaded}
@@ -41,38 +39,37 @@ class PhotoReview extends Component {
                     </div>
 
                     <div className="col-md-6">
-                        <h4>Title: {name}</h4>
+                        <h3 className="text-capitalize">{name}</h3>
+                        <p>Category: {category}</p>
                         {reviews ?
                             <p>
-                                Average Rating: {avgReview(reviews)} <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+                                Average Rating:<img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
                                 ({reviews.length})
-                        </p> : 'No reviews.'
+                        </p> : <p> No reviews. </p>
                         }
-
-                        <p>{description}</p>
+                        <Link to={`/review/add/${category}/${_id}`} className="btn btn-primary">Leave A Review</Link>
                     </div>
                 </div>
-
-                <div className="row">
+                <div className="row marg-tt">
                     <div className="col-md-12">
-                        <div className="text-right">
-
-                            <Link to={`/review/add/${category}/${_id}`} className="btn btn-success">Leave A Review</Link>
-
-                        </div>
+                        <p className="text-justify marg">{description}</p>
                     </div>
                 </div>
+                
                 <hr />
 
-                <h4>Reviews & Ratings</h4>
-                {reviews ?
-                    reviews.map((review, index) => {
-                        return (
-                            <ReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} />
-                        );
-                    })
-                    : <p>There are no ratings. Be the first to rate this photo!</p>
-                }
+                <div className="row">
+                    <h4 className="marg-l">Reviews & Ratings</h4>
+                    <hr />
+                    {reviews ?
+                        reviews.map((review, index) => {
+                            return (
+                                <ReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+                            );
+                        })
+                        : <p className="marg-l">There are no ratings. Be the first to rate this photo!</p>
+                    }
+                </div>
             </div>
         );
     }

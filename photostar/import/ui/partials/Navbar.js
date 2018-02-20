@@ -1,36 +1,61 @@
-﻿import React from 'react';
+﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Tracker } from 'meteor/tracker';
 
-const Navbar = () => {
+import UserAccounts from '../UserAccounts';
 
-    return (
-        <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-                <div className="container">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <Link className="navbar-brand" to="/photos">PhotoStar</Link>
+class Navbar extends Component {
+
+    state = {
+        loggedIn: null
+    }
+
+    componentDidMount() {
+        Tracker.autorun(() => {
+            var userId = Meteor.userId();
+            if (!userId) {
+                this.setState({ loggedIn: userId });
+            } else {
+                this.setState({ loggedIn: userId });
+            }
+        });
+    }
+
+    render() {
+
+        return (
+            <div>
+                <nav className="navbar navbar-inverse navbar-fixed-top">
+                    <div className="container">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span className="sr-only">Toggle navigation</span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            <Link className="navbar-brand" to="/photos">RateMyPhoto</Link>
+                        </div>
+                        <div id="navbar" className="collapse navbar-collapse">
+                            <ul className="nav navbar-nav">
+
+                                <li><UserAccounts /></li>
+                                <li><Link to="/">All Photos</Link></li>
+                            </ul>
+
+                            {this.state.loggedIn ?
+                                <ul className="nav navbar-nav"> <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
+                                    <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li>
+                                </ul>
+                                : ''
+                            }
+
+                        </div>
                     </div>
-                    <div id="navbar" className="collapse navbar-collapse">
-                        <ul className="nav navbar-nav">
-                            <li><Link to="/">Top Photos</Link></li>
-                            <li><Link to="/photos/:userId">My Photos</Link></li>
-                            <li><Link to="/photos/add">Add Photo</Link></li>
-
-                        </ul>
-                        <ul className="nav navbar-nav navbar-right">
-
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    );
+                </nav>
+            </div>
+        );
+    }
 }
 
 export default Navbar;

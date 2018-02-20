@@ -2,7 +2,6 @@
 import { Link, Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { FS } from 'meteor/cfs:base-package';
-import { Session } from 'meteor/session';
 
 import { Photos } from '../api/photos';
 import { Categories } from '../api/categories';
@@ -33,6 +32,10 @@ class AddPhoto extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
+
+        const userId = Meteor.userId();
+        const userEmail = Meteor.user().emails[0].address;
+
         const name = e.target.name.value;
         const description = e.target.description.value;
         const category = e.target.category.value;
@@ -57,17 +60,13 @@ class AddPhoto extends Component {
                 description,
                 category,
                 photoImage,
+                userId,
+                userEmail,
                 (error, result) => {
                     if (error) {
                         console.log('ERROR', error);
                     } else {
-                        //this.setState({ result });
-                        //Session.set('newPhotoId', result);
-                        //console.log('*******RESULT*******', result);
                         this.props.history.push(`/review/${result}`);
-                       
-                        //window.location.href = "`/review/${result}`";
-                        //return result;
                     }
                 });
 
@@ -75,14 +74,6 @@ class AddPhoto extends Component {
         else {
             console.log('Photo required.');
         }
-
-        //this.props.history.push(`/review/${Session.get('newPhotoId')}`);
-
-        //this.props.history.push(`/review/${newPhotoId}`);
-        //e.target.image.value = null;
-        //e.target.name.value = '';
-        //e.target.description.value = '';
-        //e.target.category.value = 0;
     }
 
 

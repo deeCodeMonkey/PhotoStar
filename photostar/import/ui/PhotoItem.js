@@ -14,18 +14,17 @@ const PhotoItem = (props) => {
                 <Link to={`/review/${_id}`}><img className="img-thumbnail" src={file} /></Link>
             </div>
             <div className="col-md-6">
-                <h4>{name}</h4>
-                
+                <h4 className="font-weight-bold text-capitalize">{name}</h4>
+
                 {props.photo.reviews ?
                     (<p>Average Rating:
-                        {props.avgReview(reviews)}
                         <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
-                        ({reviews.length})
+                        <span>({reviews.length})</span>
                     </p>)
-                        : 'No Reviews'
-                    }
-                
-                <p>{truncateText(description, 150)}</p>
+                    : <p>No Reviews</p>
+                }
+
+                <p className="text-justify">{truncateText(description, 150)}</p>
                 <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
                 <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
             </div>
@@ -34,3 +33,4 @@ const PhotoItem = (props) => {
 }
 
 export default PhotoItem;
+
