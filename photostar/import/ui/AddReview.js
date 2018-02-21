@@ -23,7 +23,8 @@ class AddReview extends Component {
         const reviewedBy = Meteor.user().emails[0].address;
         const rating = parseInt(e.target.rating.value);
         const body = e.target.body.value;
-        const reviewCreatedAt = moment(new Date()).format('LL, h:mm:ss a');
+        const reviewCreatedAt = new Date();
+            //moment(new Date()).format('LL, h:mm:ss a');
 
         Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy, (error, result) => {
             if (error) {

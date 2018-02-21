@@ -1,5 +1,4 @@
-﻿import { clientReport } from '../api/photos';
-
+﻿
 export const truncateText = (text, length) => {
     let newText = text.substring(0, length);
     if (text.length > 150) {
@@ -19,6 +18,6 @@ export const avgReview = (reviews) => {
 }
 
 //get client collection from mongodb aggregation pipeline
-export const fetchClientReport = () => {
+export const fetchClientReport = (clientReport) => {
     return clientReport.find().fetch();
 }

@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 
 import PhotoItem from './PhotoItem';
+import { clientReport } from '../api/photos';
+
 import { avgReview } from '../helpers/index';
 import { fetchClientReport } from '../helpers/index';
 
@@ -25,7 +27,7 @@ export default class Home extends Component {
         Tracker.autorun(() => {
             //reactive client setup for aggregating in Mongodb
             Meteor.subscribe('topPhotos');
-            const results = fetchClientReport();
+            const results = fetchClientReport(clientReport);
             this.setState({ photos: results })
         });
     }

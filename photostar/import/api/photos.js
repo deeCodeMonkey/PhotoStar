@@ -7,7 +7,9 @@ import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 //users can add photos
 export const Photos = new Mongo.Collection('photos');
 //reactive client setup for aggregating in Mongodb
+//client subset of Photos collection
 export const clientReport = new Mongo.Collection('clientReport');
+export const reviewsCollection = new Mongo.Collection('reviewsCollection');
 
 
 //to run on server only
@@ -40,6 +42,32 @@ if (Meteor.isServer) {
                 }
             }],
             { clientCollection: "clientReport" });
+    });
+
+    //reviews list by descending review date
+    Meteor.publish('reviewsList', function (photoId) {
+        ReactiveAggregate(this, Photos,
+            [{
+                $match: { _id: photoId }
+            },
+            {
+                $unwind: "$reviews"
+            },
+            {
+                $group: {
+                    _id: '$reviews.reviewedBy',
+                    reviewCreatedAt: { "$first": "$reviews.reviewCreatedAt" },
+                    rating: { "$first": "$reviews.rating" },
+                    body: { "$first": "$reviews.body" },
+                    reviewedBy: { "$first": "$reviews.reviewedBy" }
+                }
+            },
+            {
+                $sort: {
+                    reviewCreatedAt: -1
+                }
+            }],
+            { clientCollection: "reviewsCollection" });
     });
 }
 
@@ -125,7 +153,7 @@ Meteor.methods({
                 label: 'Your review comment'
             },
             reviewCreatedAt: {
-                type: String,
+                type: Date,
                 min: 1,
                 label: 'Reviewed date'
             },
