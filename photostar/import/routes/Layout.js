@@ -1,7 +1,7 @@
 ﻿import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Session } from 'meteor/session';
+//import { Session } from 'meteor/session';
 
 import Navbar from '../ui/partials/Navbar';
 import Sidebar from '../ui/partials/Sidebar';

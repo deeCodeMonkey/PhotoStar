@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
 
-import { Photos } from '../api/photos';
-
 import PhotoItem from './PhotoItem';
 import { avgReview } from '../helpers/index';
+import { fetchClientReport } from '../helpers/index';
+
 
 export default class Home extends Component {
 
@@ -12,31 +12,34 @@ export default class Home extends Component {
         avgReview: []
     }
 
-    componentWillMount() {
-        Tracker.autorun(() => {
-            if (Meteor.user()) {
-                this.props.history.replace('/photos')
-            }
-        })
-    }
+    //componentWillMount() {
+    //    Tracker.autorun(() => {
+    //        if (Meteor.user()) {
+    //            this.props.history.replace('/photos')
+    //        }
+    //    })
+    //}
 
     componentDidMount() {
         //update for any changes
         Tracker.autorun(() => {
-            //subscribe to possibly filtered collection
-            Meteor.subscribe('allPhotos');
-            //access collection with subscribe conditions
-            const results = Photos.find({}, { sort: { createdAt: -1 } }).fetch();
-            this.setState({ photos: results });
+            //reactive client setup for aggregating in Mongodb
+            Meteor.subscribe('topPhotos');
+            const results = fetchClientReport();
+            this.setState({ photos: results })
         });
     }
 
-    renderPhotos = () => {      
-        return this.state.photos.map((photo) => {
-            return (
-                <PhotoItem key={photo._id} photo={photo} />
-            );
-        })
+    renderPhotos = () => {
+            return this.state.photos.slice(0, 3).map((photo) => {
+                return (
+                    <p key={photo._id}>
+                        Rating count: {photo.ratingsCount}
+                        Rating Avg: {photo.averageRating}
+                        Image: {photo.image}
+                    </p>
+                );
+            });
     }
 
 

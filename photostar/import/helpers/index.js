@@ -1,4 +1,5 @@
-﻿
+﻿import { clientReport } from '../api/photos';
+
 export const truncateText = (text, length) => {
     let newText = text.substring(0, length);
     if (text.length > 150) {
@@ -17,3 +18,7 @@ export const avgReview = (reviews) => {
     return Math.round(avg); //* 10) / 10;
 }
 
+//get client collection from mongodb aggregation pipeline
+export const fetchClientReport = () => {
+    return clientReport.find().fetch();
+}

@@ -51,7 +51,7 @@ class PhotoReview extends Component {
                         {
                             (Meteor.userId() && Meteor.userId() !== userId) ?
                                 <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Leave A Review</Link>
-                                : ''
+                                : 'Note: You cannot rate your own photo.'
                         }
 
                         <Link to="/photos">Back</Link>
@@ -75,7 +75,7 @@ class PhotoReview extends Component {
                                 <ReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
                             );
                         })
-                        : <p className="marg-l">There are no ratings. Be the first to rate this photo!</p>
+                        : <p className="marg-l">There are no ratings.</p>
                     }
                 </div>
             </div>

@@ -1,9 +1,14 @@
 ﻿import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+//reactive client setup for aggregating in Mongodb
+import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
 //users can add photos
 export const Photos = new Mongo.Collection('photos');
+//reactive client setup for aggregating in Mongodb
+export const clientReport = new Mongo.Collection('clientReport');
+
 
 //to run on server only
 if (Meteor.isServer) {
@@ -12,7 +17,30 @@ if (Meteor.isServer) {
         //subscriber to get. User can see all for this particular publish.
         return Photos.find({});
     });
-   
+
+    //reactive client setup for aggregating in Mongodb
+    Meteor.publish('topPhotos', function () {
+        ReactiveAggregate(this, Photos,
+            [{
+                $unwind: "$reviews"
+            },
+            {
+                $group: {
+                    _id: '$_id',
+                    ratingsCount: { $sum: 1 },
+                    averageRating: { $avg: "$reviews.rating" },
+                    image: { "$first": "$file" },
+                    //to get whole document 
+                    //document: { "$first": "$$CURRENT" }
+                }
+            },
+            {
+                $sort: {
+                    averageRating: -1
+                }
+            }],
+            { clientCollection: "clientReport" });
+    });
 }
 
 
@@ -23,39 +51,39 @@ Meteor.methods({
             throw new Meteor.Error('Not authorized.');
         }
         //validate inputs
-            new SimpleSchema({
-                name: {
-                    type: String,
-                    min: 1,
-                    max: 75,
-                    label: 'Title of your image'
-                },
-                description: {
-                    type: String,
-                    min: 1,
-                    max: 250,
-                    label: 'Your image description'
-                },
-                category: {
-                    type: String,
-                    min: 1,
-                    label: 'Category Of Image'
-                },
-                file: {
-                    type: String,
-                    label: 'Image File'
-                },
-                userId: {
-                    type: String,
-                    min: 1,
-                    label: 'User ID'
-                },
-                userEmail: {
-                    type: String,
-                    regEx: SimpleSchema.RegEx.Email,
-                    label: 'User Email'
-                }
-            }).validate({ name, description, category, file, userId, userEmail });
+        new SimpleSchema({
+            name: {
+                type: String,
+                min: 1,
+                max: 75,
+                label: 'Title of your image'
+            },
+            description: {
+                type: String,
+                min: 1,
+                max: 250,
+                label: 'Your image description'
+            },
+            category: {
+                type: String,
+                min: 1,
+                label: 'Category Of Image'
+            },
+            file: {
+                type: String,
+                label: 'Image File'
+            },
+            userId: {
+                type: String,
+                min: 1,
+                label: 'User ID'
+            },
+            userEmail: {
+                type: String,
+                regEx: SimpleSchema.RegEx.Email,
+                label: 'User Email'
+            }
+        }).validate({ name, description, category, file, userId, userEmail });
 
         let id = await Photos.insert({
             name,
@@ -70,7 +98,7 @@ Meteor.methods({
                 console.log('MongoDB ERROR:', error);
             }
             return result;
-            });
+        });
         return id;
     },
 
@@ -121,31 +149,6 @@ Meteor.methods({
                 }
             }
         );
-    },
-
-
-    'photo.topReviews': function () {
-        Photos.aggregate([
-            {
-                '$unwind': "$reviews"
-            },
-            {
-                '$group': {
-                    _id: '$_id',
-                    ratingsCount: { $sum: 1 },
-                    averageRating: { $avg: "$reviews.rating" }
-                }
-            },
-            {
-                '$sort': {
-                    averageRating: -1
-                }
-            },
-            { "$project": { averageRating: true, _id: false } }
-        ]);
-        //    .then((result) => {
-        //    console.log('============',result);;
-        //});
     }
 });
 

@@ -73,7 +73,6 @@ class AddPhoto extends Component {
                 userEmail,
                 (error, result) => {
                     if (error) {
-                        console.log('ERROR', error);
                         this.setState({ errorMessage: error.reason });
                     } else {
                         this.props.history.push(`/review/${result}`);
