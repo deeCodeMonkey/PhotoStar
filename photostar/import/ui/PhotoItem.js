@@ -6,7 +6,7 @@ import { avgReview } from '../helpers/index';
 
 const PhotoItem = (props) => {
 
-    const { _id, file, name, description, reviews } = props.photo;
+    const { _id, file, name, description, reviews, userId } = props.photo;
 
     return (
         <div className="row photo-row">
@@ -25,9 +25,11 @@ const PhotoItem = (props) => {
                 }
 
                 <p className="text-justify">{truncateText(description, 150)}</p>
+
                 <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
 
-                {Meteor.userId() ?
+                {
+                    (Meteor.userId() && Meteor.userId() !== userId) ?
                     <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
                     : ''
                 }

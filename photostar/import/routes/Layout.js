@@ -1,6 +1,6 @@
 ﻿import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Session } from 'meteor/session';
 
 import Navbar from '../ui/partials/Navbar';
@@ -13,15 +13,6 @@ import AddReview from '../ui/AddReview';
 import PhotoReview from '../ui/PhotoReview';
 import MyPhotos from '../ui/MyPhotos';
 
-//<Redirect from="/photos/add" to="/photos" />
-
-//render() {
-
-//    if (!this.state.loggedIn) {
-//        return <Redirect to="/photos" />;
-//    }
-
-
 
 export const routes = (
     <div>
@@ -33,8 +24,8 @@ export const routes = (
                     <div className="row">
                         <div className="col-md-3">
                             <Sidebar />
-                        </div>
 
+                        </div>
                         <div className="col-md-9">
                             <Switch>
 
@@ -48,14 +39,14 @@ export const routes = (
                                 <Route path="/photos" component={PhotoList} />
 
                                 <Route exact path="/" component={Home} />
+
                            </Switch>
                         </div>
                         </div>
                     </div>
                 </div>
         </BrowserRouter>
-
-            <Footer />
+        <Footer />
 
     </div>
 );

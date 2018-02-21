@@ -12,6 +12,14 @@ export default class Home extends Component {
         avgReview: []
     }
 
+    componentWillMount() {
+        Tracker.autorun(() => {
+            if (Meteor.user()) {
+                this.props.history.replace('/photos')
+            }
+        })
+    }
+
     componentDidMount() {
         //update for any changes
         Tracker.autorun(() => {
@@ -22,7 +30,6 @@ export default class Home extends Component {
             this.setState({ photos: results });
         });
     }
-
 
     renderPhotos = () => {      
         return this.state.photos.map((photo) => {
@@ -46,16 +53,3 @@ export default class Home extends Component {
     }
 }
 
-//import React from 'react';
-
-////presentational component with no props
-//const Home = () => {
-
-//    return (
-//        <div>
-//            HOME component- Top 3 photos
-//        </div>
-//    );
-//}
-
-//export default Home;

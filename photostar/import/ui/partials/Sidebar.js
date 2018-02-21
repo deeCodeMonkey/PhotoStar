@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-//import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 

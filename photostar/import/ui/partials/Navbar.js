@@ -39,7 +39,7 @@ class Navbar extends Component {
                             <ul className="nav navbar-nav">
 
                                 <li><UserAccounts /></li>
-                                <li><Link to="/">All Photos</Link></li>
+                                <li><Link to="/">Main</Link></li>
                             </ul>
 
                             {this.state.loggedIn ?

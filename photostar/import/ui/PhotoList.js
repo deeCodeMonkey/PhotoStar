@@ -47,7 +47,9 @@ export default class PhotoList extends Component {
 
         return (
             <div>
-                <h3>{this.state.category} Photos</h3>
+                <h3>{
+                    this.state.category ? this.state.category : 'All' 
+                        } Photos</h3>
                 <div className="container" >
                     {this.renderPhotos()}
                 </div>
