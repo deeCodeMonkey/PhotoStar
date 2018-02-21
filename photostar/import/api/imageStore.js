@@ -28,25 +28,6 @@ if (Meteor.isServer) {
 }
 
 
-////runs on server and client, will need to import to client and server 
-//Meteor.methods({
-//    'image.insert': function (image) {
 
-//        fsFile = new FS.File(image)
-
-//        //for (var i = 0, ln = fsFile.length; i < ln; i++) {
-//        ImageStore.insert(fsFile, function (err, fileObj) {
-//            // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-//            if (!err) {
-//                console.log('fileObj=====', fileObj);
-//                const photoImage = '/cfs/files/ImageStore/' + fileObj._id;
-//                Meteor.call('photos.insert', name, description, category, photoImage);
-//            } else {
-//                throw new Meteor.Error(err);
-//            }
-//        });
-//            //}
-//    }
-//});
 
 

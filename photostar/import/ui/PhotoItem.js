@@ -21,18 +21,18 @@ const PhotoItem = (props) => {
                         <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
                         <span>({reviews.length})</span>
                     </p>)
-                    : <p>No Reviews</p>
+                    : <p>No Ratings.</p>
                 }
 
                 <p className="text-justify">{truncateText(description, 150)}</p>
 
                 <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
 
-                {
+                {/*
                     (Meteor.userId() && Meteor.userId() !== userId) ?
                     <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Add Review</Link>
                     : ''
-                }
+                */}
             </div>
         </div>
     );

@@ -39,11 +39,14 @@ export default class Home extends Component {
         })
     }
 
+
+
     render() {
 
         return (
             <div>
-                <h3>All Photos</h3>
+                <h3>Top Photos</h3>
+                <h1>LANDING PAGE</h1>
                 <div className="container" >
                     {this.renderPhotos()}
 

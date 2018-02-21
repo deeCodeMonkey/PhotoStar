@@ -1,9 +1,21 @@
-﻿import React from 'react';
+﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { moment } from "meteor/momentjs:moment";
 
-const AddReview = (props) => {
+class AddReview extends Component {
+
+    state = {
+        errorMessage: null
+    }
+
+    componentWillMount() {
+        Tracker.autorun(() => {
+            if (!Meteor.user()) {
+                this.props.history.push('/')
+            }
+        })
+    }
 
     onSubmit = (e, photoId) => {
         e.preventDefault();
@@ -13,14 +25,27 @@ const AddReview = (props) => {
         const body = e.target.body.value;
         const reviewCreatedAt = moment(new Date()).format('LL, h:mm:ss a');
 
-        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy); 
-        props.history.push(`/review/${photoId}`);
+        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy, (error, result) => {
+            if (error) {
+                this.setState({ errorMessage: error.reason });
+            } else {
+                this.props.history.push(`/review/${photoId}`);
+            }
+        });
     }
+
+    render() {
 
         return (
             <div>
-                <h3>Add A Review For <strong>{props.match.params.photoName}</strong></h3>
-                <form className="new-review" onSubmit={(e) => onSubmit(e, props.match.params.photoId)}>
+                <h3>Add A Review For <strong>{this.props.match.params.photoName}</strong></h3>
+
+                {this.state.errorMessage ?
+                    <p className="text-danger bg-danger">{this.state.errorMessage}</p>
+                    : ''
+                }
+
+                <form className="new-review" onSubmit={(e) => this.onSubmit(e, this.props.match.params.photoId)}>
                     <div className="form-group">
                         <label>Star Rating</label>
                         <select className="form-control" name="rating">
@@ -38,13 +63,14 @@ const AddReview = (props) => {
 
                     <div>
                         <input type="submit" name="submit" className="btn btn-success" value="Submit Review" />
-                        <Link to={`/review/${props.match.params.photoId}`} className="btn btn-default">Close</Link>
+                        <Link to={`/review/${this.props.match.params.photoId}`} className="btn btn-default">Close</Link>
                     </div>
 
                 </form>
-               
+
             </div>
         );
+    }
 }
 
 export default AddReview;

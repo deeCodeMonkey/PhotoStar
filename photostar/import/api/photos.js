@@ -1,5 +1,6 @@
 ﻿import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import SimpleSchema from 'simpl-schema';
 
 //users can add photos
 export const Photos = new Mongo.Collection('photos');
@@ -18,6 +19,44 @@ if (Meteor.isServer) {
 //runs on server and client, will need to import to client and server 
 Meteor.methods({
     'photos.insert': async function (name, description, category, file, userId, userEmail) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not authorized.');
+        }
+        //validate inputs
+            new SimpleSchema({
+                name: {
+                    type: String,
+                    min: 1,
+                    max: 75,
+                    label: 'Title of your image'
+                },
+                description: {
+                    type: String,
+                    min: 1,
+                    max: 250,
+                    label: 'Your image description'
+                },
+                category: {
+                    type: String,
+                    min: 1,
+                    label: 'Category Of Image'
+                },
+                file: {
+                    type: String,
+                    label: 'Image File'
+                },
+                userId: {
+                    type: String,
+                    min: 1,
+                    label: 'User ID'
+                },
+                userEmail: {
+                    type: String,
+                    regEx: SimpleSchema.RegEx.Email,
+                    label: 'User Email'
+                }
+            }).validate({ name, description, category, file, userId, userEmail });
+
         let id = await Photos.insert({
             name,
             description,
@@ -34,7 +73,41 @@ Meteor.methods({
             });
         return id;
     },
+
+
     'photos.review.insert': function (photoId, rating, body, reviewCreatedAt, reviewedBy) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not authorized.');
+        }
+        new SimpleSchema({
+            photoId: {
+                type: String,
+                min: 1,
+                label: 'Image ID'
+            },
+            rating: {
+                type: Number,
+                min: 1,
+                label: 'Your rating'
+            },
+            body: {
+                type: String,
+                min: 1,
+                max: 250,
+                label: 'Your review comment'
+            },
+            reviewCreatedAt: {
+                type: String,
+                min: 1,
+                label: 'Reviewed date'
+            },
+            reviewedBy: {
+                type: String,
+                regEx: SimpleSchema.RegEx.Email,
+                label: 'Reviewer Email'
+            }
+        }).validate({ photoId, rating, body, reviewCreatedAt, reviewedBy });
+
         Photos.update({
             _id: photoId
         }, {
@@ -49,11 +122,8 @@ Meteor.methods({
             }
         );
     },
-    'photo.review': function (photoId) {
-        Photos.find({
-            _id: photoId
-        }).fetch();
-    },
+
+
     'photo.topReviews': function () {
         Photos.aggregate([
             {

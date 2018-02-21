@@ -10,7 +10,8 @@ import { ImageStore } from '../api/imageStore';
 class AddPhoto extends Component {
 
     state = {
-        categories: []
+        categories: [],
+        errorMessage: null
     }
 
     componentWillMount() {
@@ -73,6 +74,7 @@ class AddPhoto extends Component {
                 (error, result) => {
                     if (error) {
                         console.log('ERROR', error);
+                        this.setState({ errorMessage: error.reason });
                     } else {
                         this.props.history.push(`/review/${result}`);
                     }
@@ -81,6 +83,7 @@ class AddPhoto extends Component {
         }
         else {
             console.log('Photo required.');
+            this.setState({ errorMessage: 'Photo required.'});
         }
     }
 
@@ -90,6 +93,12 @@ class AddPhoto extends Component {
         return (
             <div>
                 <h3>Add Photo</h3>
+
+                {this.state.errorMessage ?
+                    <p className="text-danger bg-danger">{this.state.errorMessage}</p>
+                    : ''
+                }
+
                 <form onSubmit={this.onSubmit} className="add_product">
                     <div className="form-group">
                         <label>Title</label>

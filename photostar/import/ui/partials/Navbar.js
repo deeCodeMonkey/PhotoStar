@@ -33,13 +33,13 @@ class Navbar extends Component {
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
                             </button>
-                            <Link className="navbar-brand" to="/photos">RateMyPhoto</Link>
+                            <Link className="navbar-brand" to="/">RateMyPhoto</Link>
                         </div>
                         <div id="navbar" className="collapse navbar-collapse">
                             <ul className="nav navbar-nav">
 
                                 <li><UserAccounts /></li>
-                                <li><Link to="/">Main</Link></li>
+                                <li><Link to="/photos">All Photos</Link></li>
                             </ul>
 
                             {this.state.loggedIn ?
