@@ -26,7 +26,7 @@ const PhotoItem = (props) => {
 
                 <p className="text-justify">{truncateText(description, 150)}</p>
 
-                <Link to={`/review/${_id}`} className="btn btn-default">Read Reviews</Link>
+                <Link to={`/review/${_id}`} className="btn btn-default btn-review">Read Reviews</Link>
 
                 {/*
                     (Meteor.userId() && Meteor.userId() !== userId) ?

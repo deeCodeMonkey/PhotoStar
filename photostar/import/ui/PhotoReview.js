@@ -117,7 +117,7 @@ class PhotoReview extends Component {
                         }
 
                         {(Meteor.userId() && Meteor.userId() !== userId && this.displayReviewButton()) ?
-                            <Link to={`/review/add/${name}/${_id}`} className="btn btn-primary">Leave A Review</Link>
+                            <Link to={`/review/add/${name}/${_id}`} className="btn btn-review ">Leave A Review</Link>
                             : ''
                         }
 

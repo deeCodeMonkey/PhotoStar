@@ -26,7 +26,7 @@ export default class Home extends Component {
     renderPhotos = () => {
             return this.state.photos.slice(0, 3).map((photo) => {
                 return (
-                    <p key={photo._id}>
+                    <div key={photo._id}>
                         Rating count: {photo.ratingsCount}
                         Rating Avg: {photo.averageRating}
                         <div className="container">
@@ -36,7 +36,7 @@ export default class Home extends Component {
                                   </div>
                             </div>
                         </div>
-                    </p>
+                    </div>
                 );
             });
     }

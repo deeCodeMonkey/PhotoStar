@@ -1,10 +1,13 @@
 /* CSS declarations go here */
 body {
     margin-top: 70px;
+    background-color: #F4F4F4;
+    font-family: 'Kavivanar', cursive;
 }
 
 footer {
     background: #333;
+    background-color: #474744;
     color: white;
     height: 40px;
     text-align: center;
@@ -48,4 +51,43 @@ footer {
 
 .marg-l {
     margin-left: 15px;
+}
+
+.navbar {
+    background-color: #474744;
+    background: #333;
+    color: white;
+    font-family: 'Indie Flower';
+}
+
+.sidebar:active {
+    background: #FF5722 !important;
+}
+
+.btn-reviews:hover {
+    background-color: #FF5722;
+}
+
+.btn-review {
+    background-color: #65EEB7;
+    color: #F4F4F4;
+}
+
+.btn-photo {
+    background-color: #FF5722;
+    color: #F4F4F4;
+}
+
+.btn-review-cancel {
+    background-color: #A4E5D9;
+    color: #F4F4F4;
+}
+
+.btn-photo-cancel {
+    background-color: #FFD05B;
+    color: white;
+}
+
+.review-item {
+    background-color: #65EEB7;
 }

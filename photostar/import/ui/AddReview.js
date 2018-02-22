@@ -63,8 +63,8 @@ class AddReview extends Component {
                     </div>
 
                     <div>
-                        <input type="submit" name="submit" className="btn btn-success" value="Submit Review" />
-                        <Link to={`/review/${this.props.match.params.photoId}`} className="btn btn-default">Close</Link>
+                        <input type="submit" name="submit" className="btn btn-review" value="Submit Review" />
+                        <Link to={`/review/${this.props.match.params.photoId}`} className="btn btn-review-cancel">Cancel</Link>
                     </div>
 
                 </form>

@@ -123,8 +123,8 @@ class AddPhoto extends Component {
                     </div>
 
                     <div>
-                        <button className="btn btn-success" >Add Photo</button>
-                        <Link to="/photos" className="btn btn-default">Close</Link>
+                        <button className="btn btn-photo" >Add Photo</button>
+                        <Link to="/photos" className="btn btn-photo-cancel">Cancel</Link>
                     </div>
                 </form>
             </div>

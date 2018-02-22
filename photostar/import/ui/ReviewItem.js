@@ -5,7 +5,7 @@ const ReviewItem = (props) => {
 
     return (
         <div className="container">
-            <div className="row marg-tt">
+            <div className="row marg-tt review-item">
                 <div className="col-md-2">
                     <img className="stars" src={`/img/star${props.rating}.png`} />
                     <div className="d-block marg-l marg-t">
