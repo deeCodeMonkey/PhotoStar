@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { moment } from "meteor/momentjs:moment";
+//import { moment } from "meteor/momentjs:moment";
 
 class AddReview extends Component {
 

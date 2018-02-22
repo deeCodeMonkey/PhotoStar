@@ -3,8 +3,7 @@
 import PhotoItem from './PhotoItem';
 import { clientReport } from '../api/photos';
 
-import { avgReview } from '../helpers/index';
-import { fetchClientReport } from '../helpers/index';
+import { avgReview, fetchClientReport } from '../helpers/index';
 
 
 export default class Home extends Component {
@@ -13,14 +12,6 @@ export default class Home extends Component {
         photos: [],
         avgReview: []
     }
-
-    //componentWillMount() {
-    //    Tracker.autorun(() => {
-    //        if (Meteor.user()) {
-    //            this.props.history.replace('/photos')
-    //        }
-    //    })
-    //}
 
     componentDidMount() {
         //update for any changes
@@ -38,7 +29,13 @@ export default class Home extends Component {
                     <p key={photo._id}>
                         Rating count: {photo.ratingsCount}
                         Rating Avg: {photo.averageRating}
-                        Image: {photo.image}
+                        <div className="container">
+                            <div className="row">
+                                  <div className="col-md-4">
+                        <img className="profile-photo" src={photo.image}/>
+                                  </div>
+                            </div>
+                        </div>
                     </p>
                 );
             });
@@ -50,7 +47,7 @@ export default class Home extends Component {
 
         return (
             <div>
-                <h3>Top Photos</h3>
+                <h3>Top 3 Photos</h3>
                 <h1>LANDING PAGE</h1>
                 <div className="container" >
                     {this.renderPhotos()}

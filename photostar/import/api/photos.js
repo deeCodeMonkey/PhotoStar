@@ -89,7 +89,6 @@ Meteor.methods({
             description: {
                 type: String,
                 min: 1,
-                max: 250,
                 label: 'Your image description'
             },
             category: {
@@ -177,6 +176,24 @@ Meteor.methods({
                 }
             }
         );
+    },
+
+
+     'photos.remove': function (photoId) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not authorized.');
+        }
+        new SimpleSchema({
+            photoId: {
+                type: String,
+                min: 1,
+                label: 'Image ID'
+            }
+        }).validate({ photoId });
+
+        Photos.remove({
+            _id: photoId
+        });
     }
 });
 
