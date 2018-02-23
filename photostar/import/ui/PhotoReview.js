@@ -77,9 +77,9 @@ class PhotoReview extends Component {
  
 
     render() {
-
+        
         if (!this.props.photoProfile || !this.state.reviews) return null;
-        const { _id, file, name, description, reviews, category, userId, userEmail } = this.props.photoProfile;
+        const { _id, photoImages, name, description, reviews, category, userId, userEmail } = this.props.photoProfile;
 
         renderNotation = () => {
             if (!Meteor.userId()) {
@@ -99,7 +99,7 @@ class PhotoReview extends Component {
             <div className="container marg-t">
                 <div className="row product-row">
                     <div className="col-md-6">
-                        <img className="profile-photo" src={file} onLoad={this.handleImageLoaded}
+                        <img className="profile-photo" src={photoImages[0]} onLoad={this.handleImageLoaded}
                             onError={this.handleImageErrored} />
                         {(this.state.imageStatus === "Loading...") ?
                             <p>{this.state.imageStatus}</p> : ''}

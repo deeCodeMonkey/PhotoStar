@@ -30,3 +30,4 @@ react-meteor-data
 #cfs:filesystem
 #session
 jcbernack:reactive-aggregate
+#raix:ui-dropped-event

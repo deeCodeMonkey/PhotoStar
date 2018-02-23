@@ -18,7 +18,7 @@ class AddPhoto extends Component {
         Tracker.autorun(() => {
             if (!Meteor.user()) {
                 this.props.history.push('/')
-            } 
+            }
         })
     }
 
@@ -39,7 +39,8 @@ class AddPhoto extends Component {
         })
     }
 
-    onSubmit = async (e) => {
+
+    onSubmit = (e) => {
         e.preventDefault();
 
         const userId = Meteor.userId();
@@ -49,46 +50,52 @@ class AddPhoto extends Component {
         const description = e.target.description.value;
         const category = e.target.category.value;
 
-        const image = e.target.image.files[0];
+        const image = e.target.image.files;
 
-        if (image) {
-
-            fsFile = new FS.File(image)
-
-            let file = await ImageStore.insert(fsFile, function (err, fileObj) {
-                // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-                if (err) {
-                    throw new Meteor.Error(err);
-                }
-                return fileObj;
-            });
-
-            const photoImage = '/cfs/files/ImageStore/' + file._id;
-            Meteor.call('photos.insert',
-                name,
-                description,
-                category,
-                photoImage,
-                userId,
-                userEmail,
-                (error, result) => {
-                    if (error) {
-                        this.setState({ errorMessage: error.reason });
-                    } else {
-                        this.props.history.push(`/review/${result}`);
+        let promises = [];
+        //obtain and add CFS image(s) into array for Photo collection insert
+        for (i = 0; i < image.length; i++){
+            let fsFile = new FS.File(image[i]);
+            promises.push(
+                ImageStore.insert(fsFile, function (err, fileObj) {
+                    if (err) {
+                        reject(console.log(Meteor.Error(err)));
                     }
-                });
+                    resolve(fileObj);
+                })
+            );
+        }
 
-        }
-        else {
-            console.log('Photo required.');
-            this.setState({ errorMessage: 'Photo required.'});
-        }
+        Promise.all(promises)
+            .then(() => {
+                let imageArray = [];
+                for (i = 0; i < image.length; i++){
+                    imageArray.push('/cfs/files/ImageStore/' + promises[i]._id);
+                }
+                
+                Meteor.call('photos.insert',
+                    name,
+                    description,
+                    category,
+                    imageArray,
+                    userId,
+                    userEmail,
+                    (error, result) => {
+                        if (error) {
+                            this.setState({ errorMessage: error.reason });
+                        } else {
+                            this.props.history.push(`/review/${result}`);
+                        }
+                    });
+            })
+            .catch((e) => {
+                console.log('PROMISE ERROR', e);
+            });
     }
 
 
     render() {
-        
+
         return (
             <div>
                 <h3>Add Photo</h3>
@@ -114,7 +121,7 @@ class AddPhoto extends Component {
 
                     <div className="form-group">
                         <label>Photo</label>
-                        <input type="file" name="image" id="image" />
+                        <input type="file" name="image" id="image" multiple />
                     </div>
 
                     <div className="form-group">

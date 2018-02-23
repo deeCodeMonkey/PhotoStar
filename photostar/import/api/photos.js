@@ -31,7 +31,7 @@ if (Meteor.isServer) {
                     _id: '$_id',
                     ratingsCount: { $sum: 1 },
                     averageRating: { $avg: "$reviews.rating" },
-                    image: { "$first": "$file" },
+                    image: { "$first": "$photoImages" }
                     //to get whole document 
                     //document: { "$first": "$$CURRENT" }
                 }
@@ -74,10 +74,11 @@ if (Meteor.isServer) {
 
 //runs on server and client, will need to import to client and server 
 Meteor.methods({
-    'photos.insert': async function (name, description, category, file, userId, userEmail) {
+    'photos.insert': async function (name, description, category, photoImages, userId, userEmail) {
         if (!this.userId) {
             throw new Meteor.Error('Not authorized.');
         }
+
         //validate inputs
         new SimpleSchema({
             name: {
@@ -96,9 +97,13 @@ Meteor.methods({
                 min: 1,
                 label: 'Category Of Image'
             },
-            file: {
+            photoImages: {
+                type: Array,
+                label: 'Image File(s) Array'
+            },
+            'photoImages.$': {
                 type: String,
-                label: 'Image File'
+                label: 'Image File(s)'
             },
             userId: {
                 type: String,
@@ -110,13 +115,13 @@ Meteor.methods({
                 regEx: SimpleSchema.RegEx.Email,
                 label: 'User Email'
             }
-        }).validate({ name, description, category, file, userId, userEmail });
+        }).validate({ name, description, category, photoImages, userId, userEmail });
 
         let id = await Photos.insert({
             name,
             description,
             category,
-            file,
+            photoImages,
             userId,
             userEmail,
             createdAt: new Date()

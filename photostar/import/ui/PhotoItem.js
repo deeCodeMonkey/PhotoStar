@@ -6,12 +6,12 @@ import { avgReview } from '../helpers/index';
 
 const PhotoItem = (props) => {
 
-    const { _id, file, name, description, reviews, userId } = props.photo;
+    const { _id, photoImages, name, description, reviews, userId } = props.photo;
 
     return (
         <div className="row photo-row">
             <div className="col-md-2">
-                <Link to={`/review/${_id}`}><img className="img-thumbnail" src={file} /></Link>
+                <Link to={`/review/${_id}`}><img className="img-thumbnail" src={photoImages[0]} /></Link>
             </div>
             <div className="col-md-6">
                 <h4 className="font-weight-bold text-capitalize">{name}</h4>

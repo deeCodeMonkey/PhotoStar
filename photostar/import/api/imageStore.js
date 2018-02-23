@@ -7,6 +7,20 @@ export const ImageStore = new FS.Collection("ImageStore", {
     stores: [new FS.Store.GridFS("ImageStore")]
 });
 
+////image storage
+//export const ImageStore = new FS.Collection("ImageStore", {
+//    stores: [new FS.Store.GridFS("ImageStore")]
+//    //only allow image uploads
+//    //filter: {
+//    //    allow: {
+//    //        //any image extension
+//    //        contentTypes: ['image/*']
+//    //    },
+//    //    onInvalid: function (message) {
+//    //        console.log('Can only upload images.');
+//    //    }
+//    //}
+//});
 
 //permission to upload image
 if (Meteor.isServer) {
@@ -26,6 +40,44 @@ if (Meteor.isServer) {
     });
 
 }
+
+//Meteor.methods({
+//    'imageStore.insert': function (images) {
+//        console.log('-------input images------------', images, 'length is', images.length);
+//        debugger;
+//        let imagesArray = [];
+
+
+//        for (let i = 0; i < images.length; i++ ) {
+//            let fsFile = new FS.File(images[i]);
+//            console.log('++++++++fsFile is+++++++', fsFile);
+//            ImageStore.insert(fsFile, function (err, fileObj) {
+//                if (err) {
+//                    throw new Meteor.Error(err);
+//                }
+
+//                console.log('----Adding----', fileObj._id);
+//                imagesArray.push('/cfs/files/ImageStore/' + fileObj._id);
+//            });
+//        }
+//        console.log('======== imageArray ==========', imagesArray);
+//        return imagesArray;
+//    }
+//});
+
+//getFiles = async (images) => {
+//    let imagesArray = [];
+//    for (let i = 0; i < images.length; i++) {
+//        //let fsFile = new FS.File(images[i])
+//        await ImageStore.insert(images[i], function (err, fileObj) {
+//            if (err) {
+//                throw new Meteor.Error(err);
+//            }
+//            imagesArray.push('/cfs/files/ImageStore/' + fileObj._id);
+//        });
+//    }
+//    return imagesArray;
+//}
 
 
 

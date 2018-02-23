@@ -24,6 +24,7 @@ export default class Home extends Component {
     }
 
     renderPhotos = () => {
+        console.log('ttttttt====', this.state.photos);
             return this.state.photos.slice(0, 3).map((photo) => {
                 return (
                     <div key={photo._id}>
@@ -32,7 +33,7 @@ export default class Home extends Component {
                         <div className="container">
                             <div className="row">
                                   <div className="col-md-4">
-                        <img className="profile-photo" src={photo.image}/>
+                        <img className="profile-photo" src={photo.image[0]}/>
                                   </div>
                             </div>
                         </div>
