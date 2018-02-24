@@ -70,7 +70,10 @@ class AddPhoto extends Component {
             .then(() => {
                 let imageArray = [];
                 for (i = 0; i < image.length; i++){
-                    imageArray.push('/cfs/files/ImageStore/' + promises[i]._id);
+                    imageArray.push({
+                        original: '/cfs/files/ImageStore/' + promises[i]._id,
+                        thumbnail: '/cfs/files/ImageStore/' + promises[i]._id
+                    });
                 }
                 
                 Meteor.call('photos.insert',
@@ -91,6 +94,7 @@ class AddPhoto extends Component {
             .catch((e) => {
                 console.log('PROMISE ERROR', e);
             });
+        
     }
 
 

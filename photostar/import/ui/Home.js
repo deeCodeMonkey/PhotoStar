@@ -33,7 +33,7 @@ export default class Home extends Component {
                         <div className="container">
                             <div className="row">
                                   <div className="col-md-4">
-                        <img className="profile-photo" src={photo.image[0]}/>
+                        <img className="profile-photo" src={photo.image[0].original}/>
                                   </div>
                             </div>
                         </div>

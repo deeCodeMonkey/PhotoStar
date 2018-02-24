@@ -13,6 +13,7 @@
     "react-addons-pure-render-mixin": "^15.6.2",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.8",
+    "react-image-gallery": "^0.8.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "simpl-schema": "^1.4.2"

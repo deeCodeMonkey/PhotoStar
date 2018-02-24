@@ -99,9 +99,19 @@ Meteor.methods({
             },
             photoImages: {
                 type: Array,
+                minCount: 1,
+                maxCount: 10,
                 label: 'Image File(s) Array'
             },
             'photoImages.$': {
+                type: Object,
+                label: 'Image File(s)'
+            },
+            'photoImages.$.original': {
+                type: String,
+                label: 'Image File(s)'
+            },
+            'photoImages.$.thumbnail': {
                 type: String,
                 label: 'Image File(s)'
             },

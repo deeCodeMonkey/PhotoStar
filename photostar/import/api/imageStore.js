@@ -4,23 +4,17 @@ import { FS } from 'meteor/cfs:base-package';
 
 //image storage
 export const ImageStore = new FS.Collection("ImageStore", {
-    stores: [new FS.Store.GridFS("ImageStore")]
+    stores: [new FS.Store.GridFS("ImageStore")],
+    filter: {
+        allow: {
+            //any image extension
+            contentTypes: ['image/*']
+        },
+        onInvalid: function (message) {
+            console.log('Can only upload images.');
+        }
+    }
 });
-
-////image storage
-//export const ImageStore = new FS.Collection("ImageStore", {
-//    stores: [new FS.Store.GridFS("ImageStore")]
-//    //only allow image uploads
-//    //filter: {
-//    //    allow: {
-//    //        //any image extension
-//    //        contentTypes: ['image/*']
-//    //    },
-//    //    onInvalid: function (message) {
-//    //        console.log('Can only upload images.');
-//    //    }
-//    //}
-//});
 
 //permission to upload image
 if (Meteor.isServer) {

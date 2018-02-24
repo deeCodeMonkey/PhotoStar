@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import ImageGallery from 'react-image-gallery';
 
 import { Photos, reviewsCollection } from '../api/photos';
 
@@ -13,19 +14,9 @@ import ReviewItem from './ReviewItem';
 class PhotoReview extends Component {
 
     state = {
-        imageStatus: "Loading...",
         reviews: null,
         deleteConfirm: null
     };
-
-    handleImageLoaded = () => {
-        this.setState({ imageStatus: "loaded" });
-    }
-
-    handleImageErrored = () => {
-        this.setState({ imageStatus: "Loading..." });
-        window.location.reload();
-    }
 
     componentDidMount() {
         this.reviewsTracker = Tracker.autorun(() => {
@@ -55,29 +46,43 @@ class PhotoReview extends Component {
     }
 
     deletePhoto = () => {
-        
         clickDelete = () => {
             Meteor.call('photos.remove', this.props.match.params.photoId);
             this.props.history.push(`/photos/${Meteor.userId()}`);
-            }
+        }
 
         clickCancel = () => {
-             this.setState({ deleteConfirm: ''})
-            }
+            this.setState({ deleteConfirm: '' })
+        }
 
-        this.setState({ deleteConfirm:
+        this.setState({
+            deleteConfirm:
             <div>
-        <p>Are you sure to delete?</p>
-        <button type="button" onClick={clickDelete}>Yes</button>
-        <button type="button" onClick={clickCancel}>No</button>
+                <p>Are you sure to delete?</p>
+                <button type="button" onClick={clickDelete}>Yes</button>
+                <button type="button" onClick={clickCancel}>No</button>
             </div>
         });
 
     }
- 
+
+    renderImages = (photoImages) => {
+        return (
+            <div>
+                <ImageGallery items={photoImages} autoPlay={false} onImageError={this.handleImageErrored} />
+            </div>
+        );
+
+    }
+
+    handleImageErrored = () => {
+        //allow time for images to load into CFS storage
+        setTimeout(function () { window.location.reload() }, 1000);
+    }
+
 
     render() {
-        
+
         if (!this.props.photoProfile || !this.state.reviews) return null;
         const { _id, photoImages, name, description, reviews, category, userId, userEmail } = this.props.photoProfile;
 
@@ -95,17 +100,15 @@ class PhotoReview extends Component {
             }
         }
 
+
         return (
             <div className="container marg-t">
                 <div className="row product-row">
-                    <div className="col-md-6">
-                        <img className="profile-photo" src={photoImages[0]} onLoad={this.handleImageLoaded}
-                            onError={this.handleImageErrored} />
-                        {(this.state.imageStatus === "Loading...") ?
-                            <p>{this.state.imageStatus}</p> : ''}
+                    <div className="col-md-8">
+                        {this.renderImages(photoImages)}
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <h3 className="text-capitalize">{name}</h3>
                         <p>Category: {category}</p>
                         <p>Submitted by: {userEmail}</p>
@@ -125,7 +128,7 @@ class PhotoReview extends Component {
 
                         <Link to="/photos">Back</Link>
 
-                         {(Meteor.userId() && Meteor.userId() === userId && !this.state.deleteConfirm) ?
+                        {(Meteor.userId() && Meteor.userId() === userId && !this.state.deleteConfirm) ?
                             <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
                             : ''
                         }
