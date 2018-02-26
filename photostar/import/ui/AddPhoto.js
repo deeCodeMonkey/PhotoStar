@@ -39,6 +39,14 @@ class AddPhoto extends Component {
         })
     }
 
+    cloudinaryUpload = (e) => {
+        e.preventDefault();
+        const image = e.target.image.files;
+
+        Meteor.call('cloudinary.insert', ['http://cdn3-www.dogtime.com/assets/uploads/2011/01/file_23262_entlebucher-mountain-dog-300x189.jpg', 'https://i.ytimg.com/vi/43P7EEqjTDA/maxresdefault.jpg']);
+
+    }
+
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -75,7 +83,7 @@ class AddPhoto extends Component {
                         thumbnail: '/cfs/files/ImageStore/' + promises[i]._id
                     });
                 }
-                
+
                 Meteor.call('photos.insert',
                     name,
                     description,
@@ -94,7 +102,7 @@ class AddPhoto extends Component {
             .catch((e) => {
                 console.log('PROMISE ERROR', e);
             });
-        
+
     }
 
 
@@ -138,6 +146,14 @@ class AddPhoto extends Component {
                         <Link to="/photos" className="btn btn-photo-cancel">Cancel</Link>
                     </div>
                 </form>
+
+                <div>
+                    <form onSubmit={this.cloudinaryUpload} >
+                        Cloudinary
+                     <input type="file" name="image" id="image" multiple />
+                        <button>Add photo</button>
+                    </form>
+                </div>
             </div>
         );
     }

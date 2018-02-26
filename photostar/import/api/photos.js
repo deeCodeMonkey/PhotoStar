@@ -1,5 +1,6 @@
 ﻿import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
 import SimpleSchema from 'simpl-schema';
 //reactive client setup for aggregating in Mongodb
 import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
@@ -69,151 +70,149 @@ if (Meteor.isServer) {
             }],
             { clientCollection: "reviewsCollection" });
     });
-}
 
 
-//runs on server and client, will need to import to client and server 
-Meteor.methods({
-    'photos.insert': async function (name, description, category, photoImages, userId, userEmail) {
-        if (!this.userId) {
-            throw new Meteor.Error('Not authorized.');
-        }
 
-        //validate inputs
-        new SimpleSchema({
-            name: {
-                type: String,
-                min: 1,
-                max: 75,
-                label: 'Title of your image'
-            },
-            description: {
-                type: String,
-                min: 1,
-                label: 'Your image description'
-            },
-            category: {
-                type: String,
-                min: 1,
-                label: 'Category Of Image'
-            },
-            photoImages: {
-                type: Array,
-                minCount: 1,
-                maxCount: 10,
-                label: 'Image File(s) Array'
-            },
-            'photoImages.$': {
-                type: Object,
-                label: 'Image File(s)'
-            },
-            'photoImages.$.original': {
-                type: String,
-                label: 'Image File(s)'
-            },
-            'photoImages.$.thumbnail': {
-                type: String,
-                label: 'Image File(s)'
-            },
-            userId: {
-                type: String,
-                min: 1,
-                label: 'User ID'
-            },
-            userEmail: {
-                type: String,
-                regEx: SimpleSchema.RegEx.Email,
-                label: 'User Email'
+    Meteor.methods({
+        'photos.insert': async function (name, description, category, photoImages, userId, userEmail) {
+            if (!this.userId) {
+                throw new Meteor.Error('Not authorized.');
             }
-        }).validate({ name, description, category, photoImages, userId, userEmail });
 
-        let id = await Photos.insert({
-            name,
-            description,
-            category,
-            photoImages,
-            userId,
-            userEmail,
-            createdAt: new Date()
-        }, (error, result) => {
-            if (error) {
-                console.log('MongoDB ERROR:', error);
+            //validate inputs
+            new SimpleSchema({
+                name: {
+                    type: String,
+                    min: 1,
+                    max: 75,
+                    label: 'Title of your image'
+                },
+                description: {
+                    type: String,
+                    min: 1,
+                    label: 'Your image description'
+                },
+                category: {
+                    type: String,
+                    min: 1,
+                    label: 'Category Of Image'
+                },
+                photoImages: {
+                    type: Array,
+                    minCount: 1,
+                    maxCount: 10,
+                    label: 'Image File(s) Array'
+                },
+                'photoImages.$': {
+                    type: Object,
+                    label: 'Image File(s)'
+                },
+                'photoImages.$.original': {
+                    type: String,
+                    label: 'Image File(s)'
+                },
+                'photoImages.$.thumbnail': {
+                    type: String,
+                    label: 'Image File(s)'
+                },
+                userId: {
+                    type: String,
+                    min: 1,
+                    label: 'User ID'
+                },
+                userEmail: {
+                    type: String,
+                    regEx: SimpleSchema.RegEx.Email,
+                    label: 'User Email'
+                }
+            }).validate({ name, description, category, photoImages, userId, userEmail });
+
+            let id = await Photos.insert({
+                name,
+                description,
+                category,
+                photoImages,
+                userId,
+                userEmail,
+                createdAt: new Date()
+            }, (error, result) => {
+                if (error) {
+                    console.log('MongoDB ERROR:', error);
+                }
+                return result;
+            });
+            return id;
+        },
+
+
+        'photos.review.insert': function (photoId, rating, body, reviewCreatedAt, reviewedBy) {
+            if (!this.userId) {
+                throw new Meteor.Error('Not authorized.');
             }
-            return result;
-        });
-        return id;
-    },
+            new SimpleSchema({
+                photoId: {
+                    type: String,
+                    min: 1,
+                    label: 'Image ID'
+                },
+                rating: {
+                    type: Number,
+                    min: 1,
+                    label: 'Your rating'
+                },
+                body: {
+                    type: String,
+                    min: 1,
+                    max: 250,
+                    label: 'Your review comment'
+                },
+                reviewCreatedAt: {
+                    type: Date,
+                    min: 1,
+                    label: 'Reviewed date'
+                },
+                reviewedBy: {
+                    type: String,
+                    regEx: SimpleSchema.RegEx.Email,
+                    label: 'Reviewer Email'
+                }
+            }).validate({ photoId, rating, body, reviewCreatedAt, reviewedBy });
 
-
-    'photos.review.insert': function (photoId, rating, body, reviewCreatedAt, reviewedBy) {
-        if (!this.userId) {
-            throw new Meteor.Error('Not authorized.');
-        }
-        new SimpleSchema({
-            photoId: {
-                type: String,
-                min: 1,
-                label: 'Image ID'
-            },
-            rating: {
-                type: Number,
-                min: 1,
-                label: 'Your rating'
-            },
-            body: {
-                type: String,
-                min: 1,
-                max: 250,
-                label: 'Your review comment'
-            },
-            reviewCreatedAt: {
-                type: Date,
-                min: 1,
-                label: 'Reviewed date'
-            },
-            reviewedBy: {
-                type: String,
-                regEx: SimpleSchema.RegEx.Email,
-                label: 'Reviewer Email'
-            }
-        }).validate({ photoId, rating, body, reviewCreatedAt, reviewedBy });
-
-        Photos.update({
-            _id: photoId
-        }, {
-                $push: {
-                    reviews: {
-                        rating,
-                        body,
-                        reviewCreatedAt,
-                        reviewedBy
+            Photos.update({
+                _id: photoId
+            }, {
+                    $push: {
+                        reviews: {
+                            rating,
+                            body,
+                            reviewCreatedAt,
+                            reviewedBy
+                        }
                     }
                 }
+            );
+        },
+
+
+        'photos.remove': function (photoId) {
+            if (!this.userId) {
+                throw new Meteor.Error('Not authorized.');
             }
-        );
-    },
+            new SimpleSchema({
+                photoId: {
+                    type: String,
+                    min: 1,
+                    label: 'Image ID'
+                }
+            }).validate({ photoId });
 
-
-     'photos.remove': function (photoId) {
-        if (!this.userId) {
-            throw new Meteor.Error('Not authorized.');
+            Photos.remove({
+                _id: photoId
+            });
         }
-        new SimpleSchema({
-            photoId: {
-                type: String,
-                min: 1,
-                label: 'Image ID'
-            }
-        }).validate({ photoId });
+    });
 
-        Photos.remove({
-            _id: photoId
-        });
-    }
-});
-
-
-
+}
 
 
 

@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 
 import PhotoItem from './PhotoItem';
 import { clientReport } from '../api/photos';
@@ -23,39 +24,55 @@ export default class Home extends Component {
         });
     }
 
-    renderPhotos = () => {
-        console.log('ttttttt====', this.state.photos);
-            return this.state.photos.slice(0, 3).map((photo) => {
-                return (
-                    <div key={photo._id}>
-                        Rating count: {photo.ratingsCount}
-                        Rating Avg: {photo.averageRating}
-                        <div className="container">
-                            <div className="row">
-                                  <div className="col-md-4">
-                        <img className="profile-photo" src={photo.image[0].original}/>
-                                  </div>
-                            </div>
+    apiCall = () => {
+        Meteor.call('googleVisionAPI.label', 'https://res.cloudinary.com/dokmh3zii/image/upload/v1519661357/maxresdefault_akvwpm.jpg', function (err, res) {
+            console.log('===API res err', res, err);
+            console.log('===============label', res.responses[0].labelAnnotations[0].description);
+
+            res.responses[0].labelAnnotations.map((label) => {
+                console.log('===description==', label.description);
+            });
+        });
+        //console.log('===Meteor absoluteURL', Meteor.absoluteUrl('cfs/files/ImageStore/nFE5x5XGu6uTfjkb9'));
+    };
+
+
+renderPhotos = () => {
+    console.log('HOME=======', this.state.photos);
+    return this.state.photos.slice(0, 3).map((photo) => {
+        return (
+            <div key={photo._id}>
+                Rating count: {photo.ratingsCount}
+                Rating Avg: {photo.averageRating}
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <img className="profile-photo" src={photo.image[0].original} />
                         </div>
                     </div>
-                );
-            });
-    }
-
-
-
-    render() {
-
-        return (
-            <div>
-                <h3>Top 3 Photos</h3>
-                <h1>LANDING PAGE</h1>
-                <div className="container" >
-                    {this.renderPhotos()}
-
                 </div>
             </div>
         );
-    }
+    });
+}
+
+
+
+render() {
+
+    return (
+        <div>
+            <h3>Top 3 Photos</h3>
+            <h1>LANDING PAGE</h1>
+            <div className="container" >
+                {this.renderPhotos()}
+
+            </div>
+            <button onClick={this.apiCall}>API CALL</button>
+
+            
+        </div>
+    );
+}
 }
 
