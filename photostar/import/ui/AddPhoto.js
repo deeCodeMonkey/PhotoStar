@@ -2,6 +2,9 @@
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { FS } from 'meteor/cfs:base-package';
+import axios from 'axios';
+
+import { cloudinary_cloud_name, cloudinary_UPLOAD_PRESET } from '../config/keys';
 
 import { Photos } from '../api/photos';
 import { Categories } from '../api/categories';
@@ -39,11 +42,24 @@ class AddPhoto extends Component {
         })
     }
 
-    cloudinaryUpload = (e) => {
+    cloudinaryUpload = async (e) => {
         e.preventDefault();
-        const image = e.target.image.files;
+        const image = e.target.image.files[0];
 
-        Meteor.call('cloudinary.insert', ['http://cdn3-www.dogtime.com/assets/uploads/2011/01/file_23262_entlebucher-mountain-dog-300x189.jpg', 'https://i.ytimg.com/vi/43P7EEqjTDA/maxresdefault.jpg']);
+        let cloudinary_URL = `https://api.cloudinary.com/v1_1/${cloudinary_cloud_name}/image/upload`;
+
+        let formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', cloudinary_UPLOAD_PRESET);
+
+        let response = await axios.post(cloudinary_URL,
+            formData,
+        ).then(function (res) {
+            console.log('RESULT=============', res);
+        }).catch(function (err) {
+            console.log('ERROR===============', err);
+        });
+        return response;
 
     }
 
@@ -62,7 +78,7 @@ class AddPhoto extends Component {
 
         let promises = [];
         //obtain and add CFS image(s) into array for Photo collection insert
-        for (i = 0; i < image.length; i++){
+        for (i = 0; i < image.length; i++) {
             let fsFile = new FS.File(image[i]);
             promises.push(
                 ImageStore.insert(fsFile, function (err, fileObj) {
@@ -77,7 +93,7 @@ class AddPhoto extends Component {
         Promise.all(promises)
             .then(() => {
                 let imageArray = [];
-                for (i = 0; i < image.length; i++){
+                for (i = 0; i < image.length; i++) {
                     imageArray.push({
                         original: '/cfs/files/ImageStore/' + promises[i]._id,
                         thumbnail: '/cfs/files/ImageStore/' + promises[i]._id

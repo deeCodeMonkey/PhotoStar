@@ -1,4 +1,5 @@
 ﻿import cloudinary from 'cloudinary';
+import axios from 'axios';
 
 if (Meteor.isServer) {
 
@@ -39,6 +40,17 @@ if (Meteor.isServer) {
                 {
                     resource_type: "auto"
                 });
+        },
+        'cloudinary.insertOne': function (formData, url) {
+            var response = axios.post(url,
+                formData,
+            ).then(function (res) {
+                console.log('RESULT=============', res);
+            }).catch(function (err) {
+                console.log('ERROR===============', err);
+            });
+            return response;
+
         }
 
     })

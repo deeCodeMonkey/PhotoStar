@@ -1,5 +1,6 @@
 ﻿import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
+
 import { google_vision_api_key } from '../config/keys';
 
 if (Meteor.isServer) {
