@@ -80,11 +80,44 @@ class PhotoReview extends Component {
         setTimeout(function () { window.location.reload() }, 1000);
     }
 
+    addTags = async (photoImages, galleryId) => {
+        let promises = [];
+
+        for (let i = 0; i < photoImages.length; i++) {
+            let url = photoImages[i].original;
+            promises.push(
+                new Promise((resolve, reject) => {
+                    Meteor.call('googleVisionAPI.label', url, function (err, res) {
+                        if (err) {
+                            console.log('===Google API error', err);
+                        }
+                        resolve(res.responses[0].labelAnnotations);
+                    });
+                })
+            )
+        }
+
+        Promise.all(promises)
+            .then((results) => {
+                console.log('PROMISES+==============', promises, '====', results);
+
+                let tags = [];
+                for (i = 0; i < results.length; i++) {
+                    results[i].map((label) => {
+                        tags.push(label.description);
+                    });
+                }
+                console.log('TAGs+==============', tags);
+                Meteor.call('googleVisionAPI.insertLabels', tags, galleryId)
+
+            });
+    }
+
 
     render() {
 
         if (!this.props.photoProfile || !this.state.reviews) return null;
-        const { _id, photoImages, name, description, reviews, category, userId, userEmail } = this.props.photoProfile;
+        const { _id, photoImages, name, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
         renderNotation = () => {
             if (!Meteor.userId()) {
@@ -156,6 +189,21 @@ class PhotoReview extends Component {
                         : <p className="marg-l">There are no ratings.</p>
                     }
                 </div>
+
+                <div className="row">
+                    <button onClick={() => { this.addTags(photoImages, _id) }}>Add Photo Tags</button>
+                    Display tags:
+                     {tags ?
+                        tags.map((tag, index) => {
+                            return (
+                                <h4 key={index}>{tag}===</h4>
+                            );
+                        })
+                        : ''
+                    }
+                </div>
+
+
             </div>
         );
     }

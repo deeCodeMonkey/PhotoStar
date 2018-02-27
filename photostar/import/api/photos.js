@@ -127,6 +127,7 @@ if (Meteor.isServer) {
                 }
             }).validate({ title, description, category, photoImages, userId, userEmail });
 
+            //photo gallery id
             let id = await Photos.insert({
                 title,
                 description,

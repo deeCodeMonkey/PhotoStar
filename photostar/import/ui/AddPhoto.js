@@ -54,12 +54,10 @@ class AddPhoto extends Component {
             await axios.post(cloudinary_URL,
                 formData,
             ).then(function (res) {
-                console.log('RESULT=============', res);
                 photosArray.push(res.data.secure_url);
-                console.log('PROMISES ARRAY=============', photosArray);
                 return photosArray;
             }).catch(function (err) {
-                console.log('ERROR===============', err);
+                console.log('ERROR', err);
             });
         }
         return photosArray;
@@ -72,17 +70,14 @@ class AddPhoto extends Component {
                 original: photoUrlArray[i],
                 thumbnail: photoUrlArray[i]
             });
-            console.log('==========PHOTO OBJ ARRAY', photoObjArray);
         }
         return photoObjArray;
     }
 
     addPhotos = async (image) => {
         const photoUrlArray = await this.cloudinaryUpload(image);
-        console.log('ADD PHTOS FUNCTION----', photoObjArray);
 
         const photoObjArray = this.cloudinaryImageObject(photoUrlArray);
-        console.log('ADD PHTOS FUNCTION----', photoObjArray);
 
         return photoObjArray;
     }
@@ -106,8 +101,7 @@ class AddPhoto extends Component {
             });
     }
 
-
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
 
         const userId = Meteor.userId();
@@ -164,13 +158,6 @@ class AddPhoto extends Component {
                     </div>
                 </form>
 
-                <div>
-                    <form onSubmit={this.addPhotos} >
-                        Cloudinary========================================cloudinaryUpload
-                     <input type="file" name="image" id="image" multiple />
-                        <button>Add photo</button>
-                    </form>
-                </div>
             </div>
         );
     }

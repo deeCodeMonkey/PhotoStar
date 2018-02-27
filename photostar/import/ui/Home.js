@@ -25,7 +25,7 @@ export default class Home extends Component {
     }
 
     apiCall = () => {
-        Meteor.call('googleVisionAPI.label', 'https://res.cloudinary.com/dokmh3zii/image/upload/v1519661357/maxresdefault_akvwpm.jpg', function (err, res) {
+        Meteor.call('googleVisionAPI.label', 'https://res.cloudinary.com/dokmh3zii/image/upload/v1519755239/ohudjh4evxjag2jlamba.jpg', function (err, res) {
             console.log('===API res err', res, err);
             console.log('===============label', res.responses[0].labelAnnotations[0].description);
 
@@ -33,7 +33,6 @@ export default class Home extends Component {
                 console.log('===description==', label.description);
             });
         });
-        //console.log('===Meteor absoluteURL', Meteor.absoluteUrl('cfs/files/ImageStore/nFE5x5XGu6uTfjkb9'));
     };
 
 
