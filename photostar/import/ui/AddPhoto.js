@@ -42,25 +42,68 @@ class AddPhoto extends Component {
         })
     }
 
-    cloudinaryUpload = async (e) => {
-        e.preventDefault();
-        const image = e.target.image.files[0];
-
+    cloudinaryUpload = async (image) => {
         let cloudinary_URL = `https://api.cloudinary.com/v1_1/${cloudinary_cloud_name}/image/upload`;
 
-        let formData = new FormData();
-        formData.append('file', image);
-        formData.append('upload_preset', cloudinary_UPLOAD_PRESET);
+        let photosArray = [];
+        for (i = 0; i < image.length; i++) {
+            let formData = new FormData();
+            formData.append('file', image[i]);
+            formData.append('upload_preset', cloudinary_UPLOAD_PRESET);
 
-        let response = await axios.post(cloudinary_URL,
-            formData,
-        ).then(function (res) {
-            console.log('RESULT=============', res);
-        }).catch(function (err) {
-            console.log('ERROR===============', err);
-        });
-        return response;
+            await axios.post(cloudinary_URL,
+                formData,
+            ).then(function (res) {
+                console.log('RESULT=============', res);
+                photosArray.push(res.data.secure_url);
+                console.log('PROMISES ARRAY=============', photosArray);
+                return photosArray;
+            }).catch(function (err) {
+                console.log('ERROR===============', err);
+            });
+        }
+        return photosArray;
+    }
 
+    cloudinaryImageObject = (photoUrlArray) => {
+        let photoObjArray = [];
+        for (i = 0; i < photoUrlArray.length; i++) {
+            photoObjArray.push({
+                original: photoUrlArray[i],
+                thumbnail: photoUrlArray[i]
+            });
+            console.log('==========PHOTO OBJ ARRAY', photoObjArray);
+        }
+        return photoObjArray;
+    }
+
+    addPhotos = async (image) => {
+        const photoUrlArray = await this.cloudinaryUpload(image);
+        console.log('ADD PHTOS FUNCTION----', photoObjArray);
+
+        const photoObjArray = this.cloudinaryImageObject(photoUrlArray);
+        console.log('ADD PHTOS FUNCTION----', photoObjArray);
+
+        return photoObjArray;
+    }
+
+    createGallery = async (title, description, category, userId, userEmail, image) => {
+        const imageArray = await this.addPhotos(image);
+
+        Meteor.call('photos.insert',
+            title,
+            description,
+            category,
+            imageArray,
+            userId,
+            userEmail,
+            (error, result) => {
+                if (error) {
+                    this.setState({ errorMessage: error.reason });
+                } else {
+                    this.props.history.push(`/review/${result}`);
+                }
+            });
     }
 
 
@@ -70,55 +113,13 @@ class AddPhoto extends Component {
         const userId = Meteor.userId();
         const userEmail = Meteor.user().emails[0].address;
 
-        const name = e.target.name.value;
+        const title = e.target.title.value;
         const description = e.target.description.value;
         const category = e.target.category.value;
 
         const image = e.target.image.files;
 
-        let promises = [];
-        //obtain and add CFS image(s) into array for Photo collection insert
-        for (i = 0; i < image.length; i++) {
-            let fsFile = new FS.File(image[i]);
-            promises.push(
-                ImageStore.insert(fsFile, function (err, fileObj) {
-                    if (err) {
-                        reject(console.log(Meteor.Error(err)));
-                    }
-                    resolve(fileObj);
-                })
-            );
-        }
-
-        Promise.all(promises)
-            .then(() => {
-                let imageArray = [];
-                for (i = 0; i < image.length; i++) {
-                    imageArray.push({
-                        original: '/cfs/files/ImageStore/' + promises[i]._id,
-                        thumbnail: '/cfs/files/ImageStore/' + promises[i]._id
-                    });
-                }
-
-                Meteor.call('photos.insert',
-                    name,
-                    description,
-                    category,
-                    imageArray,
-                    userId,
-                    userEmail,
-                    (error, result) => {
-                        if (error) {
-                            this.setState({ errorMessage: error.reason });
-                        } else {
-                            this.props.history.push(`/review/${result}`);
-                        }
-                    });
-            })
-            .catch((e) => {
-                console.log('PROMISE ERROR', e);
-            });
-
+        this.createGallery(title, description, category, userId, userEmail, image);
     }
 
 
@@ -136,7 +137,7 @@ class AddPhoto extends Component {
                 <form onSubmit={this.onSubmit} className="add_product">
                     <div className="form-group">
                         <label>Title</label>
-                        <input type="text" name="name" className="form-control" placeholder="Photo Title" />
+                        <input type="text" name="title" className="form-control" placeholder="Photo Title" />
                     </div>
 
                     <div className="form-group">
@@ -164,8 +165,8 @@ class AddPhoto extends Component {
                 </form>
 
                 <div>
-                    <form onSubmit={this.cloudinaryUpload} >
-                        Cloudinary
+                    <form onSubmit={this.addPhotos} >
+                        Cloudinary========================================cloudinaryUpload
                      <input type="file" name="image" id="image" multiple />
                         <button>Add photo</button>
                     </form>

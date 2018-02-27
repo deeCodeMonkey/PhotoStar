@@ -1,57 +1,37 @@
 ﻿import cloudinary from 'cloudinary';
 import axios from 'axios';
 
+import { cloudinary_cloud_name, cloudinary_UPLOAD_PRESET } from '../config/keys';
+
 if (Meteor.isServer) {
 
     Meteor.methods({
-        'cloudinary.insert': function (localImagePathArray) {
-            let multipleUpload = new Promise(async (resolve, reject) => {
-                let upload_len = localImagePathArray.length;
-                let upload_res = new Array();
+        //'cloudinary.insert': async function (image) {
+        //    let cloudinary_URL = `https://api.cloudinary.com/v1_1/${cloudinary_cloud_name}/image/upload`;
+        //    console.log('ran=========================');
+        //    let photosArray = [];
+        //    for (i = 0; i < image.length; i++) {
+        //        let formData = new FormData();
+        //        formData.append('file', image[i]);
+        //        formData.append('upload_preset', cloudinary_UPLOAD_PRESET);
 
-                for (let i = 0; i < upload_len; i++) {
-                    let filePath = localImagePathArray[i];
-                    await cloudinary.v2.uploader.upload(filePath, (error, result) => {
-                        if (upload_res.length === upload_len) {
-                            /* resolve promise after upload is complete */
-                            resolve(upload_res)
-                        } else if (result) {
-                            upload_res.push(result.public_id);
-                            console.log('PROMISE RESOLVE===========', result.public_id, '****************', result);
-                        } else if (error) {
-                            console.log('PROMISE ERROR===========', error)
-                            reject(error)
-                        }
+        //        await axios.post(cloudinary_URL,
+        //            formData,
+        //        ).then(function (res) {
+        //            console.log('RESULT=============', res);
+        //            photosArray.push(res.data.secure_url);
+        //            console.log('PROMISES ARRAY=============', photosArray);
+        //            return photosArray;
+        //        }).catch(function (err) {
+        //            console.log('ERROR===============', err);
+        //        });
+        //    }
+        //    return photosArray;
+        //}
 
-                    })
 
-                }
-            })
-                .then((result) => result)
-                .catch((error) => error);
-        },
-        'cloudinary.upload': function (localImagePath) {
-            cloudinary.v2.uploader.upload(localImagePath, { use_filename: true }, function (error, result) {
-                if (error) {
-                    console.log(error);
-                }
-                console.log(result);
-            },
-                {
-                    resource_type: "auto"
-                });
-        },
-        'cloudinary.insertOne': function (formData, url) {
-            var response = axios.post(url,
-                formData,
-            ).then(function (res) {
-                console.log('RESULT=============', res);
-            }).catch(function (err) {
-                console.log('ERROR===============', err);
-            });
-            return response;
 
-        }
+
 
     })
 }

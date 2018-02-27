@@ -74,18 +74,18 @@ if (Meteor.isServer) {
 
 
     Meteor.methods({
-        'photos.insert': async function (name, description, category, photoImages, userId, userEmail) {
+        'photos.insert': async function (title, description, category, photoImages, userId, userEmail) {
             if (!this.userId) {
                 throw new Meteor.Error('Not authorized.');
             }
 
             //validate inputs
             new SimpleSchema({
-                name: {
+                title: {
                     type: String,
                     min: 1,
                     max: 75,
-                    label: 'Title of your image'
+                    label: 'Title of your images'
                 },
                 description: {
                     type: String,
@@ -125,10 +125,10 @@ if (Meteor.isServer) {
                     regEx: SimpleSchema.RegEx.Email,
                     label: 'User Email'
                 }
-            }).validate({ name, description, category, photoImages, userId, userEmail });
+            }).validate({ title, description, category, photoImages, userId, userEmail });
 
             let id = await Photos.insert({
-                name,
+                title,
                 description,
                 category,
                 photoImages,
@@ -209,9 +209,74 @@ if (Meteor.isServer) {
             Photos.remove({
                 _id: photoId
             });
-        }
-    });
+        },
+   
 
+
+    //'photos.insertPhotosOnly': async function (photoImages, userId, userEmail) {
+    //    if (!this.userId) {
+    //        throw new Meteor.Error('Not authorized.');
+    //    } 
+   
+    //    //validate inputs
+    //    new SimpleSchema({
+    //        photoImages: {
+    //            type: Array,
+    //            minCount: 1,
+    //            maxCount: 10,
+    //            label: 'Image File(s) Array'
+    //        },
+    //        'photoImages.$': {
+    //            type: Object,
+    //            label: 'Image File(s)'
+    //        },
+    //        'photoImages.$.original': {
+    //            type: String,
+    //            label: 'Image File(s)'
+    //        },
+    //        'photoImages.$.thumbnail': {
+    //            type: String,
+    //            label: 'Image File(s)'
+    //        },
+    //        userId: {
+    //            type: String,
+    //            min: 1,
+    //            label: 'User ID'
+    //        },
+    //        userEmail: {
+    //            type: String,
+    //            regEx: SimpleSchema.RegEx.Email,
+    //            label: 'User Email'
+    //        }
+    //    }).validate({ photoImages, userId, userEmail });
+
+    //    if (Photos.findOne({ _id: userId })) {
+    //        let id = await Photos.insert({ _id: userId },{
+    //            photoImages,
+    //        }, (error, result) => {
+    //            if (error) {
+    //                console.log('MongoDB ERROR:', error);
+    //            }
+    //            return result;
+    //        });
+    //        return id;
+    //    } else {
+    //        let id = await Photos.insert({
+    //            photoImages,
+    //            userId,
+    //            userEmail,
+    //            createdAt: new Date()
+    //        }, (error, result) => {
+    //            if (error) {
+    //                console.log('MongoDB ERROR:', error);
+    //            }
+    //            return result;
+    //        });
+    //        return id;
+    //    }
+    //}
+
+    });
 }
 
 
