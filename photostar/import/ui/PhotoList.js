@@ -5,6 +5,7 @@ import { Tracker } from 'meteor/tracker';
 import { Photos } from '../api/photos';
 
 import PhotoItem from './PhotoItem';
+import SearchBar from './partials/SearchBar';
 
 export default class PhotoList extends Component {
 
@@ -47,6 +48,7 @@ export default class PhotoList extends Component {
 
         return (
             <div>
+                <SearchBar/>
                 <h3>{
                     this.state.category ? this.state.category : 'All' 
                         } Photos</h3>

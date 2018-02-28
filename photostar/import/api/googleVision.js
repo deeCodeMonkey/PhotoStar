@@ -9,7 +9,6 @@ import { Photos } from './photos';
 if (Meteor.isServer) {
 
     Meteor.methods({
-        //synchronous method
         'googleVisionAPI.label': function (imageUri) {
             console.log('Method.googleVision.api for', imageUri);
             var apiUrl = 'https://vision.googleapis.com/v1/images:annotate?key=' + google_vision_api_key;
@@ -38,7 +37,6 @@ if (Meteor.isServer) {
             return response;
         },
         'googleVisionAPI.insertLabels': function (tags, galleryId) {
-            console.log('METHOD CALLED', tags, 'GALLERY ID==', galleryId);
             //validate inputs
             new SimpleSchema({
                 tags: {
@@ -48,6 +46,7 @@ if (Meteor.isServer) {
                 },
                 'tags.$': {
                     type: String,
+                    min: 1,
                     label: 'Individual Tags'
                 }
             }).validate({ tags });

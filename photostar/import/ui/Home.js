@@ -2,6 +2,7 @@
 import { Meteor } from 'meteor/meteor';
 
 import PhotoItem from './PhotoItem';
+import SearchBar from './partials/SearchBar';
 import { clientReport } from '../api/photos';
 
 import { avgReview, fetchClientReport } from '../helpers/index';
@@ -24,16 +25,7 @@ export default class Home extends Component {
         });
     }
 
-    apiCall = () => {
-        Meteor.call('googleVisionAPI.label', 'https://res.cloudinary.com/dokmh3zii/image/upload/v1519755239/ohudjh4evxjag2jlamba.jpg', function (err, res) {
-            console.log('===API res err', res, err);
-            console.log('===============label', res.responses[0].labelAnnotations[0].description);
-
-            res.responses[0].labelAnnotations.map((label) => {
-                console.log('===description==', label.description);
-            });
-        });
-    };
+   
 
 
 renderPhotos = () => {
@@ -67,7 +59,8 @@ render() {
                 {this.renderPhotos()}
 
             </div>
-            <button onClick={this.apiCall}>API CALL</button>
+
+           <SearchBar/>
 
             
         </div>

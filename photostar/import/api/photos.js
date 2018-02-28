@@ -100,7 +100,7 @@ if (Meteor.isServer) {
                 photoImages: {
                     type: Array,
                     minCount: 1,
-                    maxCount: 10,
+                    maxCount: 6,
                     label: 'Image File(s) Array'
                 },
                 'photoImages.$': {
@@ -210,72 +210,7 @@ if (Meteor.isServer) {
             Photos.remove({
                 _id: photoId
             });
-        },
-   
-
-
-    //'photos.insertPhotosOnly': async function (photoImages, userId, userEmail) {
-    //    if (!this.userId) {
-    //        throw new Meteor.Error('Not authorized.');
-    //    } 
-   
-    //    //validate inputs
-    //    new SimpleSchema({
-    //        photoImages: {
-    //            type: Array,
-    //            minCount: 1,
-    //            maxCount: 10,
-    //            label: 'Image File(s) Array'
-    //        },
-    //        'photoImages.$': {
-    //            type: Object,
-    //            label: 'Image File(s)'
-    //        },
-    //        'photoImages.$.original': {
-    //            type: String,
-    //            label: 'Image File(s)'
-    //        },
-    //        'photoImages.$.thumbnail': {
-    //            type: String,
-    //            label: 'Image File(s)'
-    //        },
-    //        userId: {
-    //            type: String,
-    //            min: 1,
-    //            label: 'User ID'
-    //        },
-    //        userEmail: {
-    //            type: String,
-    //            regEx: SimpleSchema.RegEx.Email,
-    //            label: 'User Email'
-    //        }
-    //    }).validate({ photoImages, userId, userEmail });
-
-    //    if (Photos.findOne({ _id: userId })) {
-    //        let id = await Photos.insert({ _id: userId },{
-    //            photoImages,
-    //        }, (error, result) => {
-    //            if (error) {
-    //                console.log('MongoDB ERROR:', error);
-    //            }
-    //            return result;
-    //        });
-    //        return id;
-    //    } else {
-    //        let id = await Photos.insert({
-    //            photoImages,
-    //            userId,
-    //            userEmail,
-    //            createdAt: new Date()
-    //        }, (error, result) => {
-    //            if (error) {
-    //                console.log('MongoDB ERROR:', error);
-    //            }
-    //            return result;
-    //        });
-    //        return id;
-    //    }
-    //}
+        }
 
     });
 }

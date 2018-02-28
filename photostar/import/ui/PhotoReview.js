@@ -76,7 +76,7 @@ class PhotoReview extends Component {
     }
 
     handleImageErrored = () => {
-        //allow time for images to load into CFS storage
+        //allow time for images to load 
         setTimeout(function () { window.location.reload() }, 1000);
     }
 
@@ -99,7 +99,6 @@ class PhotoReview extends Component {
 
         Promise.all(promises)
             .then((results) => {
-                console.log('PROMISES+==============', promises, '====', results);
 
                 let tags = [];
                 for (i = 0; i < results.length; i++) {
@@ -107,9 +106,11 @@ class PhotoReview extends Component {
                         tags.push(label.description);
                     });
                 }
-                console.log('TAGs+==============', tags);
-                Meteor.call('googleVisionAPI.insertLabels', tags, galleryId)
-
+                //remove duplicate tags in array
+                let uniqTags = Array.from(new Set(tags))
+                //limit number of tags to 25
+                let finalTags = uniqTags.slice(0, 25);
+                Meteor.call('googleVisionAPI.insertLabels', finalTags, galleryId);
             });
     }
 
