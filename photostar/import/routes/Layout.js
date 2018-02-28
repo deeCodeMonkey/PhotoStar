@@ -36,7 +36,7 @@ export const routes = (
 
                                 <Route path="/photos/:userId/add" component={AddPhoto} />
                                 <Route path="/photos/:userId" component={MyPhotos} />
-                                <Route path="/photos" component={PhotoList} />
+                                {/*<Route path="/photos" component={PhotoList} />*/}
 
                                 <Route exact path="/" component={Home} />
 

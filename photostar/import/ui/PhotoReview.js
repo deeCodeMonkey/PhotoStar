@@ -116,7 +116,7 @@ class PhotoReview extends Component {
 
 
     render() {
-
+        //console.log('=======PROPS=========', this.props);
         if (!this.props.photoProfile || !this.state.reviews) return null;
         const { _id, photoImages, name, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
@@ -160,8 +160,8 @@ class PhotoReview extends Component {
 
                         {renderNotation()}
 
-                        <Link to="/photos">Back</Link>
-
+                        <button onClick={() => { this.props.history.goBack() }}>Go Back</button>
+                       
                         {(Meteor.userId() && Meteor.userId() === userId && !this.state.deleteConfirm) ?
                             <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
                             : ''
@@ -191,18 +191,21 @@ class PhotoReview extends Component {
                     }
                 </div>
 
-                <div className="row">
-                    <button onClick={() => { this.addTags(photoImages, _id) }}>Add Photo Tags</button>
-                    Display tags:
+                {(Meteor.userId() && Meteor.userId() === userId) ?
+                    <div className="row">
+
+                        <button onClick={() => { this.addTags(photoImages, _id) }}>Add Photo Tags</button>
+                        Display tags:
                      {tags ?
-                        tags.map((tag, index) => {
-                            return (
-                                <h4 key={index}>{tag}===</h4>
-                            );
-                        })
-                        : ''
-                    }
-                </div>
+                            tags.map((tag, index) => {
+                                return (
+                                    <h4 key={index}>{tag}===</h4>
+                                );
+                            })
+                            : ''
+                        }
+                    </div>
+                    : ''}
 
 
             </div>
@@ -214,7 +217,7 @@ class PhotoReview extends Component {
 export default createContainer((props) => {
     Meteor.subscribe('allPhotos');
     return {
-        photoProfile: Photos.findOne({ _id: props.match.params.photoId })
+        photoProfile: Photos.findOne({ _id: props.match.params.photoId }),
     }
 }, PhotoReview);
 

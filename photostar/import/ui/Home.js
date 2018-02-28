@@ -2,7 +2,6 @@
 import { Meteor } from 'meteor/meteor';
 
 import PhotoItem from './PhotoItem';
-import SearchBar from './partials/SearchBar';
 import { clientReport } from '../api/photos';
 
 import { avgReview, fetchClientReport } from '../helpers/index';
@@ -59,8 +58,6 @@ render() {
                 {this.renderPhotos()}
 
             </div>
-
-           <SearchBar/>
 
             
         </div>
