@@ -210,6 +210,50 @@ if (Meteor.isServer) {
             Photos.remove({
                 _id: photoId
             });
+        }, 
+        'photos.removeTag': function (tagKeyword, photoId) {
+            if (!this.userId) {
+                throw new Meteor.Error('Not authorized.');
+            }
+            new SimpleSchema({
+                photoId: {
+                    type: String,
+                    min: 1,
+                    label: 'Image ID'
+                },
+                tagKeyword: {
+                    type: String,
+                    min: 1,
+                    label: 'Tag Keyword'
+                }
+            }).validate({ photoId, tagKeyword });
+
+            Photos.update(
+                { _id: photoId },
+                { $pull: { 'tags': tagKeyword } }
+            );
+        },
+        'photos.addTag': function (tagKeyword, photoId) {
+            if (!this.userId) {
+                throw new Meteor.Error('Not authorized.');
+            }
+            new SimpleSchema({
+                photoId: {
+                    type: String,
+                    min: 1,
+                    label: 'Image ID'
+                },
+                tagKeyword: {
+                    type: String,
+                    min: 1,
+                    label: 'Tag Keyword'
+                }
+            }).validate({ photoId, tagKeyword });
+
+            Photos.update(
+                { _id: photoId },
+                { $push: { 'tags': tagKeyword } }
+            );
         }
 
     });

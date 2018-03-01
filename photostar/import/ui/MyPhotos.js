@@ -38,13 +38,17 @@ export default class MyPhotos extends Component {
     }
 
     render() {
-
+        
         return (
             <div>
                 <h3>My Photos</h3>
-                <div className="container" >
-                    {this.renderPhotos()}
-                </div>
+                {this.state.photos.length ?
+                    <div className="container" >
+                        {this.renderPhotos()}
+                    </div>
+                    : 'You have no photos! Add one now!'
+                }
+                
             </div>
         );
     }

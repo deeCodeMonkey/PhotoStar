@@ -1,0 +1,122 @@
+﻿import React, { Component } from 'react';
+
+class PhotoReviewTags extends Component {
+
+    state = {
+        isHovered: false
+    }
+
+    handleEnter = () => {
+        this.setState({ isHovered: true });
+    }
+
+    handleLeave = () => {
+        this.setState({ isHovered: false });
+    }
+
+    addGoogleVisionTags = async (photoImages, galleryId) => {
+        let promises = [];
+
+        for (let i = 0; i < photoImages.length; i++) {
+            let url = photoImages[i].original;
+            promises.push(
+                new Promise((resolve, reject) => {
+                    Meteor.call('googleVisionAPI.label', url, function (err, res) {
+                        if (err) {
+                            console.log('===Google API error', err);
+                        }
+                        resolve(res.responses[0].labelAnnotations);
+                    });
+                })
+            )
+        }
+
+        Promise.all(promises)
+            .then((results) => {
+
+                let tags = [];
+                for (i = 0; i < results.length; i++) {
+                    results[i].map((label) => {
+                        tags.push(label.description);
+                    });
+                }
+                //remove duplicate tags in array
+                let uniqTags = Array.from(new Set(tags))
+                //limit number of tags to 25
+                let finalTags = uniqTags.slice(0, 25);
+                Meteor.call('googleVisionAPI.insertLabels', finalTags, galleryId);
+            });
+    }
+
+    addTag = (e, photoId) => {
+        e.preventDefault();
+        let tagKeyword = e.target.newTag.value;
+
+        Meteor.call('photos.addTag', tagKeyword, photoId, function (err, res) {
+            if (err) {
+                console.log('====ERROR', err);
+            }
+        });
+        e.target.newTag.value = '';
+    }
+
+    deleteTag = (tagKeyword, photoId) => {
+        Meteor.call('photos.removeTag', tagKeyword, photoId, function (err, res) {
+            if (err) {
+                console.log('====ERROR', err);
+            }
+        });
+    }
+
+    displayTagInput = (loggedIn, isCurrentUser, userId, tags, photoId, addTag) => {
+        if (isCurrentUser(loggedIn, userId) && loggedIn && tags.length < 25) {
+            return (
+                <form onSubmit={(e) => { addTag(e, photoId) }}>
+                    <input type="text" name="newTag" className="form-control" placeholder="enter a tag"/>
+                    <button className="fa fa-plus"></button>
+                </form>
+            );
+        }
+    }
+
+    render() {
+       
+        return (
+            <div>
+                {( this.props.isCurrentUser(this.props.loggedIn, this.props.userId) && !this.props.tags) ?
+                    <button onClick={() => { this.addGoogleVisionTags(this.props.photoImages, this.props.photoId) }}>Add Photo Tags</button>
+                    : ''}
+
+                <div className="row">
+
+                    {this.props.tags ?
+                        this.props.tags.map((tag, index) => {
+                            return (
+                                <div key={index}>
+                                    <a className="a-to-text"
+                                        onMouseEnter={this.handleEnter}
+                                        onMouseLeave={this.handleLeave}>
+                                        {tag}
+                                        {
+                                            (this.state.isHovered && this.props.isCurrentUser(this.props.loggedIn, this.props.userId)) ?
+                                                <span className="fa fa-remove" onClick={() => { this.deleteTag(tag, this.props.photoId) }}></span>
+                                                : ''
+                                        }
+                                    </a>
+
+                                </div>);
+                        })
+                        : 'There are no tags.'
+                    }
+                </div>
+                {this.props.tags ?
+                    <div>{this.displayTagInput(this.props.loggedIn, this.props.isCurrentUser, this.props.userId, this.props.tags, this.props.photoId, this.addTag)}</div>
+                    : ''}
+            </div>
+        );
+    }
+}
+
+export default PhotoReviewTags;
+
+

@@ -29,7 +29,7 @@ export const routes = (
                         <div className="col-md-9">
                             <Switch>
 
-                                <Route path="/review/add/:photoName/:photoId" component={AddReview} />
+                                <Route path="/review/add/:photoTitle/:photoId" component={AddReview} />
                                 <Route path="/review/:photoId" component={PhotoReview} />
 
                                 <Route path="/categories/:category" component={PhotoList} />

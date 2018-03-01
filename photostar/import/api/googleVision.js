@@ -42,6 +42,8 @@ if (Meteor.isServer) {
                 tags: {
                     type: Array,
                     min: 1,
+                    minCount: 1,
+                    maxCount: 25,
                     label: 'Tags Array'
                 },
                 'tags.$': {
@@ -60,7 +62,6 @@ if (Meteor.isServer) {
                     if (error) {
                         console.log('MongoDB ERROR:', error);
                     }
-                    console.log('TAGS ADDED', result);
                 });
         }
 

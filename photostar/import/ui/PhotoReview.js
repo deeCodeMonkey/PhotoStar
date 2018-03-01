@@ -9,13 +9,15 @@ import { Photos, reviewsCollection } from '../api/photos';
 import { avgReview, fetchClientReport } from '../helpers/index';
 
 import ReviewItem from './ReviewItem';
+import PhotoReviewTags from './PhotoReviewTags';
 
 
 class PhotoReview extends Component {
 
     state = {
         reviews: null,
-        deleteConfirm: null
+        deleteConfirm: null,
+        loggedIn: false
     };
 
     componentDidMount() {
@@ -23,7 +25,17 @@ class PhotoReview extends Component {
             //reactive client setup for aggregating in Mongodb
             Meteor.subscribe('reviewsList', this.props.match.params.photoId);
             const results = fetchClientReport(reviewsCollection);
-            this.setState({ reviews: results })
+            this.setState({ reviews: results });
+
+            //track logging in and out Meteor state changes
+            if (Meteor.userId()) {
+                console.log('Logged in photo review');
+                this.setState({ loggedIn: true });
+            } else {
+                console.log('Logged out photo review');
+                this.setState({ loggedIn: false });
+            }
+
         });
     }
 
@@ -76,64 +88,42 @@ class PhotoReview extends Component {
     }
 
     handleImageErrored = () => {
-        //allow time for images to load 
+        //allow time for images to load and reload IF needed 
         setTimeout(function () { window.location.reload() }, 1000);
     }
 
-    addTags = async (photoImages, galleryId) => {
-        let promises = [];
-
-        for (let i = 0; i < photoImages.length; i++) {
-            let url = photoImages[i].original;
-            promises.push(
-                new Promise((resolve, reject) => {
-                    Meteor.call('googleVisionAPI.label', url, function (err, res) {
-                        if (err) {
-                            console.log('===Google API error', err);
-                        }
-                        resolve(res.responses[0].labelAnnotations);
-                    });
-                })
-            )
+    //check if currently logged-in user is same userId of photo gallery presented
+    isCurrentUser = (loggedIn, userId) => {
+        if (loggedIn && Meteor.userId() === userId) {
+            return true;
         }
+        return false;
+    }
 
-        Promise.all(promises)
-            .then((results) => {
-
-                let tags = [];
-                for (i = 0; i < results.length; i++) {
-                    results[i].map((label) => {
-                        tags.push(label.description);
-                    });
-                }
-                //remove duplicate tags in array
-                let uniqTags = Array.from(new Set(tags))
-                //limit number of tags to 25
-                let finalTags = uniqTags.slice(0, 25);
-                Meteor.call('googleVisionAPI.insertLabels', finalTags, galleryId);
-            });
+    renderNotation = (loggedIn, isCurrentUser, userId, displayReviewButton) => {
+        if (!loggedIn) {
+            return <p>Log in to rate this photo, or submit your own photo!</p>;
+        }
+        else if (isCurrentUser(userId) && loggedIn) {
+            return <p>Note: You cannot rate your own photo.</p>
+        }
+        else if (!displayReviewButton() && loggedIn) {
+            return <p>Note: You cannot post more than one review per photo.</p>
+        } else {
+            return null;
+        }
     }
 
 
+
     render() {
-        //console.log('=======PROPS=========', this.props);
+
         if (!this.props.photoProfile || !this.state.reviews) return null;
-        const { _id, photoImages, name, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
-        renderNotation = () => {
-            if (!Meteor.userId()) {
-                return <p>Log in to rate this photo, or submit your own photo!</p>;
-            }
-            else if (Meteor.userId() && Meteor.userId() === userId) {
-                return <p>Note: You cannot rate your own photo.</p>
-            }
-            else if (!this.displayReviewButton()) {
-                return <p>Note: You cannot post more than one review per photo.</p>
-            } else {
-                return null;
-            }
-        }
+        const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
+        console.log('state====', this.state.loggedIn);
+        console.log('Is Current User', this.isCurrentUser(userId));
 
         return (
             <div className="container marg-t">
@@ -143,7 +133,7 @@ class PhotoReview extends Component {
                     </div>
 
                     <div className="col-md-4">
-                        <h3 className="text-capitalize">{name}</h3>
+                        <h3 className="text-capitalize">{title}</h3>
                         <p>Category: {category}</p>
                         <p>Submitted by: {userEmail}</p>
                         {reviews ?
@@ -153,20 +143,23 @@ class PhotoReview extends Component {
                         </p> : <p> No reviews. </p>
                         }
 
-                        {(Meteor.userId() && Meteor.userId() !== userId && this.displayReviewButton()) ?
-                            <Link to={`/review/add/${name}/${_id}`} className="btn btn-review ">Leave A Review</Link>
+                        {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
+                            <Link to={`/review/add/${title}/${_id}`} className="btn btn-review ">Leave A Review</Link>
                             : ''
                         }
 
-                        {renderNotation()}
+                        {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
 
-                        <button onClick={() => { this.props.history.goBack() }}>Go Back</button>
-                       
-                        {(Meteor.userId() && Meteor.userId() === userId && !this.state.deleteConfirm) ?
+                        {(this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && !this.state.deleteConfirm) ?
                             <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
                             : ''
                         }
                         {this.state.deleteConfirm}
+
+
+                        <div>
+                            <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
+                        </div>
 
                     </div>
                 </div>
@@ -191,21 +184,6 @@ class PhotoReview extends Component {
                     }
                 </div>
 
-                {(Meteor.userId() && Meteor.userId() === userId) ?
-                    <div className="row">
-
-                        <button onClick={() => { this.addTags(photoImages, _id) }}>Add Photo Tags</button>
-                        Display tags:
-                     {tags ?
-                            tags.map((tag, index) => {
-                                return (
-                                    <h4 key={index}>{tag}===</h4>
-                                );
-                            })
-                            : ''
-                        }
-                    </div>
-                    : ''}
 
 
             </div>
