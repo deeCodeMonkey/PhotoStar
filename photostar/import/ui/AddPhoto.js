@@ -1,14 +1,12 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { FS } from 'meteor/cfs:base-package';
 import axios from 'axios';
 
 import { cloudinary_cloud_name, cloudinary_UPLOAD_PRESET } from '../config/keys';
 
 import { Photos } from '../api/photos';
 import { Categories } from '../api/categories';
-import { ImageStore } from '../api/imageStore';
 
 class AddPhoto extends Component {
 
@@ -18,6 +16,7 @@ class AddPhoto extends Component {
     }
 
     componentWillMount() {
+        //component will not render if user not logged in
         Tracker.autorun(() => {
             if (!Meteor.user()) {
                 this.props.history.push('/')

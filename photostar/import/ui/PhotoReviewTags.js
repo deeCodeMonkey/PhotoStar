@@ -80,17 +80,19 @@ class PhotoReviewTags extends Component {
     }
 
     render() {
-       
+
+        const { loggedIn, userId, tags, photoImages, photoId, isCurrentUser } = this.props;
+
         return (
             <div>
-                {( this.props.isCurrentUser(this.props.loggedIn, this.props.userId) && !this.props.tags) ?
-                    <button onClick={() => { this.addGoogleVisionTags(this.props.photoImages, this.props.photoId) }}>Add Photo Tags</button>
+                {( this.props.isCurrentUser(loggedIn, userId) && !tags) ?
+                    <button onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>Add Photo Tags</button>
                     : ''}
 
                 <div className="row">
 
-                    {this.props.tags ?
-                        this.props.tags.map((tag, index) => {
+                    {tags ?
+                        tags.map((tag, index) => {
                             return (
                                 <div key={index}>
                                     <a className="a-to-text"
@@ -98,8 +100,8 @@ class PhotoReviewTags extends Component {
                                         onMouseLeave={this.handleLeave}>
                                         {tag}
                                         {
-                                            (this.state.isHovered && this.props.isCurrentUser(this.props.loggedIn, this.props.userId)) ?
-                                                <span className="fa fa-remove" onClick={() => { this.deleteTag(tag, this.props.photoId) }}></span>
+                                            (this.state.isHovered && isCurrentUser(loggedIn, userId)) ?
+                                                <span className="fa fa-remove" onClick={() => { this.deleteTag(tag, photoId) }}></span>
                                                 : ''
                                         }
                                     </a>
@@ -110,7 +112,7 @@ class PhotoReviewTags extends Component {
                     }
                 </div>
                 {this.props.tags ?
-                    <div>{this.displayTagInput(this.props.loggedIn, this.props.isCurrentUser, this.props.userId, this.props.tags, this.props.photoId, this.addTag)}</div>
+                    <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
                     : ''}
             </div>
         );

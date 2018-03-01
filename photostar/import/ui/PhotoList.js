@@ -18,7 +18,7 @@ export default class PhotoList extends Component {
         const photos = category !== 'All' ?
             Photos.find({ category }).fetch()
             : Photos.find({}, { sort: { createdAt: -1 } }).fetch();
-
+        //clear keywords search when change category
         this.setState({ photos, category, keywords: '' });
     }
 
@@ -36,7 +36,7 @@ export default class PhotoList extends Component {
         this.filterPhotos(nextProps.match.params.category);   
     }
 
-    //controlled input value by react state
+    //controlled input value by react state. input will clear when category selection changes
     handleKeywordsChange = (e) => {
         this.setState({ keywords: e.target.value });
     }

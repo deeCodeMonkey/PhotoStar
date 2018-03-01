@@ -27,7 +27,7 @@ class PhotoReview extends Component {
             const results = fetchClientReport(reviewsCollection);
             this.setState({ reviews: results });
 
-            //track logging in and out Meteor state changes
+            //track Meteor logging in-and-out by react state 
             if (Meteor.userId()) {
                 console.log('Logged in photo review');
                 this.setState({ loggedIn: true });
@@ -40,6 +40,7 @@ class PhotoReview extends Component {
     }
 
     componentWillUnmount() {
+        //clean up of data when user navigates from one gallery to another
         this.reviewsTracker.stop();
     }
 
@@ -68,6 +69,7 @@ class PhotoReview extends Component {
         }
 
         this.setState({
+            //display confirmation for deletion of gallery
             deleteConfirm:
             <div>
                 <p>Are you sure to delete?</p>
@@ -88,11 +90,11 @@ class PhotoReview extends Component {
     }
 
     handleImageErrored = () => {
-        //allow time for images to load and reload IF needed 
+        //allow time for images to load and reload, in case images errored
         setTimeout(function () { window.location.reload() }, 1000);
     }
 
-    //check if currently logged-in user is same userId of photo gallery presented
+    //check if currently logged-in user has same userId of photo gallery presented
     isCurrentUser = (loggedIn, userId) => {
         if (loggedIn && Meteor.userId() === userId) {
             return true;
@@ -104,7 +106,7 @@ class PhotoReview extends Component {
         if (!loggedIn) {
             return <p>Log in to rate this photo, or submit your own photo!</p>;
         }
-        else if (isCurrentUser(userId) && loggedIn) {
+        else if (isCurrentUser(loggedIn, userId) && loggedIn) {
             return <p>Note: You cannot rate your own photo.</p>
         }
         else if (!displayReviewButton() && loggedIn) {
@@ -117,13 +119,13 @@ class PhotoReview extends Component {
 
 
     render() {
-
+        //ensure data from both are available before rendering
         if (!this.props.photoProfile || !this.state.reviews) return null;
 
         const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
-        console.log('state====', this.state.loggedIn);
-        console.log('Is Current User', this.isCurrentUser(userId));
+        console.log('state====PhotoReview', this.state.loggedIn);
+        console.log('Is Current User====PhotoReview', this.isCurrentUser(userId));
 
         return (
             <div className="container marg-t">

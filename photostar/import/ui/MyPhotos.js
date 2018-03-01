@@ -13,6 +13,7 @@ export default class MyPhotos extends Component {
     }
 
     componentWillMount() {
+         //component will not render if user not logged in
         Tracker.autorun(() => {
             if (!Meteor.user()) {
                 this.props.history.push('/')

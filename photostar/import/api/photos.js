@@ -1,4 +1,6 @@
-﻿import { Mongo } from 'meteor/mongo';
+﻿//'photoId' is the photo gallery id
+
+import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import SimpleSchema from 'simpl-schema';
@@ -11,7 +13,6 @@ export const Photos = new Mongo.Collection('photos');
 //client subset of Photos collection
 export const clientReport = new Mongo.Collection('clientReport');
 export const reviewsCollection = new Mongo.Collection('reviewsCollection');
-
 
 //to run on server only
 if (Meteor.isServer) {
@@ -127,7 +128,7 @@ if (Meteor.isServer) {
                 }
             }).validate({ title, description, category, photoImages, userId, userEmail });
 
-            //photo gallery id
+            //photo gallery id is also 'photoId'
             let id = await Photos.insert({
                 title,
                 description,
