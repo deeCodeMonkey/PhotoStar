@@ -10,6 +10,7 @@ class Navbar extends Component {
         loggedIn: null
     }
 
+    //setting to hide certain nav tabs when not logged in
     componentDidMount() {
         Tracker.autorun(() => {
             var userId = Meteor.userId();

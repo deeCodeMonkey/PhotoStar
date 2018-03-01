@@ -35,16 +35,18 @@ class AddPhoto extends Component {
 
     renderCategories = () => {
         return this.state.categories.map((category) => {
-            return (
-                <option name="category" value={category.name} key={category.name}>{category.name}</option>
-            );
+            if (category.name !== 'All') {
+                return (
+                    <option name="category" value={category.name} key={category.name}>{category.name}</option>
+                );
+            }
         })
     }
 
     cloudinaryUpload = async (image) => {
         let cloudinary_URL = `https://api.cloudinary.com/v1_1/${cloudinary_cloud_name}/image/upload`;
 
-        let photosArray = [];
+        let photosArrayObj = [];
         for (i = 0; i < image.length; i++) {
             let formData = new FormData();
             formData.append('file', image[i]);
@@ -53,30 +55,34 @@ class AddPhoto extends Component {
             await axios.post(cloudinary_URL,
                 formData,
             ).then(function (res) {
-                photosArray.push(res.data.secure_url);
-                return photosArray;
+                photosArrayObj.push({
+                    url: res.data.secure_url,
+                    public_id: res.data.public_id
+                });
+                return photosArrayObj;
             }).catch(function (err) {
                 console.log('ERROR', err);
             });
         }
-        return photosArray;
+        return photosArrayObj;
     }
 
-    cloudinaryImageObject = (photoUrlArray) => {
+    cloudinaryImageObject = (photoArrayObj) => {
         let photoObjArray = [];
-        for (i = 0; i < photoUrlArray.length; i++) {
+        for (i = 0; i < photoArrayObj.length; i++) {
             photoObjArray.push({
-                original: photoUrlArray[i],
-                thumbnail: photoUrlArray[i]
+                original: photoArrayObj[i].url,
+                thumbnail: photoArrayObj[i].url,
+                public_id: photoArrayObj[i].public_id
             });
         }
         return photoObjArray;
     }
 
     addPhotos = async (image) => {
-        const photoUrlArray = await this.cloudinaryUpload(image);
+        const photoArrayObj = await this.cloudinaryUpload(image);
 
-        const photoObjArray = this.cloudinaryImageObject(photoUrlArray);
+        const photoObjArray = this.cloudinaryImageObject(photoArrayObj);
 
         return photoObjArray;
     }
@@ -99,6 +105,7 @@ class AddPhoto extends Component {
                 }
             });
     }
+
 
     onSubmit = async (e) => {
         e.preventDefault();

@@ -22,9 +22,9 @@ export default class Sidebar extends Component {
 
     renderCategories = () => {
         return this.state.categories.map((category) => {
-            return (    
-                <Link to={`/categories/${category.name}`} className="list-group-item sidebar" key={category.name}>{category.name}</Link>
-            );
+                return (
+                    <Link to={`/categories/${category.name}`} className="list-group-item sidebar" key={category.name}>{category.name}</Link>
+                );
         })
     }
 

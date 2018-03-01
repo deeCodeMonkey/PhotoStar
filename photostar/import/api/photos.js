@@ -110,11 +110,15 @@ if (Meteor.isServer) {
                 },
                 'photoImages.$.original': {
                     type: String,
-                    label: 'Image File(s)'
+                    label: 'Image Original Url'
                 },
                 'photoImages.$.thumbnail': {
                     type: String,
-                    label: 'Image File(s)'
+                    label: 'Image Thumbnail Url'
+                },
+                'photoImages.$.public_id': {
+                    type: String,
+                    label: 'Image Public Id'
                 },
                 userId: {
                     type: String,

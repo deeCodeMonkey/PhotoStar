@@ -46,7 +46,10 @@ renderPhotos = () => {
     });
 }
 
+delete = () => {
 
+    Meteor.call('cloudinary.remove');
+}
 
 render() {
 
@@ -58,7 +61,7 @@ render() {
                 {this.renderPhotos()}
 
             </div>
-
+            <button onClick={this.delete}>Delete</button>
             
         </div>
     );
