@@ -97,3 +97,8 @@ footer {
     text-decoration: none !important;
 }
 
+
+.modal {
+    height: 500px;
+    width: 500px;
+}

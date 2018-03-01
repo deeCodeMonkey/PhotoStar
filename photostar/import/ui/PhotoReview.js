@@ -8,16 +8,17 @@ import { Photos, reviewsCollection } from '../api/photos';
 
 import { avgReview, fetchClientReport } from '../helpers/index';
 
-import ReviewItem from './ReviewItem';
+import PhotoReviewItem from './PhotoReviewItem';
 import PhotoReviewTags from './PhotoReviewTags';
+import PhotoReviewDeleteModal from './PhotoReviewDeleteModal';
 
 
 class PhotoReview extends Component {
 
     state = {
         reviews: null,
-        deleteConfirm: null,
-        loggedIn: false
+        loggedIn: false,
+        modalStatus: false
     };
 
     componentDidMount() {
@@ -60,8 +61,19 @@ class PhotoReview extends Component {
         return true;
     }
 
-    deletePhoto = () => {
-        clickDelete = async () => {
+    modalOpen = () => {
+        this.setState({
+            modalStatus: true
+        });
+    }
+
+    modalClose = () => {
+        this.setState({
+            modalStatus: false
+        });
+    }
+
+    deleteGallery = async () => {
             //get public id(s) for cloudinary image delete
             let gallery = await Photos.find({ _id: this.props.match.params.photoId }).fetch();
 
@@ -71,22 +83,6 @@ class PhotoReview extends Component {
             }
             Meteor.call('photos.remove', this.props.match.params.photoId, publicIds);
             this.props.history.push(`/photos/${Meteor.userId()}`);
-        }
-
-        clickCancel = () => {
-            this.setState({ deleteConfirm: '' })
-        }
-
-        this.setState({
-            //display confirmation for deletion of gallery
-            deleteConfirm:
-            <div>
-                <p>Are you sure to delete?</p>
-                <button type="button" onClick={clickDelete}>Yes</button>
-                <button type="button" onClick={clickCancel}>No</button>
-            </div>
-        });
-
     }
 
     renderImages = (photoImages) => {
@@ -158,11 +154,14 @@ class PhotoReview extends Component {
 
                         {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
 
-                        {(this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && !this.state.deleteConfirm) ?
-                            <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
-                            : ''
+
+                        {
+                            (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
+                                <button type="button" className="btn btn-inactive" onClick={this.modalOpen}>Delete</button>
+                                : ''
                         }
-                        {this.state.deleteConfirm}
+                        <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
+
 
 
                         <div>
@@ -185,14 +184,12 @@ class PhotoReview extends Component {
                     {this.state.reviews ?
                         this.state.reviews.map((review, index) => {
                             return (
-                                <ReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+                                <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
                             );
                         })
                         : <p className="marg-l">There are no ratings.</p>
                     }
                 </div>
-
-
 
             </div>
         );
@@ -207,3 +204,17 @@ export default createContainer((props) => {
     }
 }, PhotoReview);
 
+
+
+
+//{
+//    (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && !this.state.deleteConfirm) ?
+//    <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
+//    : ''
+//}
+
+//{ this.state.deleteConfirm }
+
+
+//<button onClick={this.modalOpen}>Open modal</button>
+    

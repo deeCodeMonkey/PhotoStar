@@ -91,7 +91,6 @@ class PhotoReviewTags extends Component {
     }
 
    
-
     render() {
         console.log('state loading', this.state.tagsLoad);
         const { loggedIn, userId, tags, photoImages, photoId, isCurrentUser } = this.props;

@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
-import PhotoItem from './PhotoItem';
 import { clientReport } from '../api/photos';
 
 import { Photos } from '../api/photos';
@@ -25,9 +24,6 @@ export default class Home extends Component {
             this.setState({ photos: results })
         });
     }
-
-
-
 
     renderPhotos = () => {
         console.log('HOME=======', this.state.photos);
@@ -56,8 +52,8 @@ export default class Home extends Component {
                 <div className="container" >
                     {this.renderPhotos()}
 
-                </div>
-               
+                </div>               
+
             </div>
         );
     }

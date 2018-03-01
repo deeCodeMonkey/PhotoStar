@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { moment } from "meteor/momentjs:moment";
 
-const ReviewItem = (props) => {
+const PhotoReviewItem = (props) => {
 
     return (
         <div className="container">
@@ -19,7 +19,9 @@ const ReviewItem = (props) => {
             </div>
         </div>
     );
+
 }
 
-export default ReviewItem;
+
+export default PhotoReviewItem;
 
