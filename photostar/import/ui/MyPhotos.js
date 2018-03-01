@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
@@ -13,7 +14,7 @@ export default class MyPhotos extends Component {
     }
 
     componentWillMount() {
-         //component will not render if user not logged in
+        //component will not render if user not logged in
         Tracker.autorun(() => {
             if (!Meteor.user()) {
                 this.props.history.push('/')
@@ -24,22 +25,22 @@ export default class MyPhotos extends Component {
     componentDidMount() {
         Tracker.autorun(() => {
             Meteor.subscribe('allPhotos');
-            const results = Photos.find({'userId': Meteor.userId()}, { sort: { createdAt: -1 } }).fetch();
+            const results = Photos.find({ 'userId': Meteor.userId() }, { sort: { createdAt: -1 } }).fetch();
             this.setState({ photos: results });
-            
+
         });
     }
 
     renderPhotos = () => {
         return this.state.photos.map((photo) => {
             return (
-                <PhotoItem key={photo._id} photo={photo}/>
+                <PhotoItem key={photo._id} photo={photo} />
             );
         })
     }
 
     render() {
-        
+
         return (
             <div>
                 <h3>My Photos</h3>
@@ -47,10 +48,15 @@ export default class MyPhotos extends Component {
                     <div className="container" >
                         {this.renderPhotos()}
                     </div>
-                    : 'You have no photos! Add one now!'
+                    : (<div>'You have no photos! Add one now!'
+                        <button><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></button>
+                    </div>
+                    )
                 }
-                
+
             </div>
         );
     }
 }
+
+

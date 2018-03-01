@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ImageGallery from 'react-image-gallery';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import ImageGallery from 'react-image-gallery';
 
 import { Photos, reviewsCollection } from '../api/photos';
 
@@ -132,9 +132,6 @@ class PhotoReview extends Component {
         if (!this.props.photoProfile || !this.state.reviews) return null;
 
         const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
-
-        console.log('state====PhotoReview', this.state.loggedIn);
-        console.log('Is Current User====PhotoReview', this.isCurrentUser(userId));
 
         return (
             <div className="container marg-t">

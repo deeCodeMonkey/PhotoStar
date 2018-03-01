@@ -33,14 +33,16 @@ if (Meteor.isServer) {
                     _id: '$_id',
                     ratingsCount: { $sum: 1 },
                     averageRating: { $avg: "$reviews.rating" },
-                    image: { "$first": "$photoImages" }
+                    image: { "$first": "$photoImages" },
+                    category: { "$first": "$category" }
                     //to get whole document 
                     //document: { "$first": "$$CURRENT" }
                 }
             },
             {
                 $sort: {
-                    averageRating: -1
+                    averageRating: -1,
+                    ratingsCount: -1
                 }
             }],
             { clientCollection: "clientReport" });

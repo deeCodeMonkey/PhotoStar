@@ -12,7 +12,8 @@ class AddPhoto extends Component {
 
     state = {
         categories: [],
-        errorMessage: null
+        errorMessage: null,
+        loading: false
     }
 
     componentWillMount() {
@@ -119,6 +120,8 @@ class AddPhoto extends Component {
 
         const image = e.target.image.files;
 
+        this.setState({ loading: true });
+
         this.createGallery(title, description, category, userId, userEmail, image);
     }
 
@@ -163,6 +166,10 @@ class AddPhoto extends Component {
                         <Link to="/photos" className="btn btn-photo-cancel">Cancel</Link>
                     </div>
                 </form>
+
+                {this.state.loading ?
+                    <div className="loading">Loading&#8230;</div>
+                    :'' }
 
             </div>
         );
