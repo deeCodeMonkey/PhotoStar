@@ -200,7 +200,7 @@ if (Meteor.isServer) {
         },
 
 
-        'photos.remove': function (photoId) {
+        'photos.remove': function (photoId, publicIds) {
             if (!this.userId) {
                 throw new Meteor.Error('Not authorized.');
             }
@@ -209,12 +209,23 @@ if (Meteor.isServer) {
                     type: String,
                     min: 1,
                     label: 'Image ID'
+                },
+                publicIds: {
+                    type: Array,
+                    label: 'Images Public Ids Array'
+                },
+                'publicIds.$': {
+                    type: String,
+                    minCount: 1,
+                    maxCount: 6,
+                    label: 'Image Public Id'
                 }
-            }).validate({ photoId });
+            }).validate({ photoId, publicIds });
 
             Photos.remove({
                 _id: photoId
             });
+            Meteor.call('cloudinary.remove', publicIds);
         }, 
         'photos.removeTag': function (tagKeyword, photoId) {
             if (!this.userId) {

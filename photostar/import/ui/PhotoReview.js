@@ -22,6 +22,8 @@ class PhotoReview extends Component {
 
     componentDidMount() {
         this.reviewsTracker = Tracker.autorun(() => {
+            //data ready for photos.remove
+            Meteor.subscribe('allPhotos');
             //reactive client setup for aggregating in Mongodb
             Meteor.subscribe('reviewsList', this.props.match.params.photoId);
             const results = fetchClientReport(reviewsCollection);
@@ -59,8 +61,15 @@ class PhotoReview extends Component {
     }
 
     deletePhoto = () => {
-        clickDelete = () => {
-            Meteor.call('photos.remove', this.props.match.params.photoId);
+        clickDelete = async () => {
+            //get public id(s) for cloudinary image delete
+            let gallery = await Photos.find({ _id: this.props.match.params.photoId }).fetch();
+
+            let publicIds = [];
+            for (let i = 0; i < gallery[0].photoImages.length; i++) {
+                publicIds.push(gallery[0].photoImages[i].public_id);
+            }
+            Meteor.call('photos.remove', this.props.match.params.photoId, publicIds);
             this.props.history.push(`/photos/${Meteor.userId()}`);
         }
 

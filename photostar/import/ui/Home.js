@@ -4,6 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import PhotoItem from './PhotoItem';
 import { clientReport } from '../api/photos';
 
+import { Photos } from '../api/photos';
+
 import { avgReview, fetchClientReport } from '../helpers/index';
 
 
@@ -24,47 +26,41 @@ export default class Home extends Component {
         });
     }
 
-   
 
 
-renderPhotos = () => {
-    console.log('HOME=======', this.state.photos);
-    return this.state.photos.slice(0, 3).map((photo) => {
-        return (
-            <div key={photo._id}>
-                Rating count: {photo.ratingsCount}
-                Rating Avg: {photo.averageRating}
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <img className="profile-photo" src={photo.image[0].original} />
+
+    renderPhotos = () => {
+        console.log('HOME=======', this.state.photos);
+        return this.state.photos.slice(0, 3).map((photo) => {
+            return (
+                <div key={photo._id}>
+                    Rating count: {photo.ratingsCount}
+                    Rating Avg: {photo.averageRating}
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-4">
+                                <img className="profile-photo" src={photo.image[0].original} />
+                            </div>
                         </div>
                     </div>
                 </div>
+            );
+        });
+    }
+
+    render() {
+
+        return (
+            <div>
+                <h3>Top 3 Photos</h3>
+                <h1>LANDING PAGE</h1>
+                <div className="container" >
+                    {this.renderPhotos()}
+
+                </div>
+                
             </div>
         );
-    });
-}
-
-delete = () => {
-
-    Meteor.call('cloudinary.remove');
-}
-
-render() {
-
-    return (
-        <div>
-            <h3>Top 3 Photos</h3>
-            <h1>LANDING PAGE</h1>
-            <div className="container" >
-                {this.renderPhotos()}
-
-            </div>
-            <button onClick={this.delete}>Delete</button>
-            
-        </div>
-    );
-}
+    }
 }
 
