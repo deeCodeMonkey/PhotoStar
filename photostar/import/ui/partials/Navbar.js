@@ -38,8 +38,10 @@ class Navbar extends Component {
                         </div>
                         <div id="navbar" className="collapse navbar-collapse">
                             <ul className="nav navbar-nav">
-
                                 <li><UserAccounts /></li>
+                            </ul>
+
+                            <ul className="nav navbar-nav">
                                 <li><Link to="/categories/All">All Photos</Link></li>
                             </ul>
 
@@ -49,7 +51,7 @@ class Navbar extends Component {
                                 </ul>
                                 : ''
                             }
-
+                            
                         </div>
                     </div>
                 </nav>

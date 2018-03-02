@@ -8,6 +8,9 @@ import { Photos } from '../api/photos';
 
 import { avgReview, fetchClientReport } from '../helpers/index';
 
+import SideBar from './partials/Sidebar';
+
+
 export default class Home extends Component {
 
     state = {
@@ -25,17 +28,24 @@ export default class Home extends Component {
         });
     }
 
-    renderPhotos = () => {
-        console.log('HOME=======', this.state.photos);
+    renderTopPhotos = () => {   
         return this.state.photos.slice(0, 3).map((photo) => {
             return (
-                <div key={photo._id}>
-                    Rating count: {photo.ratingsCount}
-                    Rating Avg: {photo.averageRating}
-                    <div className="container">
+                <div className="container-fluid cards-row">
+                    <div className="container" key={photo._id}>
                         <div className="row">
-                            <div className="col-md-4">
-                                <Link to={`/review/${photo._id}`}><img className="profile-photo" src={photo.image[0].original} /></Link>
+                            <div className="col-sm-6 col-md-4">
+                                <div className="thumbnail">
+                                <Link to={`/review/${photo._id}`}><img src={photo.image[0].original} alt="top photos" /></Link>
+                                <div className="caption">
+
+                                    <h4>Rating count: {photo.ratingsCount}</h4> 
+                                    <h4>Rating Avg: {photo.averageRating}</h4>
+
+                                        <p className="card-description"><strong>Bootstrap Thumbnail</strong> Customization Example. Here are customized <strong>bootstrap cards</strong>. We just apply some box shadow and remove border radius.</p>
+                                        <p><Link to={`/review/${photo._id}`} className="btn btn-primary" role="button">Button</Link></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,17 +55,17 @@ export default class Home extends Component {
     }
 
     render() {
+        console.log('HOME=======', this.state.photos);
 
         return (
             <div>
-                <h3>Top 3 Photos</h3>
-                <div className="container" >
-                    {this.renderPhotos()}
-
-                </div>               
-
+                {this.renderTopPhotos()}
             </div>
         );
     }
 }
+
+
+
+
 

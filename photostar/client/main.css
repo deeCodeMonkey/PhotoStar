@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 body {
     margin-top: 70px;
-    background-color: #F4F4F4;
+    background-color: #FFFFFF;
     font-family: 'Kavivanar', cursive;
 }
 
@@ -60,9 +60,6 @@ footer {
     font-family: 'Indie Flower';
 }
 
-.sidebar:active {
-    background: #FF5722 !important;
-}
 
 .btn-reviews:hover {
     background-color: #FF5722;
@@ -98,7 +95,6 @@ footer {
 }
 
 
-.modal {
-    height: 500px;
-    width: 500px;
+.img {
+    width: 100%
 }

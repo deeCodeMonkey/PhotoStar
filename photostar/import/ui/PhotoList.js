@@ -5,6 +5,7 @@ import { Tracker } from 'meteor/tracker';
 import { Photos } from '../api/photos';
 
 import PhotoItem from './PhotoItem';
+import SideBar from './partials/Sidebar';
 
 export default class PhotoList extends Component {
 
@@ -33,7 +34,7 @@ export default class PhotoList extends Component {
 
     componentWillReceiveProps(nextProps) {
         //to navigate between categories
-        this.filterPhotos(nextProps.match.params.category);   
+        this.filterPhotos(nextProps.match.params.category);
     }
 
     //controlled input value by react state. input will clear when category selection changes
@@ -72,17 +73,17 @@ export default class PhotoList extends Component {
             }
         }
     }
-   
+
     renderPhotos = () => {
         return this.state.photos.map((photo) => {
             return (
-                <PhotoItem key={photo._id} photo={photo}/>
+                <PhotoItem key={photo._id} photo={photo} />
             );
         })
     }
 
     render() {
-       
+
         return (
             <div>
 
@@ -99,8 +100,16 @@ export default class PhotoList extends Component {
                 <h3>{this.state.category} Photos</h3>
                 <div className="container" >
                     {this.renderPhotos()}
+
                 </div>
+
             </div>
         );
     }
 }
+
+
+
+
+
+   

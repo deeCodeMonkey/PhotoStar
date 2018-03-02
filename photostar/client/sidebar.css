@@ -1,0 +1,58 @@
+﻿
+.sidebar:active {
+    background: #FF5722 !important;
+}
+
+#navigation {
+    font-size: 0.75em;
+    width: 150px;
+    padding: 5px;
+}
+
+    #navigation ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #navigation li {
+        list-style: none;
+    }
+
+ul.top-level {
+    background: #fff;
+}
+
+    ul.top-level li {
+        margin: 0 0 3px 0;
+        border: solid 1px #cccccc;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+#navigation a {
+    color: #666;
+    cursor: pointer;
+    display: block;
+    height: 25px;
+    line-height: 25px;
+    text-indent: 10px;
+    text-decoration: none;
+    width: 100%;
+}
+
+    #navigation a:hover {
+        text-decoration: none;
+        background: #FF5722;
+    }
+
+
+
+#navigation li:hover {
+    background: #EFEFEF;
+    position: relative;
+}
+
+
+
+

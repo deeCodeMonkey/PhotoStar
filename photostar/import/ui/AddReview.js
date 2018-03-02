@@ -3,19 +3,32 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 //import { moment } from "meteor/momentjs:moment";
 
+import PhotoItem from './PhotoItem';
+
+import { Photos } from '../api/photos';
+
 class AddReview extends Component {
 
     state = {
-        errorMessage: null
+        errorMessage: null,
+        photo: null
     }
 
     componentWillMount() {
-         //component will not render if user not logged in
+        //component will not render if user not logged in
         Tracker.autorun(() => {
             if (!Meteor.user()) {
                 this.props.history.push('/')
             }
         })
+    }
+
+    componentDidMount() {
+        Tracker.autorun(() => {
+            Meteor.subscribe('allPhotos');
+            const photo = Photos.find({ _id: this.props.match.params.photoId }).fetch();
+            this.setState({ photo: photo[0] });
+        });
     }
 
     onSubmit = (e, photoId) => {
@@ -25,23 +38,30 @@ class AddReview extends Component {
         const rating = parseInt(e.target.rating.value);
         const body = e.target.body.value;
         const reviewCreatedAt = new Date();
-            //moment(new Date()).format('LL, h:mm:ss a');
+        //moment(new Date()).format('LL, h:mm:ss a');
 
         Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy, (error, result) => {
             if (error) {
                 this.setState({ errorMessage: error.reason });
             } else {
-                this.props.history.push(`/review/${photoId}`);
+                this.props.history.replace(`/review/${photoId}`);
             }
         });
     }
 
 
     render() {
-
+        if (this.state.photo) {
+            console.log('STATE=======', this.state.photo.reviews[0].reviewedBy);
+        }
         return (
             <div>
-                    <h3>Add A Review For <strong>{this.props.match.params.photoTitle}</strong></h3>
+                {this.state.photo ?
+                    <div>
+                        <PhotoItem photo={this.state.photo} />
+                    </div> : ''}
+
+                <h3>Add A Review For <strong>{this.props.match.params.photoTitle}</strong></h3>
 
                 {this.state.errorMessage ?
                     <p className="text-danger bg-danger">{this.state.errorMessage}</p>

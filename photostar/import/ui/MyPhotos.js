@@ -6,6 +6,8 @@ import { Tracker } from 'meteor/tracker';
 import { Photos } from '../api/photos';
 
 import PhotoItem from './PhotoItem';
+import SideBar from './partials/Sidebar';
+
 
 export default class MyPhotos extends Component {
 
@@ -53,7 +55,6 @@ export default class MyPhotos extends Component {
                     </div>
                     )
                 }
-
             </div>
         );
     }

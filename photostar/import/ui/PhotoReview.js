@@ -30,12 +30,10 @@ class PhotoReview extends Component {
             const results = fetchClientReport(reviewsCollection);
             this.setState({ reviews: results });
 
-            //track Meteor logging in-and-out by react state 
+            //track Meteor logging in-and-out by react state. buttons and messages dependent on user.
             if (Meteor.userId()) {
-                console.log('Logged in photo review');
                 this.setState({ loggedIn: true });
             } else {
-                console.log('Logged out photo review');
                 this.setState({ loggedIn: false });
             }
 
@@ -154,6 +152,8 @@ class PhotoReview extends Component {
 
                         {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
 
+                        <button onClick={() => this.props.history.goBack()}>Back</button>
+
 
                         {
                             (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
@@ -204,17 +204,3 @@ export default createContainer((props) => {
     }
 }, PhotoReview);
 
-
-
-
-//{
-//    (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && !this.state.deleteConfirm) ?
-//    <button type="button" className="btn btn-inactive" onClick={this.deletePhoto}>Delete</button>
-//    : ''
-//}
-
-//{ this.state.deleteConfirm }
-
-
-//<button onClick={this.modalOpen}>Open modal</button>
-    
