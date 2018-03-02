@@ -97,6 +97,7 @@ class PhotoReviewTags extends Component {
 
         return (
             <div>
+
                 {(this.props.isCurrentUser(loggedIn, userId) && !tags && !this.state.tagsLoad) ?
                     <button onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>Add Photo Tags</button>
                     : ''}
@@ -123,9 +124,10 @@ class PhotoReviewTags extends Component {
                     }) : ''}
 
                 </div>
-                {this.props.tags ?
+                {tags ?
                     <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
                     : ''}
+               
             </div>
         );
     }

@@ -1,22 +1,35 @@
 ﻿import React from 'react';
 import { moment } from "meteor/momentjs:moment";
 
+//user ratings
 const PhotoReviewItem = (props) => {
 
     return (
-        <div className="container">
-            <div className="row marg-tt review-item">
-                <div className="col-md-2">
-                    <img className="stars" src={`/img/star${props.rating}.png`} />
-                    <div className="d-block marg-l marg-t">
-                        by {props.reviewedBy} on {moment(props.createdAt).format('LL')}
-                    </div>
-                </div>
-
-                <div className="col-md-9 marg-l marg-t">
-                    "{props.body}"
-                    </div>
+        <div className="tab-pane active" id="tab_default_1">
+            <div className="well well-sm">
+                <h4>Heading</h4>
             </div>
+            <p align="right">
+                <button type="button" className="btn btn-default btn-sm">
+                    <span className="glyphicon glyphicon-edit"></span> Edit
+                                        </button>
+            </p>
+
+            <img className="stars" src={`/img/star${props.rating}.png`} />
+
+            <table className="table bio-table">
+                <tbody>
+                    <tr>
+                        <td>Review By:</td>
+                        <td>{props.reviewedBy}</td>
+                    </tr>
+                    <tr>
+                        <td>Review Date:</td>
+                        <td>{moment(props.createdAt).format('LL')}</td>
+                    </tr>
+                </tbody>
+                <div><p>{props.body}</p></div>
+            </table>
         </div>
     );
 
@@ -24,4 +37,7 @@ const PhotoReviewItem = (props) => {
 
 
 export default PhotoReviewItem;
+
+
+
 

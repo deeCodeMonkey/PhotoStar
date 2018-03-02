@@ -37,7 +37,7 @@ export default class Sidebar extends Component {
                         <ul className="top-level">
                         {this.state.categories.map((category) => {
                             return (
-                                <li><Link to={`/categories/${category.name}`} className="sidebar" key={category.name}>{category.name}</Link></li>
+                                <li key={category.name}><Link to={`/categories/${category.name}`} className="sidebar" key={category.name}>{category.name}</Link></li>
                             );
                             })}
                         </ul>

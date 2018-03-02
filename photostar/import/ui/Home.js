@@ -31,8 +31,8 @@ export default class Home extends Component {
     renderTopPhotos = () => {   
         return this.state.photos.slice(0, 3).map((photo) => {
             return (
-                <div className="container-fluid cards-row">
-                    <div className="container" key={photo._id}>
+                <div className="container-fluid cards-row" key={photo._id}>
+                    <div className="container">
                         <div className="row">
                             <div className="col-sm-6 col-md-4">
                                 <div className="thumbnail">

@@ -57,3 +57,6 @@ const PhotoItem = (props) => {
 
 export default PhotoItem;
 
+//https://bootsnipp.com/snippets/mM3eR
+//https://bootsnipp.com/snippets/featured/profile-box
+//https://bootsnipp.com/snippets/92ygp

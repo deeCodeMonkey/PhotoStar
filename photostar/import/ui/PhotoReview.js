@@ -72,15 +72,15 @@ class PhotoReview extends Component {
     }
 
     deleteGallery = async () => {
-            //get public id(s) for cloudinary image delete
-            let gallery = await Photos.find({ _id: this.props.match.params.photoId }).fetch();
+        //get public id(s) for cloudinary image delete
+        let gallery = await Photos.find({ _id: this.props.match.params.photoId }).fetch();
 
-            let publicIds = [];
-            for (let i = 0; i < gallery[0].photoImages.length; i++) {
-                publicIds.push(gallery[0].photoImages[i].public_id);
-            }
-            Meteor.call('photos.remove', this.props.match.params.photoId, publicIds);
-            this.props.history.push(`/photos/${Meteor.userId()}`);
+        let publicIds = [];
+        for (let i = 0; i < gallery[0].photoImages.length; i++) {
+            publicIds.push(gallery[0].photoImages[i].public_id);
+        }
+        Meteor.call('photos.remove', this.props.match.params.photoId, publicIds);
+        this.props.history.push(`/photos/${Meteor.userId()}`);
     }
 
     renderImages = (photoImages) => {
@@ -128,67 +128,119 @@ class PhotoReview extends Component {
         const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
         return (
-            <div className="container marg-t">
-                <div className="row product-row">
-                    <div className="col-md-8">
-                        {this.renderImages(photoImages)}
-                    </div>
+            <div>
 
-                    <div className="col-md-4">
-                        <h3 className="text-capitalize">{title}</h3>
-                        <p>Category: {category}</p>
-                        <p>Submitted by: {userEmail}</p>
-                        {reviews ?
-                            <p>
-                                Average Rating:<img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
-                                ({reviews.length})
-                        </p> : <p> No reviews. </p>
-                        }
-
-                        {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
-                            <Link to={`/review/add/${title}/${_id}`} className="btn btn-review ">Leave A Review</Link>
-                            : ''
-                        }
-
-                        {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
-
-                        <button onClick={() => this.props.history.goBack()}>Back</button>
-
-
-                        {
-                            (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
-                                <button type="button" className="btn btn-inactive" onClick={this.modalOpen}>Delete</button>
-                                : ''
-                        }
-                        <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
-
-
-
-                        <div>
-                            <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-2">
                         </div>
-
+                        <div className="col-md-8">
+                            <div>
+                                {this.renderImages(photoImages)}
+                            </div>
+                        </div>
+                        <div className="col-md-2">
+                        </div>
                     </div>
                 </div>
-                <div className="row marg-tt">
-                    <div className="col-md-12">
-                        <p className="text-justify marg">{description}</p>
+
+
+                <div className="container style_30">
+                    <div className="profile-head">
+                        <div className="col-md-12 col-sm-12 col-xs-12">
+                            <h5>{title}</h5>
+                            <p>{category}</p>
+                            {reviews ?
+                                <p>
+                                    Average Rating:<img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+                                    ({reviews.length})
+                                    </p> : <p> No reviews. </p>}
+                            <ul>
+                                <li><span className="glyphicon glyphicon-briefcase"></span>Submitted By: {userEmail}</li>
+                                <li><span className="glyphicon glyphicon-map-marker"></span> No Reviews</li>
+                            </ul>
+                            {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
+
+                            {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
+                                <Link to={`/review/add/${title}/${_id}`} className="btn btn-review ">Leave A Review</Link>
+                                : ''
+                            }
+
+
+
+                            <button onClick={() => this.props.history.goBack()}>Back</button>
+
+
+                            {
+                                (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
+                                    <button type="button" className="btn btn-inactive" onClick={this.modalOpen}>Delete</button>
+                                    : ''
+                            }
+                            <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
+
+
+                        </div>
                     </div>
                 </div>
 
-                <hr />
+                <br />
+                <br />
+                <div className="container">
 
-                <div className="row">
-                    <h4 className="marg-l">Reviews & Ratings</h4>
-                    <hr />
-                    {this.state.reviews ?
-                        this.state.reviews.map((review, index) => {
-                            return (
-                                <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
-                            );
-                        })
-                        : <p className="marg-l">There are no ratings.</p>
-                    }
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="menu_title">
+                                <b>Description</b>
+                                <p className="text-justify">{description}</p>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div>
+                                            <label>Tags:</label>
+                                            <div className="container style_90" >
+                                                <span className="btn btn-default uplod-file">
+                                                    Upload Photo <input type="file" />
+                                                </span>
+                                            </div>
+
+                                            <div>
+                                                <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div className="col-sm-8">
+                        <div data-spy="scroll" className="tabbable-panel">
+                            <div className="tabbable-line">
+                                <div className="tab-content">
+
+
+
+                                    <h4>Reviews & Ratings</h4>
+
+                                </div>
+
+                                    {this.state.reviews ?
+                                        this.state.reviews.map((review, index) => {
+                                            return (
+                                                <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+                                            );
+                                        })
+                                        : <p className="marg-l">There are no ratings.</p>
+                                    }
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -203,4 +255,96 @@ export default createContainer((props) => {
         photoProfile: Photos.findOne({ _id: props.match.params.photoId }),
     }
 }, PhotoReview);
+
+
+
+//https://bootsnipp.com/snippets/M0NlA
+
+
+
+
+
+
+
+
+
+   
+   
+
+
+
+
+
+//========================================================================================================================
+  //<div className="container marg-t">
+    //    <div className="row product-row">
+    //        <div className="col-md-8">
+    //            {this.renderImages(photoImages)}
+    //        </div>
+
+    //        <div className="col-md-4">
+    //            <h3 className="text-capitalize">{title}</h3>
+    //            <p>Category: {category}</p>
+    //            <p>Submitted by: {userEmail}</p>
+    //            {reviews ?
+    //                <p>
+    //                    Average Rating:<img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+    //                    ({reviews.length})
+    //                    </p> : <p> No reviews. </p>
+    //            }
+
+    //            {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
+    //                <Link to={`/review/add/${title}/${_id}`} className="btn btn-review ">Leave A Review</Link>
+    //                : ''
+    //            }
+
+    //            {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
+
+    //            <button onClick={() => this.props.history.goBack()}>Back</button>
+
+
+    //            {
+    //                (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
+    //                    <button type="button" className="btn btn-inactive" onClick={this.modalOpen}>Delete</button>
+    //                    : ''
+    //            }
+    //            <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
+
+
+
+    //            <div>
+    //                <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
+    //            </div>
+
+    //        </div>
+    //    </div>
+    //    <div className="row marg-tt">
+    //        <div className="col-md-12">
+    //            <p className=" marg">{description}</p>
+    //        </div>
+    //    </div>
+
+    //    <hr />
+
+    //    <div className="row">
+    //        <h4 className="marg-l">Reviews & Ratings</h4>
+    //        <hr />
+    //        {this.state.reviews ?
+    //            this.state.reviews.map((review, index) => {
+    //                return (
+    //                    <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+    //                );
+    //            })
+    //            : <p className="marg-l">There are no ratings.</p>
+    //        }
+    //    </div>
+
+    //</div>
+
+
+
+
+
+
+
 
