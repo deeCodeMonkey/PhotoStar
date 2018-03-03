@@ -11,6 +11,7 @@ import { avgReview, fetchClientReport } from '../helpers/index';
 import PhotoReviewItem from './PhotoReviewItem';
 import PhotoReviewTags from './PhotoReviewTags';
 import PhotoReviewDeleteModal from './PhotoReviewDeleteModal';
+import PhotoReviewRatingBox from './PhotoReviewRatingBox';
 
 
 class PhotoReview extends Component {
@@ -133,7 +134,7 @@ class PhotoReview extends Component {
 
         return (
             <div>
-
+                {/*photo gallery*/}
                 <div className="container">
                     <div className="row">
                         <div className="col-md-2">
@@ -148,10 +149,11 @@ class PhotoReview extends Component {
                     </div>
                 </div>
 
+
                 {/*profile head*/}
                 <div className="container style_30">
                     <div className="profile-head">
-                        <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-5 col-sm-5 col-xs-5">
                             <h5>{title}</h5>
                             <p>{category}</p>
                             {reviews ?
@@ -161,7 +163,7 @@ class PhotoReview extends Component {
                                     </p> : <p> No reviews. </p>}
                             <ul>
                                 <li><span className="glyphicon glyphicon-briefcase"></span>Submitted By: {userEmail}</li>
-                                <li><span className="glyphicon glyphicon-map-marker"></span> No Reviews</li>
+                                <li><span className="glyphicon glyphicon-map-marker"></span> stuff===========</li>
                             </ul>
                             {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
 
@@ -184,13 +186,19 @@ class PhotoReview extends Component {
 
 
                         </div>
+
+                        <div className="col-md-5 col-sm-5 col-xs-5">
+                            < PhotoReviewRatingBox />
+                        </div>
                     </div>
                 </div>
 
                 <br />
                 <br />
-                <div className="container">
 
+
+                {/*Description and Tags*/}
+                <div className="container">
                     <div className="col-sm-4">
                         <div className="panel panel-default">
                             <div className="menu_title">
@@ -202,12 +210,7 @@ class PhotoReview extends Component {
                                     <div className="col-lg-12">
                                         <div>
                                             <label>Tags:</label>
-                                            <div className="container style_90" >
-                                                <span className="btn btn-default uplod-file">
-                                                    Upload Photo <input type="file" />
-                                                </span>
-                                            </div>
-
+                                            
                                             <div>
                                                 <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
                                             </div>
@@ -220,13 +223,11 @@ class PhotoReview extends Component {
 
 
 
-
+                    {/*Reviews List*/}
                     <div className="col-sm-8">
                         <div data-spy="scroll" className="tabbable-panel">
                             <div className="tabbable-line">
                                 <div className="tab-content">
-
-
 
                                     <h4>Reviews & Ratings</h4>
 

@@ -102,3 +102,7 @@ footer {
 .flex {
     display: flex;
 }
+
+.img-rounded {
+    width: 35%;
+}

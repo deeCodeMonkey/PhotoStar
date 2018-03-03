@@ -92,14 +92,16 @@ class PhotoReviewTags extends Component {
 
    
     render() {
-        console.log('state loading', this.state.tagsLoad);
+        
         const { loggedIn, userId, tags, photoImages, photoId, isCurrentUser } = this.props;
 
         return (
             <div>
 
                 {(this.props.isCurrentUser(loggedIn, userId) && !tags && !this.state.tagsLoad) ?
-                    <button onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>Add Photo Tags</button>
+                    <button className="btn btn-default uplod-file" onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>
+                        Add Automated Photo Tags
+                    </button>
                     : ''}
 
                 <div className="row">
