@@ -51,9 +51,7 @@ class AddReview extends Component {
 
 
     render() {
-        if (this.state.photo) {
-            console.log('STATE=======', this.state.photo.reviews[0].reviewedBy);
-        }
+        
         return (
             <div>
                 {this.state.photo ?

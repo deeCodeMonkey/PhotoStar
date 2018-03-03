@@ -53,6 +53,7 @@ export default class Home extends Component {
 
         return (
             <div>
+               
                 <div className="container flex card-columns">
                         <div className="row">
                 {this.renderTopPhotos()}

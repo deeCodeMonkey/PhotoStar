@@ -171,7 +171,7 @@ if (Meteor.isServer) {
                 body: {
                     type: String,
                     min: 1,
-                    max: 250,
+                    max: 750,
                     label: 'Your review comment'
                 },
                 reviewCreatedAt: {

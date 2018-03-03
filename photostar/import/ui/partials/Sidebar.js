@@ -30,12 +30,12 @@ export default class Sidebar extends Component {
 
         return (
                 <div>
-                    <div className="btn_orange medium cover-size text-center">Categories</div>
+                <Link to={'/categories/All'}><div className="btn_orange medium cover-size text-center">Categories</div></Link>
                     <div className="side-bar">
                         <ul>
                             {this.state.categories.map((category) => {
                                 return (
-                                    <Link to={`/categories/${category.name}`}><li key={category.name} className="btn_orange medium cover-size text-left" style={style}>{category.name}</li></Link>
+                                    <Link to={`/categories/${category.name}`} key={category.name}><li className="btn_orange medium cover-size text-left" style={style}>{category.name}</li></Link>
                                 );
                             })}
                         </ul>
