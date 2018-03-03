@@ -6,16 +6,18 @@ const PhotoReviewItem = (props) => {
 
     return (
         <div className="tab-pane active" id="tab_default_1">
-            <div className="well well-sm">
+
+            <div className="well-sm">
                 <h4>Heading</h4>
+                <span><img className="stars" src={`/img/star${props.rating}.png`} /></span>
             </div>
+
             <p align="right">
                 <button type="button" className="btn btn-default btn-sm">
                     <span className="glyphicon glyphicon-edit"></span> Edit
                                         </button>
             </p>
 
-            <img className="stars" src={`/img/star${props.rating}.png`} />
 
             <table className="table bio-table">
                 <tbody>
@@ -37,7 +39,6 @@ const PhotoReviewItem = (props) => {
 
 
 export default PhotoReviewItem;
-
 
 
 

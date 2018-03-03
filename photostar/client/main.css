@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 body {
     margin-top: 70px;
-    background-color: #FFFFFF;
+    background-color: #EFEFEF;
     font-family: 'Kavivanar', cursive;
 }
 
@@ -99,3 +99,6 @@ footer {
     width: 100%
 }
 
+.flex {
+    display: flex;
+}

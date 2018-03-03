@@ -20,32 +20,31 @@ export default class Sidebar extends Component {
         });
     }
 
-    renderCategories = () => {
-        return this.state.categories.map((category) => {
-            return (
-                <li><Link to={`/categories/${category.name}`} className="list-group-item sidebar" key={category.name}>{category.name}</Link></li>
-            );
-        })
-    }
-
     render() {
+        const style = {
+            color: 'white',
+            fontWeight: 'bold',
+            marginBottom: '7px',
+            paddingLeft: '17px'
+        }
 
         return (
-            <div>
-                <div id="navigation">
-                  
-                        <ul className="top-level">
-                        {this.state.categories.map((category) => {
-                            return (
-                                <li key={category.name}><Link to={`/categories/${category.name}`} className="sidebar" key={category.name}>{category.name}</Link></li>
-                            );
+                <div>
+                    <div className="btn_orange medium cover-size text-center">Categories</div>
+                    <div className="side-bar">
+                        <ul>
+                            {this.state.categories.map((category) => {
+                                return (
+                                    <Link to={`/categories/${category.name}`}><li key={category.name} className="btn_orange medium cover-size text-left" style={style}>{category.name}</li></Link>
+                                );
                             })}
                         </ul>
-                       
+                    </div>
                 </div>
-            </div>
         );
     }
 }
 
- 
+
+
+

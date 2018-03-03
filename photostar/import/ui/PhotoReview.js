@@ -122,6 +122,10 @@ class PhotoReview extends Component {
 
 
     render() {
+        const style = {
+            backgroundColor: 'red'
+        }
+
         //ensure data from both are available before rendering
         if (!this.props.photoProfile || !this.state.reviews) return null;
 
@@ -144,7 +148,7 @@ class PhotoReview extends Component {
                     </div>
                 </div>
 
-
+                {/*profile head*/}
                 <div className="container style_30">
                     <div className="profile-head">
                         <div className="col-md-12 col-sm-12 col-xs-12">
@@ -228,14 +232,14 @@ class PhotoReview extends Component {
 
                                 </div>
 
-                                    {this.state.reviews ?
-                                        this.state.reviews.map((review, index) => {
-                                            return (
-                                                <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
-                                            );
-                                        })
-                                        : <p className="marg-l">There are no ratings.</p>
-                                    }
+                                {this.state.reviews ?
+                                    this.state.reviews.map((review, index) => {
+                                        return (
+                                            <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+                                        );
+                                    })
+                                    : <p className="marg-l">There are no ratings.</p>
+                                }
 
                             </div>
                         </div>
@@ -268,8 +272,8 @@ export default createContainer((props) => {
 
 
 
-   
-   
+
+
 
 
 

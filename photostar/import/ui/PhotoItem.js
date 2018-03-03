@@ -10,53 +10,34 @@ const PhotoItem = (props) => {
     const { _id, photoImages, title, description, reviews, userId, userEmail, createdAt } = props.photo;
 
     return (
-        <div className="container">
-            <div className="well">
-                <div className="row">
-                    <div className="media">
-                        <div className="col-md-3">
-                            <Link to={`/review/${_id}`} className="pull-left">
-                                <img className="img media-object" src={photoImages[0].original} />
-                            </Link>
-                        </div>
-                        <div className="col-md-9">
-                            <div className="media-body">
-                                <h4 className="media-heading font-weight-bold text-capitalize">{title}</h4>
-                                <p className="text-right">By {userEmail}</p>
-                                <p className="text-justify">{truncateText(description, 150)}</p>
-                                <ul className="list-inline list-unstyled">
-                                    <li><span><i className="glyphicon glyphicon-calendar"></i> {moment(createdAt).format('LL, h:mm:ss a')} </span></li>
-                                    <li>|</li>
-                                    <li>
-                                        <span className="glyphicon glyphicon-star"></span>
-                                    </li>
-                                    <li>|</li>
-                                    <li>
-                                        {props.photo.reviews ?
-                                            (<p>Average Rating:
+        <div>
+            <Link to={`/review/${_id}`}><div className="row small-padding-bg">
+                <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div className="image-size"><img src={photoImages[0].original} /></div>
+                </div>
+                <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 customs-p">
+                    <h3>{title}</h3>
+                    <p><i className="fa fa-star-o" aria-hidden="true"></i><i className="fa fa-star-o" aria-hidden="true"></i><i className="fa fa-star-o" aria-hidden="true"></i><i className="fa fa-star-o" aria-hidden="true"></i><i className="fa fa-star-o" aria-hidden="true"></i><span>233 Votes</span></p>
+                    <p><span><i className="fa fa-mobile" aria-hidden="true"></i></span>{userEmail}</p>
+                    <p><span><i className="fa fa-location-arrow" aria-hidden="true"></i></span>{moment(createdAt).format('LL, h:mm:ss a')}</p>
+                    <p>{truncateText(description, 150)}</p>
+                    {props.photo.reviews ?
+                        (<p>Average Rating:
                                                 <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
-                                                <span>({reviews.length})</span>
-                                            </p>)
-                                            : <p>No Ratings.</p>
-                                        }
-                                    </li>
-                                </ul>
-
-                                <div>
-                                    <Link to={`/review/${_id}`} className="btn btn-default btn-review">Read Reviews</Link>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                            <span>({reviews.length})</span>
+                        </p>)
+                        : <p>No Ratings.</p>
+                    }
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <button className="btn_orange medium customs-margin">Read more</button>
                 </div>
             </div>
+            </Link>
         </div>
     );
 }
 
 export default PhotoItem;
 
-//https://bootsnipp.com/snippets/mM3eR
-//https://bootsnipp.com/snippets/featured/profile-box
-//https://bootsnipp.com/snippets/92ygp
+

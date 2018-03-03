@@ -31,10 +31,7 @@ export default class Home extends Component {
     renderTopPhotos = () => {   
         return this.state.photos.slice(0, 3).map((photo) => {
             return (
-                <div className="container-fluid cards-row" key={photo._id}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-6 col-md-4">
+                            <div className="col-sm-6 col-md-4" key={photo._id}>
                                 <div className="thumbnail">
                                 <Link to={`/review/${photo._id}`}><img src={photo.image[0].original} alt="top photos" /></Link>
                                 <div className="caption">
@@ -46,10 +43,7 @@ export default class Home extends Component {
                                         <p><Link to={`/review/${photo._id}`} className="btn btn-primary" role="button">Button</Link></p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </div>   
             );
         });
     }
@@ -59,7 +53,11 @@ export default class Home extends Component {
 
         return (
             <div>
+                <div className="container flex card-columns">
+                        <div className="row">
                 {this.renderTopPhotos()}
+                        </div>
+                    </div>
             </div>
         );
     }
