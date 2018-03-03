@@ -180,9 +180,3 @@ export default AddPhoto;
 
 
 
-//file upload https://bootsnipp.com/snippets/oVRxn
-//https://bootsnipp.com/snippets/66vx5
-//https://bootsnipp.com/snippets/featured/compact-contact-form
-//https://bootsnipp.com/snippets/9XzNm
-
-

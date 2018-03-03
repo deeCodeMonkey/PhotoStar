@@ -6,8 +6,12 @@ const PhotoReviewDeleteModal = (props) => {
         <div>
             <Modal open={props.modalStatus} onClose={props.modalClose} little>
                 <h1>Are you sure you want to delete your picture gallery?</h1>
-                <button onClick={props.modalClose}>Cancel</button>
-                <button onClick={props.deleteGallery}>Delete</button>
+                <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <button className="btn_orange medium customs-margin" onClick={props.modalClose}>Cancel</button>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <button className="btn_orange medium customs-margin" onClick={props.deleteGallery}>Delete</button>
+                </div>
             </Modal>
         </div>
     );
