@@ -215,20 +215,18 @@ class PhotoReview extends Component {
                     <div className="col-sm-4">
                         <div className="panel panel-default">
                             <div className="menu_title">
-                                <b>Description</b>   
+                                <label>Description</label>
                             </div>
                             <div className="panel-body">
-                            <p className="text-justify">{description}</p>
+                                <p className="text-justify">{description}</p>
                             </div>
                             <div className="panel-body">
                                 <div className="row">
-                                    <div className="col-sm-12">
+                                    <div className="col-md-12">
+                                        <label>Tags</label>
+                                        <hr/>
                                         <div>
-                                            <label>Tags:</label>
-
-                                            <div>
-                                                <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
-                                            </div>
+                                            <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
                                         </div>
                                     </div>
                                 </div>
@@ -243,13 +241,13 @@ class PhotoReview extends Component {
                         <div>
                             <h4>Reviews & Ratings</h4>
                         </div>
-                        {this.state.reviews ?
+                        {!this.state.reviews ?
+                            <p>There are no ratings.</p> :
                             this.state.reviews.map((review, index) => {
                                 return (
                                     <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
                                 );
                             })
-                            : <p>There are no ratings.</p>
                         }
                     </div>
                 </div>
@@ -265,67 +263,6 @@ export default createContainer((props) => {
         photoProfile: Photos.findOne({ _id: props.match.params.photoId }),
     }
 }, PhotoReview);
-
-
-//{/*profile head*/ }
-//<div className="container style_30">
-//    <div className="profile-head">
-//        <div className="col-md-5 col-sm-5 col-xs-5">
-//            <h5>{title}</h5>
-//            <p>{category}</p>
-//            {reviews ?
-//                <p>
-//                    Average Rating:<img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
-//                    ({reviews.length})
-//                                    </p> : <p> No reviews. </p>}
-//            <ul>
-//                <li><span className="glyphicon glyphicon-briefcase"></span>Submitted By: {userEmail}</li>
-//                <li><span className="glyphicon glyphicon-map-marker"></span> stuff===========</li>
-//            </ul>
-
-
-//            {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}
-
-//            {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
-//                (<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-//                    <Link to={`/review/add/${title}/${_id}`} className="btn_orange medium customs-margin">Leave A Review</Link>
-//                </div>)
-//                : ''
-//            }
-
-
-//            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-//                <button className="btn_orange medium customs-margin" onClick={() => this.props.history.goBack()}>Back</button>
-//            </div>
-
-
-
-
-//            {
-//                (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
-//                    <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-//                        <button className="btn_orange medium customs-margin" onClick={this.modalOpen}>Delete</button>
-//                    </div>
-//                    : ''
-//            }
-//            <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
-
-
-//        </div>
-
-//        <div className="col-md-5 col-sm-5 col-xs-5">
-//            < PhotoReviewRatingBox />
-//        </div>
-//    </div>
-//</div>
-
-
-
-
-
-
-
-
 
 
 

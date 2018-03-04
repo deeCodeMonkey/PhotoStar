@@ -82,14 +82,15 @@ class PhotoReviewTags extends Component {
     displayTagInput = (loggedIn, isCurrentUser, userId, tags, photoId, addTag) => {
         if (isCurrentUser(loggedIn, userId) && loggedIn && tags.length < 25) {
             return (
-                <form onSubmit={(e) => { addTag(e, photoId) }}>
-                    <input type="text" name="newTag" className="form-control" placeholder="enter a tag" />
-                    <button className="fa fa-plus"></button>
-                </form>
+                <div className="col-md-6">
+                    <form className="input-group" onSubmit={(e) => { addTag(e, photoId) }}>
+                        <span className="input-group-addon tag"><span class="glyphicon glyphicon-check"></span></span>
+                        <input type="text" className="form-control tag-input" placeholder="enter a tag" name="newTag" />
+                    </form>
+                </div>
             );
         }
     }
-
 
     render() {
 
@@ -105,6 +106,7 @@ class PhotoReviewTags extends Component {
                     : ''}
 
                 <div className="row">
+                    <div className="col-md-12">
                         {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
                         {tags ?
                             tags.map((tag, index) => {
@@ -123,15 +125,15 @@ class PhotoReviewTags extends Component {
 
                                     </span>);
                             }) : ''}
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        {tags ?
-                            <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
-                            : ''}
                     </div>
                 </div>
-            </div>
+
+                <div className="row">
+                    {tags ?
+                        <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
+                        : 'There are no tags.'}
+                </div>
+            </div >
         );
     }
 }

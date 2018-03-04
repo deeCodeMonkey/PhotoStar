@@ -48,8 +48,10 @@
     font-size: 15px;
     font-weight: 700;
     margin-bottom: 10px;
+    margin-left: 12px;
 }
 
 .review-block-description {
     font-size: 13px;
+    margin-left: 12px;
 }

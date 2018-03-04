@@ -18,24 +18,11 @@ const PhotoReviewItem = (props) => {
                         </div>
 
                         <div className="col-sm-9">
-                            <span><img className="stars" src={`/img/star${props.rating}.png`} /></span>
+                           
 
                             <div className="review-block-rate">
-                                <button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" className="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" className="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
+                                <span><img className="stars" src={`/img/star${props.rating}.png`} /></span>
+                               
                             </div>
                             <div className="review-block-title">this was nice in buy</div>
                             <div className="review-block-description">{props.body}</div>

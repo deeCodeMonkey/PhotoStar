@@ -107,6 +107,17 @@ footer {
     width: 35%;
 }
 
+/*tags input*/
+.input-group-addon.tag {
+    color: rgb(255, 255, 255);
+    background-color:darkorange;
+    border-color: white;
+}
+
+.tag-input {
+    height: 30px;
+}
+
 .tags a {
     border: 1px solid #DDD;
     display: inline-block;
