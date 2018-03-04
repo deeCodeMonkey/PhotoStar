@@ -11,7 +11,7 @@ class PhotoReviewTags extends Component {
 
     componentWillReceiveProps(nextProps) {
         //change state when google tags populate
-        if (nextProps.tags){
+        if (nextProps.tags) {
             this.setState({ tagsLoad: false });
         }
     }
@@ -90,13 +90,13 @@ class PhotoReviewTags extends Component {
         }
     }
 
-   
+
     render() {
-        
+
         const { loggedIn, userId, tags, photoImages, photoId, isCurrentUser } = this.props;
 
         return (
-            <div>
+            <div className="marg-l">
 
                 {(this.props.isCurrentUser(loggedIn, userId) && !tags && !this.state.tagsLoad) ?
                     <button className="btn btn-default uplod-file" onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>
@@ -105,31 +105,32 @@ class PhotoReviewTags extends Component {
                     : ''}
 
                 <div className="row">
-                    {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
+                        {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
+                        {tags ?
+                            tags.map((tag, index) => {
+                                return (
+                                    <span key={index} className="tags">
+                                        <a className="a-to-text"
+                                            onMouseEnter={this.handleEnter}
+                                            onMouseLeave={this.handleLeave}>
+                                            {tag}
+                                            {
+                                                (this.state.isHovered && isCurrentUser(loggedIn, userId)) ?
+                                                    <span className="fa fa-remove marg-l" onClick={() => { this.deleteTag(tag, photoId) }}></span>
+                                                    : ''
+                                            }
+                                        </a>
 
-                    {tags ?
-                        tags.map((tag, index) => {
-                        return (
-                            <div key={index}>
-                                <a className="a-to-text"
-                                    onMouseEnter={this.handleEnter}
-                                    onMouseLeave={this.handleLeave}>
-                                    {tag}
-                                    {
-                                        (this.state.isHovered && isCurrentUser(loggedIn, userId)) ?
-                                            <span className="fa fa-remove" onClick={() => { this.deleteTag(tag, photoId) }}></span>
-                                            : ''
-                                    }
-                                </a>
-
-                            </div>);
-                    }) : ''}
-
+                                    </span>);
+                            }) : ''}
                 </div>
-                {tags ?
-                    <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
-                    : ''}
-               
+                <div className="row">
+                    <div className="col-md-12">
+                        {tags ?
+                            <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
+                            : ''}
+                    </div>
+                </div>
             </div>
         );
     }

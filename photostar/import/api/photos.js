@@ -153,7 +153,7 @@ if (Meteor.isServer) {
         },
 
 
-        'photos.review.insert': function (photoId, rating, body, reviewCreatedAt, reviewedBy) {
+        'photos.review.insert': function (photoId, rating, body, heading, reviewCreatedAt, reviewedBy) {
             if (!this.userId) {
                 throw new Meteor.Error('Not authorized.');
             }
@@ -167,6 +167,12 @@ if (Meteor.isServer) {
                     type: Number,
                     min: 1,
                     label: 'Your rating'
+                },
+                heading: {
+                    type: String,
+                    min: 1,
+                    max: 150,
+                    label: 'Your review heading'
                 },
                 body: {
                     type: String,
@@ -184,7 +190,7 @@ if (Meteor.isServer) {
                     regEx: SimpleSchema.RegEx.Email,
                     label: 'Reviewer Email'
                 }
-            }).validate({ photoId, rating, body, reviewCreatedAt, reviewedBy });
+            }).validate({ photoId, rating, body, heading, reviewCreatedAt, reviewedBy });
 
             Photos.update({
                 _id: photoId
@@ -193,6 +199,7 @@ if (Meteor.isServer) {
                         reviews: {
                             rating,
                             body,
+                            heading,
                             reviewCreatedAt,
                             reviewedBy
                         }

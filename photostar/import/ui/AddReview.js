@@ -36,11 +36,11 @@ class AddReview extends Component {
 
         const reviewedBy = Meteor.user().emails[0].address;
         const rating = parseInt(e.target.rating.value);
+        const heading = e.target.heading.value;
         const body = e.target.body.value;
         const reviewCreatedAt = new Date();
-        //moment(new Date()).format('LL, h:mm:ss a');
 
-        Meteor.call('photos.review.insert', photoId, rating, body, reviewCreatedAt, reviewedBy, (error, result) => {
+        Meteor.call('photos.review.insert', photoId, rating, body, heading, reviewCreatedAt, reviewedBy, (error, result) => {
             if (error) {
                 this.setState({ errorMessage: error.reason });
             } else {
@@ -78,7 +78,11 @@ class AddReview extends Component {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Review</label>
+                        <label>Review Heading</label>
+                        <input className="form-control" name="heading" />
+                    </div>
+                    <div className="form-group">
+                        <label>Comments</label>
                         <textarea className="form-control" name="body"></textarea>
                     </div>
 

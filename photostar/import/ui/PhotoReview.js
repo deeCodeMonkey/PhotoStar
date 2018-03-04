@@ -211,7 +211,7 @@ class PhotoReview extends Component {
                 <br />
 
                 {/*Description and Tags*/}
-                <div className="container">
+                <div className="">
                     <div className="col-sm-4">
                         <div className="panel panel-default">
                             <div className="menu_title">
@@ -222,7 +222,7 @@ class PhotoReview extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-sm-12">
                                         <div>
                                             <label>Tags:</label>
 
