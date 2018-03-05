@@ -83,31 +83,39 @@ export default class PhotoList extends Component {
     }
 
     render() {
-    
+
         return (
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <h3>{this.state.category} Photos</h3>
+                            <div class="or-spacer">
+                                <div class="mask"></div>
+                                <span><i>{this.state.category} Photos</i></span>
+                            </div>
 
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div id="custom-search-input">
-                                            <form className="input-group col-md-10" onSubmit={this.searchTags}>
-                                                <input type="text" className="search-query form-control" placeholder="Search By Tag Keywords" value={this.state.keywords} onChange={this.handleKeywordsChange} />
-                                                <span className="input-group-btn">
-                                                    <button className="btn btn-danger" type="button" onClick={() => { this.filterPhotos(this.state.category) }}>
-                                                        <span className=" glyphicon glyphicon-search"></span>
-                                                    </button>
-                                                </span>
-                                            </form>
+                            <br />
+                           
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div id="custom-search-input">
+                                                <form className="input-group col-md-10" onSubmit={this.searchTags}>
+                                                    <input type="text" className="search-query form-control" placeholder="Search By Tag Keywords" value={this.state.keywords} onChange={this.handleKeywordsChange} />
+                                                    <span className="input-group-btn">
+                                                        <button className="btn btn-danger" type="button" onClick={() => { this.filterPhotos(this.state.category) }}>
+                                                            <span className=" glyphicon glyphicon-search"></span>
+                                                        </button>
+                                                    </span>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                           
 
+
+                            <br />
                         </div>
                     </div>
                 </div>

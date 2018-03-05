@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 body {
     margin-top: 70px;
-    background-color: #EFEFEF;
+    background-color: #ffffff; /*#EFEFEF;*/
     font-family: 'Kavivanar', cursive;
 }
 
@@ -115,7 +115,7 @@ footer {
 }
 
 .tag-input {
-    height: 30px;
+    height: 28px;
 }
 
 .tags a {

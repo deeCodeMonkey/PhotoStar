@@ -62,7 +62,7 @@ class AddReview extends Component {
                 <h3>Add A Review For <strong>{this.props.match.params.photoTitle}</strong></h3>
 
                 {this.state.errorMessage ?
-                    <p className="text-danger bg-danger">{this.state.errorMessage}</p>
+                    <p className="alert alert-danger">{this.state.errorMessage}</p>
                     : ''
                 }
 

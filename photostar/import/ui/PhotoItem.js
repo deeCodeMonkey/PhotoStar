@@ -23,7 +23,7 @@ const PhotoItem = (props) => {
                     <p>{truncateText(description, 150)}</p>
                     {props.photo.reviews ?
                         (<p>Average Rating:
-                                                <img className="stars" src={`/img/star${avgReview(reviews)}.png`} />
+                                                <img className="stars" src={`/img/star${Math.round(avgReview(reviews))}.png`} />
                             <span>({reviews.length})</span>
                         </p>)
                         : <p>No Ratings.</p>

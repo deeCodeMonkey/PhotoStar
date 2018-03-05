@@ -84,8 +84,8 @@ class PhotoReviewTags extends Component {
             return (
                 <div className="col-md-6">
                     <form className="input-group" onSubmit={(e) => { addTag(e, photoId) }}>
-                        <span className="input-group-addon tag"><span class="glyphicon glyphicon-check"></span></span>
-                        <input type="text" className="form-control tag-input" placeholder="enter a tag" name="newTag" />
+                        <span className="input-group-addon tag"><span className="glyphicon glyphicon-check"></span></span>
+                        <input type="text" className="form-control tag-input" placeholder="add a tag" name="newTag" />
                     </form>
                 </div>
             );
@@ -105,28 +105,28 @@ class PhotoReviewTags extends Component {
                     </button>
                     : ''}
 
-                <div className="row">
-                    <div className="col-md-12">
-                        {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
-                        {tags ?
-                            tags.map((tag, index) => {
-                                return (
-                                    <span key={index} className="tags">
-                                        <a className="a-to-text"
-                                            onMouseEnter={this.handleEnter}
-                                            onMouseLeave={this.handleLeave}>
-                                            {tag}
-                                            {
-                                                (this.state.isHovered && isCurrentUser(loggedIn, userId)) ?
-                                                    <span className="fa fa-remove marg-l" onClick={() => { this.deleteTag(tag, photoId) }}></span>
-                                                    : ''
-                                            }
-                                        </a>
+                    <div className="row">
+                        <div className="col-md-12">
+                            {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
+                            {tags ?
+                                tags.map((tag, index) => {
+                                    return (
+                                        <span key={index} className="tags">
+                                            <a className="a-to-text"
+                                                onMouseEnter={this.handleEnter}
+                                                onMouseLeave={this.handleLeave}>
+                                                {tag}
+                                                {
+                                                    (this.state.isHovered && isCurrentUser(loggedIn, userId)) ?
+                                                        <span className="fa fa-remove marg-l" onClick={() => { this.deleteTag(tag, photoId) }}></span>
+                                                        : ''
+                                                }
+                                            </a>
 
-                                    </span>);
-                            }) : ''}
+                                        </span>);
+                                }) : ''}
+                        </div>
                     </div>
-                </div>
 
                 <div className="row">
                     {tags ?

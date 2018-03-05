@@ -42,6 +42,11 @@ export default class MyPhotos extends Component {
     }
 
     render() {
+        const style = {
+            color: 'white',
+            fontWeight: 'bold',
+            marginBottom: '7px'
+        }
 
         return (
             <div>
@@ -50,8 +55,13 @@ export default class MyPhotos extends Component {
                     <div className="container" >
                         {this.renderPhotos()}
                     </div>
-                    : (<div>'You have no photos! Add one now!'
-                        <button><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></button>
+                    : (<div>You have no photos. Add one now!
+                        <br/>
+                        <div className="row d-inline-block">
+                            <div className="col-md-3">
+                                <button className="btn_orange medium cover-size text-center"><Link to={`/photos/${Meteor.userId()}/add`} style={style}> Add Photo</Link></button>
+                            </div>
+                        </div>
                     </div>
                     )
                 }

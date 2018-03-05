@@ -21,7 +21,7 @@ const PhotoReviewItem = (props) => {
                            
 
                             <div className="review-block-rate">
-                                <span><img className="stars" src={`/img/star${props.rating}.png`} /></span>
+                                <span><img className="stars" src={`/img/star${Math.round(props.rating)}.png`} /></span>
                                
                             </div>
                             <div className="review-block-title">this was nice in buy</div>

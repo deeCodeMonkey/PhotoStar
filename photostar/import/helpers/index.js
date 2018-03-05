@@ -14,7 +14,8 @@ export const avgReview = (reviews) => {
         sum += parseInt(reviews[i].rating);
     }
     let avg = sum / reviews.length;
-    return Math.round(avg); //* 10) / 10;
+    console.log('AVG===', Math.round(avg * 10) / 10);
+    return Math.round(avg * 10) / 10;
 }
 
 //get client collection from mongodb aggregation pipeline

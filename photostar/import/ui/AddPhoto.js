@@ -139,7 +139,7 @@ class AddPhoto extends Component {
 
                                     <div className="col-md-8">
                                         {this.state.errorMessage ?
-                                            <p className="text-danger bg-danger">{this.state.errorMessage}</p>
+                                            <p className="alert alert-danger">{this.state.errorMessage}</p>
                                             : ''
                                         }
 
