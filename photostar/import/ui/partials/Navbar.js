@@ -25,36 +25,30 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-inverse navbar-fixed-top">
-                    <div className="container">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
-                            <Link className="navbar-brand" to="/">RateMyPet</Link>
+                <div class="col-md-6 col-md-offset-2">
+                    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+                        <div class="container">
+                            <div class="row">
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li><Link className="navbar-brand" to="/">RateMyPet</Link></li>
+                                        <li><Link to="/">Home</Link></li>
+                                        <li><Link to="/categories/All">All Photos</Link></li>
+                                        {this.state.loggedIn ?
+                                            <ul className="nav navbar-nav">
+                                                <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
+                                                <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li> 
+                                            </ul>
+                                            : ''}
+                                        
+                                        <li><a href="#"></a></li>
+                                        <li><UserAccounts /></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div id="navbar" className="collapse navbar-collapse">
-                            <ul className="nav navbar-nav">
-                                <li><UserAccounts /></li>
-                            </ul>
-
-                            <ul className="nav navbar-nav">
-                                <li><Link to="/categories/All">All Photos</Link></li>
-                            </ul>
-
-                            {this.state.loggedIn ?
-                                <ul className="nav navbar-nav"> <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
-                                    <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li>
-                                </ul>
-                                : ''
-                            }
-                            
-                        </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             </div>
         );
     }
@@ -63,3 +57,35 @@ class Navbar extends Component {
 export default Navbar;
 
 
+//<div>
+//    <nav className="navbar navbar-inverse navbar-fixed-top">
+//        <div className="container">
+//            <div className="navbar-header">
+//                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+//                    <span className="sr-only">Toggle navigation</span>
+//                    <span className="icon-bar"></span>
+//                    <span className="icon-bar"></span>
+//                    <span className="icon-bar"></span>
+//                </button>
+//                <Link className="navbar-brand" to="/">RateMyPet</Link>
+//            </div>
+//            <div id="navbar" className="collapse navbar-collapse">
+//                <ul className="nav navbar-nav">
+//                    <li><UserAccounts /></li>
+//                </ul>
+
+//                <ul className="nav navbar-nav">
+//                    <li><Link to="/categories/All">All Photos</Link></li>
+//                </ul>
+
+//                {this.state.loggedIn ?
+//                    <ul className="nav navbar-nav"> <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
+//                        <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li>
+//                    </ul>
+//                    : ''
+//                }
+
+//            </div>
+//        </div>
+//    </nav>
+//</div>
