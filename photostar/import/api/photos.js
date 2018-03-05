@@ -62,6 +62,7 @@ if (Meteor.isServer) {
                     _id: '$reviews.reviewedBy',
                     reviewCreatedAt: { "$first": "$reviews.reviewCreatedAt" },
                     rating: { "$first": "$reviews.rating" },
+                    heading: { "$first": "$reviews.heading" },
                     body: { "$first": "$reviews.body" },
                     reviewedBy: { "$first": "$reviews.reviewedBy" }
                 }

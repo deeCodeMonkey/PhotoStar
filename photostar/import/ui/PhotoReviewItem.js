@@ -24,7 +24,7 @@ const PhotoReviewItem = (props) => {
                                 <span><img className="stars" src={`/img/star${Math.round(props.rating)}.png`} /></span>
                                
                             </div>
-                            <div className="review-block-title">this was nice in buy</div>
+                            <div className="review-block-title">{props.heading}</div>
                             <div className="review-block-description">{props.body}</div>
                         </div>
 

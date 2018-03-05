@@ -14,7 +14,6 @@ export const avgReview = (reviews) => {
         sum += parseInt(reviews[i].rating);
     }
     let avg = sum / reviews.length;
-    console.log('AVG===', Math.round(avg * 10) / 10);
     return Math.round(avg * 10) / 10;
 }
 

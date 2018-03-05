@@ -51,7 +51,7 @@ class AddReview extends Component {
 
 
     render() {
-        
+
         return (
             <div>
                 {this.state.photo ?
@@ -59,40 +59,68 @@ class AddReview extends Component {
                         <PhotoItem photo={this.state.photo} />
                     </div> : ''}
 
-                <h3>Add A Review For <strong>{this.props.match.params.photoTitle}</strong></h3>
 
                 {this.state.errorMessage ?
                     <p className="alert alert-danger">{this.state.errorMessage}</p>
                     : ''
                 }
 
-                <form className="new-review" onSubmit={(e) => this.onSubmit(e, this.props.match.params.photoId)}>
-                    <div className="form-group">
-                        <label>Star Rating</label>
-                        <select className="form-control" name="rating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Review Heading</label>
-                        <input className="form-control" name="heading" />
-                    </div>
-                    <div className="form-group">
-                        <label>Comments</label>
-                        <textarea className="form-control" name="body"></textarea>
-                    </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h3>Add A Review For "<strong>{this.props.match.params.photoTitle}</strong>"</h3>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-1 col-md-1"></div>
+                            <div className="col-sm-10 review-form">
+                                <form id="contact" method="post" className="form" role="form"
+                                    onSubmit={(e) => this.onSubmit(e, this.props.match.params.photoId)}>
+                                    <div className="row">
+                                        <label className="col-md-2 control-label">Star Rating</label>
+                                        <div className="col-xs-2 col-md-2 form-group">
+                                            <select className="form-control" name="rating">
+                                                <option value="0">Select</option>
+                                                <option value="1">1 Star</option>
+                                                <option value="2">2 Stars</option>
+                                                <option value="3">3 Stars</option>
+                                                <option value="4">4 Stars</option>
+                                                <option value="5">5 Stars</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                    <div>
-                        <input type="submit" name="submit" className="btn btn-review" value="Submit Review" />
-                        <Link to={`/review/${this.props.match.params.photoId}`} className="btn btn-review-cancel">Cancel</Link>
+                                    {/*Text Inputs*/}
+                                    <div className="row">
+                                        <label className="col-md-2 control-label">Review Heading</label>
+                                        <div className="col-xs-9 col-md-9 form-group">
+                                            <input className="form-control" id="heading" name="heading" placeholder="Heading" type="text" required autoFocus />
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <label className="col-md-2 control-label">Comment</label>
+                                        <div className="col-xs-9 col-md-9"> <textarea className="form-control" id="body" name="body" placeholder="Review Comments" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    {/*Buttons*/}
+                                    <div className="row">
+                                        <div className="col-xs-8 col-md-8 form-group">
+                                        </div>
+                                        <div className="col-xs-1 col-md-1 form-group">
+                                            <Link to={`/review/${this.props.match.params.photoId}`} className="btn btn-review-cancel">Cancel</Link>
+                                        </div>
+                                        <div className="col-xs-2 col-md-2 form-group">
+                                            <input type="submit" name="submit" className="btn btn-review pull-right" value="Submit Review" />
+                                        </div>
+                                        <div className="col-xs-1 col-md-1"></div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="col-xs-1 col-md-1"></div>
+                        </div>
                     </div>
-
-                </form>
-
+                </div>
             </div>
         );
     }
@@ -102,4 +130,3 @@ export default AddReview;
 
 
 
-//https://bootsnipp.com/snippets/featured/bootstrap-300-contact-form

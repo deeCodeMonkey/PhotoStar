@@ -54,7 +54,6 @@ class PhotoReview extends Component {
                 if (this.state.reviews[i].reviewedBy === Meteor.user().emails[0].address) {
                     return false;
                 }
-                return true;
             }
         }
         return true;
@@ -126,10 +125,10 @@ class PhotoReview extends Component {
         //const style = {
         //    backgroundColor: 'red'
         //}
-
+        
         //ensure data from both are available before rendering
         if (!this.props.photoProfile || !this.state.reviews) return null;
-
+      
         const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
         return (
@@ -245,7 +244,7 @@ class PhotoReview extends Component {
                             <p>There are no ratings.</p> :
                             this.state.reviews.map((review, index) => {
                                 return (
-                                    <PhotoReviewItem key={index} rating={review.rating} body={review.body} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
+                                    <PhotoReviewItem key={index} rating={review.rating} body={review.body} heading={review.heading} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />
                                 );
                             })
                         }

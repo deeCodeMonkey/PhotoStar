@@ -130,6 +130,34 @@ class AddPhoto extends Component {
 
         return (
             <div className="container">
+
+                {/*MODAL*/}
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+                <div class="modal fade-scale" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Some text in the modal.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {/*MODAL*/}
+
+
+
+
                 <div className="row">
                     <div className="col-md-12">
                         <legend><center>Add Photo Gallery And Info</center></legend>
@@ -166,7 +194,7 @@ class AddPhoto extends Component {
                                             <label className="col-md-3 control-label">Photos (Up to 6)</label>
                                             <div className="col-md-9">
                                                 <div class="update-nag">
-                                                    <input type="file" name="image" id="image" multiple class="hide"/> 
+                                                    <input type="file" name="image" id="image" multiple class="hide" />
                                                     <label htmlFor="image" class="update-split update-info"><i class="glyphicon glyphicon-folder-open"></i></label>
                                                 </div>
                                             </div>
@@ -212,50 +240,80 @@ export default AddPhoto;
 
 
 
+//<div className="container">
+//    <div className="row">
+//        <div className="col-md-12">
+//            <legend><center>Add Photo Gallery And Info</center></legend>
+//            <form onSubmit={this.onSubmit} className="form-horizontal">
+//                <fieldset>
+//                    <div className="col-md-12">
+
+//                        <div className="col-md-8">
+//                            {this.state.errorMessage ?
+//                                <p className="alert alert-danger">{this.state.errorMessage}</p>
+//                                : ''
+//                            }
+
+//                            <div className="form-group">
+//                                <label className="col-md-3 control-label">Title</label>
+//                                <div className="col-md-9">
+//                                    <input id="title" name="title" placeholder="Title" className="form-control input-md" required="" type="text" />
+
+//                                </div>
+//                            </div>
+//                            {/*<!-- Select Basic -->*/}
+//                            <div className="form-group">
+//                                <label className="col-md-3 control-label">Category</label>
+//                                <div className="col-md-9">
+//                                    <select id="category" name="category" className="form-control">
+//                                        <option value="0">Select Category</option>
+//                                        {this.renderCategories()}
+
+//                                    </select>
+//                                </div>
+//                            </div>
+
+//                            <div className="form-group">
+//                                <label className="col-md-3 control-label">Photos (Up to 6)</label>
+//                                <div className="col-md-9">
+//                                    <div class="update-nag">
+//                                        <input type="file" name="image" id="image" multiple class="hide" />
+//                                        <label htmlFor="image" class="update-split update-info"><i class="glyphicon glyphicon-folder-open"></i></label>
+//                                    </div>
+//                                </div>
+//                            </div>
+
+//                            {/*<!-- Textarea -->*/}
+//                            <div className="form-group">
+//                                <label className="col-md-3 control-label">Discription</label>
+//                                <div className="col-md-9">
+//                                    <textarea className="form-control" id="description" name="description"></textarea>
+//                                </div>
+//                            </div>
+
+//                            {/*<!-- Button -->*/}
+//                            <div className="form-group">
+//                                <label className="col-md-3 control-label"></label><center>
+//                                    <div className="col-md-4">
+//                                        <Link to="/categories/all" className="btn_orange medium customs-margin">Cancel</Link>
+//                                    </div>
+//                                    <div className="col-md-5">
+//                                        <button id="submit" name="submit" className="btn_orange medium customs-margin">Submit</button>
+//                                    </div>
+//                                </center>
+//                            </div>
+
+//                            <div>
+//                                {this.state.loading ?
+//                                    <div className="loading">Loading&#8230;</div>
+//                                    : ''}
+//                            </div>
+//                        </div>
+//                    </div>
+//                </fieldset>
+//            </form>
+//        </div>
+//    </div>
+//</div>
 
 
-
-
-            //<div>
-            //    <h3>Add Photo</h3>
-
-            //    {this.state.errorMessage ?
-            //        <p className="text-danger bg-danger">{this.state.errorMessage}</p>
-            //        : ''
-            //    }
-
-            //    <form onSubmit={this.onSubmit} className="add_product">
-            //        <div className="form-group">
-            //            <label>Title</label>
-            //            <input type="text" name="title" className="form-control" placeholder="Photo Title" />
-            //        </div>
-
-            //        <div className="form-group">
-            //            <label>Category</label>
-            //            <select className="form-control" name="category">
-            //                <option value="0">--Select Category--</option>
-            //                {this.renderCategories()}
-            //            </select>
-            //        </div>
-
-            //        <div className="form-group">
-            //            <label>Photo</label>
-            //            <input type="file" name="image" id="image" multiple />
-            //        </div>
-
-            //        <div className="form-group">
-            //            <label>Description</label>
-            //            <textarea name="description" className="form-control"></textarea>
-            //        </div>
-
-            //        <div>
-            //            <button className="btn btn-photo" >Add Photo</button>
-            //            <Link to="/photos" className="btn btn-photo-cancel">Cancel</Link>
-            //        </div>
-            //    </form>
-
-            //    {this.state.loading ?
-            //        <div className="loading">Loading&#8230;</div>
-            //        : ''}
-
-            //</div>

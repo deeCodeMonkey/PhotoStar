@@ -25,30 +25,28 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <div class="col-md-6 col-md-offset-2">
-                    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
-                        <div class="container">
-                            <div class="row">
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                    <ul class="nav navbar-nav">
-                                        <li><Link className="navbar-brand" to="/">RateMyPet</Link></li>
-                                        <li><Link to="/">Home</Link></li>
-                                        <li><Link to="/categories/All">All Photos</Link></li>
-                                        {this.state.loggedIn ?
-                                            <ul className="nav navbar-nav">
-                                                <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
-                                                <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li> 
-                                            </ul>
-                                            : ''}
-                                        
-                                        <li><a href="#"></a></li>
-                                        <li><UserAccounts /></li>
-                                    </ul>
-                                </div>
+                <nav className="navbar navbar-default navbar-inverse navbar-fixed-top">
+                    <div className="container">
+                        <div className="row">
+                            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul className="nav navbar-nav">
+                                    <li><Link className="navbar-brand" to="/">RateMyPet</Link></li>
+                                    <li><Link to="/">Home</Link></li>
+                                    <li><Link to="/categories/All">All Photos</Link></li>
+                                    {this.state.loggedIn ?
+                                        <ul className="nav navbar-nav">
+                                            <li><Link to={`/photos/${Meteor.userId()}`}>My Photos</Link></li>
+                                            <li><Link to={`/photos/${Meteor.userId()}/add`} > Add Photo</Link></li>
+                                        </ul>
+                                        : ''}
+
+                                    <li><a href="#"></a></li>
+                                    <li><UserAccounts /></li>
+                                </ul>
                             </div>
                         </div>
-                    </nav>
-                </div>
+                    </div>
+                </nav>
             </div>
         );
     }

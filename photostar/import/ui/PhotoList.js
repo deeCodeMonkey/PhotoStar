@@ -89,8 +89,8 @@ export default class PhotoList extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <div class="or-spacer">
-                                <div class="mask"></div>
+                            <div className="or-spacer">
+                                <div className="mask"></div>
                                 <span><i>{this.state.category} Photos</i></span>
                             </div>
 
