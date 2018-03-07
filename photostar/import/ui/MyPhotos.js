@@ -50,12 +50,17 @@ export default class MyPhotos extends Component {
 
         return (
             <div>
-                <h3>My Photos</h3>
+                <div className="or-spacer">
+                    <div className="mask"></div>
+                    <span><i>My Photos</i></span>
+                </div>
+                <br />
+             
                 {this.state.photos.length ?
                     <div className="container" >
                         {this.renderPhotos()}
                     </div>
-                    : (<div>You have no photos. Add one now!
+                    : (<div className="text-center">You have no photos. Add one now!
                         <br/>
                         <div className="row d-inline-block">
                             <div className="col-md-3">

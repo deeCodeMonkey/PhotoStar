@@ -31,14 +31,12 @@ const DefaultLayout = ({ component: Component, ...rest }) => {
 const SidebarLayout = ({ component: Component, ...rest }) => {
     return (
         <DefaultLayout {...rest} component={matchProps => (
-            <div>
-                <div className="row">
-                    <div className="col-md-3">
-                        <Sidebar />
-                    </div>
-                    <div className="col-md-9">
-                        <Component {...matchProps} />
-                    </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <Sidebar />
+                </div>
+                <div className="col-md-9">
+                    <Component {...matchProps} />
                 </div>
             </div>
         )} />
@@ -54,7 +52,7 @@ export const routes = (
 
                     <DefaultLayout path="/review/add/:photoTitle/:photoId" component={AddReview} />
 
-                    <DefaultLayout  path="/review/:photoId" component={PhotoReview} />
+                    <DefaultLayout path="/review/:photoId" component={PhotoReview} />
 
                     <SidebarLayout path="/categories/:category" component={PhotoList} />
 

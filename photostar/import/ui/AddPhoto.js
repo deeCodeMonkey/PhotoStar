@@ -32,6 +32,7 @@ class AddPhoto extends Component {
             const categories = Categories.find().fetch();
             this.setState({ categories });
         });
+        this.setState({ loading: false });
     }
 
     renderCategories = () => {
@@ -110,6 +111,7 @@ class AddPhoto extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
+        this.setState({ errorMessage: null });
 
         const userId = Meteor.userId();
         const userEmail = Meteor.user().emails[0].address;
@@ -127,110 +129,97 @@ class AddPhoto extends Component {
 
 
     render() {
+        {
+            this.state.errorMessage ?
+                this.setState({ loading: false })
+                : ''
+        }
 
         return (
-            <div className="container">
-
-                {/*MODAL*/}
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-                <div class="modal fade-scale" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Some text in the modal.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+            <div>
+                <div className="row">
+                    <div className="col-sm-1">
+                    </div>
+                    <div className="col-sm-10">
+                        <div className="or-spacer">
+                            <div className="mask"></div>
+                            <span><i>Add Photos</i></span>
                         </div>
+                         <div className="col-sm-1">
+                    </div>
+                    </div>
+                </div>
+                <br />
+                <div className="row">
+                    <div className="col-sm-12">
+                        {this.state.errorMessage ?
+                            <p className="alert alert-danger">{this.state.errorMessage}</p>
+                            : ''
+                        }
+
+                        {this.state.loading ?
+                            <div className="loading">Loading&#8230;</div>
+                            : ''}
 
                     </div>
                 </div>
-                {/*MODAL*/}
+                    <div className="row">
+                    <div className="col-xs-1 col-md-1"></div>
+                    <div className="col-sm-10 review-form">
+                        <form id="contact" method="post" className="form" role="form"
+                            onSubmit={this.onSubmit}>
+                            <div className="row">
+                                <h4 className="col-md-2">Category</h4>
+                                <div className="col-xs-4 col-md-4 form-group">
+                                    <select id="category" name="category" className="form-control">
+                                        <option value="0">Select Category</option>
+                                        {this.renderCategories()}
+                                    </select>
+                                </div>
+                            </div>
 
-
-
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <legend><center>Add Photo Gallery And Info</center></legend>
-                        <form onSubmit={this.onSubmit} className="form-horizontal">
-                            <fieldset>
-                                <div className="col-md-12">
-
-                                    <div className="col-md-8">
-                                        {this.state.errorMessage ?
-                                            <p className="alert alert-danger">{this.state.errorMessage}</p>
-                                            : ''
-                                        }
-
-                                        <div className="form-group">
-                                            <label className="col-md-3 control-label">Title</label>
-                                            <div className="col-md-9">
-                                                <input id="title" name="title" placeholder="Title" className="form-control input-md" required="" type="text" />
-
-                                            </div>
-                                        </div>
-                                        {/*<!-- Select Basic -->*/}
-                                        <div className="form-group">
-                                            <label className="col-md-3 control-label">Category</label>
-                                            <div className="col-md-9">
-                                                <select id="category" name="category" className="form-control">
-                                                    <option value="0">Select Category</option>
-                                                    {this.renderCategories()}
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label className="col-md-3 control-label">Photos (Up to 6)</label>
-                                            <div className="col-md-9">
-                                                <div class="update-nag">
-                                                    <input type="file" name="image" id="image" multiple class="hide" />
-                                                    <label htmlFor="image" class="update-split update-info"><i class="glyphicon glyphicon-folder-open"></i></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/*<!-- Textarea -->*/}
-                                        <div className="form-group">
-                                            <label className="col-md-3 control-label">Discription</label>
-                                            <div className="col-md-9">
-                                                <textarea className="form-control" id="description" name="description"></textarea>
-                                            </div>
-                                        </div>
-
-                                        {/*<!-- Button -->*/}
-                                        <div className="form-group">
-                                            <label className="col-md-3 control-label"></label><center>
-                                                <div className="col-md-4">
-                                                    <Link to="/categories/all" className="btn_orange medium customs-margin">Cancel</Link>
-                                                </div>
-                                                <div className="col-md-5">
-                                                    <button id="submit" name="submit" className="btn_orange medium customs-margin">Submit</button>
-                                                </div>
-                                            </center>
-                                        </div>
-
-                                        <div>
-                                            {this.state.loading ?
-                                                <div className="loading">Loading&#8230;</div>
-                                                : ''}
-                                        </div>
+                            {/*File Upload*/}
+                            <div className="row">
+                                <h4 className="col-md-2 control-label">Photos (Up to 6)</h4>
+                                <div className="col-md-1">
+                                    <div className="update-nag">
+                                        <input type="file" name="image" id="image" multiple className="hide" />
+                                        <label htmlFor="image" className="update-split update-info"><i className="glyphicon glyphicon-folder-open"></i></label>
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div className="col-md-9"></div>
+                            </div>
+
+                            {/*Text Inputs*/}
+                            <div className="row">
+                                <h4 className="col-md-2 control-label">Title</h4>
+                                <div className="col-xs-9 col-md-9 form-group">
+                                    <input className="form-control" id="title" name="title" placeholder="Title" type="text" required autoFocus />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <h4 className="col-md-2 control-label">Description</h4>
+                                <div className="col-xs-9 col-md-9"> <textarea className="form-control" id="description" name="description" placeholder="Description" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <br />
+
+                            {/*Buttons*/}
+                            <div className="row">
+                                <div className="col-xs-8 col-md-8 form-group">
+                                </div>
+                                <div className="col-xs-1 col-md-1 form-group">
+                                    <Link to="/categories/All" className="btn btn-review-cancel">Cancel</Link>
+                                </div>
+                                <div className="col-xs-2 col-md-2 form-group">
+                                    <input type="submit" name="submit" className="btn btn-review pull-right" value="Submit Review" />
+                                </div>
+                                <div className="col-xs-1 col-md-1"></div>
+                            </div>
                         </form>
                     </div>
-                </div>
+                    </div>
+                    <div className="col-xs-1 col-md-1"></div>
             </div>
         );
     }
@@ -238,82 +227,5 @@ class AddPhoto extends Component {
 
 export default AddPhoto;
 
-
-
-//<div className="container">
-//    <div className="row">
-//        <div className="col-md-12">
-//            <legend><center>Add Photo Gallery And Info</center></legend>
-//            <form onSubmit={this.onSubmit} className="form-horizontal">
-//                <fieldset>
-//                    <div className="col-md-12">
-
-//                        <div className="col-md-8">
-//                            {this.state.errorMessage ?
-//                                <p className="alert alert-danger">{this.state.errorMessage}</p>
-//                                : ''
-//                            }
-
-//                            <div className="form-group">
-//                                <label className="col-md-3 control-label">Title</label>
-//                                <div className="col-md-9">
-//                                    <input id="title" name="title" placeholder="Title" className="form-control input-md" required="" type="text" />
-
-//                                </div>
-//                            </div>
-//                            {/*<!-- Select Basic -->*/}
-//                            <div className="form-group">
-//                                <label className="col-md-3 control-label">Category</label>
-//                                <div className="col-md-9">
-//                                    <select id="category" name="category" className="form-control">
-//                                        <option value="0">Select Category</option>
-//                                        {this.renderCategories()}
-
-//                                    </select>
-//                                </div>
-//                            </div>
-
-//                            <div className="form-group">
-//                                <label className="col-md-3 control-label">Photos (Up to 6)</label>
-//                                <div className="col-md-9">
-//                                    <div class="update-nag">
-//                                        <input type="file" name="image" id="image" multiple class="hide" />
-//                                        <label htmlFor="image" class="update-split update-info"><i class="glyphicon glyphicon-folder-open"></i></label>
-//                                    </div>
-//                                </div>
-//                            </div>
-
-//                            {/*<!-- Textarea -->*/}
-//                            <div className="form-group">
-//                                <label className="col-md-3 control-label">Discription</label>
-//                                <div className="col-md-9">
-//                                    <textarea className="form-control" id="description" name="description"></textarea>
-//                                </div>
-//                            </div>
-
-//                            {/*<!-- Button -->*/}
-//                            <div className="form-group">
-//                                <label className="col-md-3 control-label"></label><center>
-//                                    <div className="col-md-4">
-//                                        <Link to="/categories/all" className="btn_orange medium customs-margin">Cancel</Link>
-//                                    </div>
-//                                    <div className="col-md-5">
-//                                        <button id="submit" name="submit" className="btn_orange medium customs-margin">Submit</button>
-//                                    </div>
-//                                </center>
-//                            </div>
-
-//                            <div>
-//                                {this.state.loading ?
-//                                    <div className="loading">Loading&#8230;</div>
-//                                    : ''}
-//                            </div>
-//                        </div>
-//                    </div>
-//                </fieldset>
-//            </form>
-//        </div>
-//    </div>
-//</div>
 
 

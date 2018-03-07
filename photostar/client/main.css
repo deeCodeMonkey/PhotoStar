@@ -1,13 +1,13 @@
 /* CSS declarations go here */
 body {
-    margin-top: 70px;
+    margin-top: 20px;
     background-color: #ffffff; /*#EFEFEF;*/
     font-family: 'Kavivanar', cursive;
 }
 
 footer {
     background: #333;
-    background-color: #474744;
+    background-color: #374353;
     color: white;
     height: 40px;
     text-align: center;
@@ -59,7 +59,7 @@ footer {
 
 .navbar {
     background-color: #474744;
-    background: #333;
+    background: #374353;
     color: white;
     font-family: 'Indie Flower';
 }

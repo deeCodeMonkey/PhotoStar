@@ -54,6 +54,15 @@ class AddReview extends Component {
 
         return (
             <div>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="or-spacer">
+                            <div className="mask"></div>
+                            <span><i>Leave A Review</i></span>
+                        </div>
+                        {/*<h3>Add A Review For "<strong>{this.props.match.params.photoTitle}</strong>"</h3>*/}
+                    </div>
+                </div>
                 {this.state.photo ?
                     <div>
                         <PhotoItem photo={this.state.photo} />
@@ -64,19 +73,15 @@ class AddReview extends Component {
                     <p className="alert alert-danger">{this.state.errorMessage}</p>
                     : ''
                 }
-
-                <div className="container">
                     <div className="row">
-                        <div className="col-sm-12">
-                            <h3>Add A Review For "<strong>{this.props.match.params.photoTitle}</strong>"</h3>
-                        </div>
+
                         <div className="row">
                             <div className="col-xs-1 col-md-1"></div>
                             <div className="col-sm-10 review-form">
                                 <form id="contact" method="post" className="form" role="form"
                                     onSubmit={(e) => this.onSubmit(e, this.props.match.params.photoId)}>
                                     <div className="row">
-                                        <label className="col-md-2 control-label">Star Rating</label>
+                                        <h4 className="col-md-2">Star Rating</h4>
                                         <div className="col-xs-2 col-md-2 form-group">
                                             <select className="form-control" name="rating">
                                                 <option value="0">Select</option>
@@ -91,13 +96,13 @@ class AddReview extends Component {
 
                                     {/*Text Inputs*/}
                                     <div className="row">
-                                        <label className="col-md-2 control-label">Review Heading</label>
+                                        <h4 className="col-md-2 control-label">Review Heading</h4>
                                         <div className="col-xs-9 col-md-9 form-group">
                                             <input className="form-control" id="heading" name="heading" placeholder="Heading" type="text" required autoFocus />
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <label className="col-md-2 control-label">Comment</label>
+                                        <h4 className="col-md-2 control-label">Comments</h4>
                                         <div className="col-xs-9 col-md-9"> <textarea className="form-control" id="body" name="body" placeholder="Review Comments" rows="5"></textarea>
                                         </div>
                                     </div>
@@ -121,7 +126,6 @@ class AddReview extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         );
     }
 }
