@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 body {
     margin-top: 20px;
-    background-color: #ffffff; /*#EFEFEF;*/
+    background-color: #ffffff;
     font-family: 'Kavivanar', cursive;
 }
 
@@ -13,6 +13,11 @@ footer {
     text-align: center;
     padding-top: 10px;
     margin-top: 40px;
+}
+
+a {
+    color: #25bea0;
+    font-weight: bold;
 }
 
 .review-form {
@@ -46,7 +51,7 @@ footer {
 }
 
 .marg-t {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .marg-tt {
@@ -54,16 +59,20 @@ footer {
 }
 
 .marg-l {
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
-.navbar {
-    background-color: #474744;
-    background: #374353;
-    color: white;
-    font-family: 'Indie Flower';
+.marg-r {
+    margin-right: 15px;
 }
 
+.marg-b {
+    margin-bottom: 50px;
+}
+
+.marg-t-0 {
+    margin-top: 0px;
+}
 
 .btn-reviews:hover {
     background-color: #FF5722;
@@ -103,8 +112,15 @@ footer {
     width: 100%
 }
 
+.image-size > img {
+    width: 100%;
+    border-radius: 3%;
+    margin-left: 15px;
+}
+
 .flex {
     display: flex;
+    flex-direction: column;
 }
 
 .img-rounded {
@@ -114,7 +130,7 @@ footer {
 /*tags input*/
 .input-group-addon.tag {
     color: rgb(255, 255, 255);
-    background-color:darkorange;
+    background-color: #25BEA0;
     border-color: white;
 }
 
@@ -123,10 +139,10 @@ footer {
 }
 
 .tags a {
-    border: 1px solid #DDD;
+    border: 1px dotted #DDD;
     display: inline-block;
     color: #717171;
-    background: #FFF;
+    background: #65EEB7;
     -webkit-box-shadow: 0 1px 1px 0 rgba(180,180,180,0.1);
     box-shadow: 0 1px 1px 0 rgba(180,180,180,0.1);
     -webkit-transition: all .1s ease-in-out;

@@ -78,7 +78,10 @@ export default class PhotoList extends Component {
     renderPhotos = () => {
         return this.state.photos.map((photo) => {
             return (
-                <PhotoItem key={photo._id} photo={photo} />
+                <div className="row" key={photo._id}>
+                    <PhotoItem photo={photo} />
+                    <br/>
+                </div>
             );
         })
     }
@@ -92,12 +95,10 @@ export default class PhotoList extends Component {
                     <span><i>{this.state.category} Photos</i></span>
                 </div>
                 <br />
-                <div className="row">
-                    <div className="col-md-1">
-                    </div>
-                    <div className="col-md-10">
+                <div className="row">         
+                    <div className="col-md-10 marg-l">
                         <div id="custom-search-input">
-                            <form className="input-group col-md-10" onSubmit={this.searchTags}>
+                            <form className="input-group" onSubmit={this.searchTags}>
                                 <input type="text" className="search-query form-control" placeholder="Search By Tag Keywords" value={this.state.keywords} onChange={this.handleKeywordsChange} />
                                 <span className="input-group-btn">
                                     <button className="btn btn-danger" type="button" onClick={() => { this.filterPhotos(this.state.category) }}>
@@ -106,17 +107,12 @@ export default class PhotoList extends Component {
                                 </span>
                             </form>
                         </div>
-                        <div className="col-md-1">
-                        </div>
+                    </div>
+                    <div className="col-md-1 marg-t">
+                        <button className="btn_clear" onClick={() => this.filterPhotos(this.state.category)}>Clear</button>
                     </div>
                 </div>
-                <div className="col-md-4">
-                </div>
-                <div className="col-md-4">
-                    <button className="btn_orange medium customs-margin" onClick={() => this.filterPhotos(this.state.category)}>Clear Search</button>
-                </div>
-                <div className="col-md-4">
-                </div>
+                
                 <br />
                 <div className="row">
                     <div className="col-md-12">

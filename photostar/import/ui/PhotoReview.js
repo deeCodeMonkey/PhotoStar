@@ -6,12 +6,11 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Photos, reviewsCollection } from '../api/photos';
 
-import { avgReview, fetchClientReport } from '../helpers/index';
+import { fetchClientReport } from '../helpers/index';
 
 import PhotoReviewItem from './PhotoReviewItem';
 import PhotoReviewTags from './PhotoReviewTags';
-import PhotoReviewDeleteModal from './PhotoReviewDeleteModal';
-import PhotoReviewRatingBox from './PhotoReviewRatingBox';
+import PhotoReviewHead from './PhotoReviewHead';
 
 
 class PhotoReview extends Component {
@@ -107,7 +106,7 @@ class PhotoReview extends Component {
 
     renderNotation = (loggedIn, isCurrentUser, userId, displayReviewButton) => {
         if (!loggedIn) {
-            return <p>Log in to rate this photo, or submit your own photo!</p>;
+            return <p>Log in to rate this photo, or submit your own!</p>;
         }
         else if (isCurrentUser(loggedIn, userId) && loggedIn) {
             return <p>Note: You cannot rate your own photo.</p>
@@ -122,13 +121,8 @@ class PhotoReview extends Component {
 
 
     render() {
-        //const style = {
-        //    backgroundColor: 'red'
-        //}
-        
-        //ensure data from both are available before rendering
         if (!this.props.photoProfile || !this.state.reviews) return null;
-      
+
         const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
 
         return (
@@ -149,64 +143,30 @@ class PhotoReview extends Component {
                 </div>
 
 
-
-
-
-
                 {/*profile head*/}
-                <div className="container style_30">
-                    <div className="profile-head">
-                        <div className="row">
-                            <div className="col-md-6 col-sm-6 col-xs-6">
-                                <div className="container">
-                                    <h2>{title}</h2>
-                                </div>
-                                <hr />
-                                <ul>
-                                    <li><span className="glyphicon glyphicon-map-marker"></span>Category: {category}</li>
-                                    <li><span className="glyphicon glyphicon-briefcase"></span>Submitted By: {userEmail}</li>
-                                    <li><span className="glyphicon glyphicon-briefcase"></span>Note: {this.renderNotation(this.state.loggedIn, this.isCurrentUser, userId, this.displayReviewButton)}</li>
-                                </ul>
-
-                                <div>
-                                    <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <button className="btn_orange medium customs-margin" onClick={() => this.props.history.goBack()}>Back</button>
-                                    </div>
-                                    {
-                                        (this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn) ?
-                                            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                                <button className="btn_orange medium customs-margin" onClick={this.modalOpen}>Delete</button>
-                                            </div>
-                                            : ''
-                                    }
-
-                                    <PhotoReviewDeleteModal modalStatus={this.state.modalStatus} modalClose={this.modalClose} deleteGallery={this.deleteGallery} />
-
-                                    {(!this.isCurrentUser(this.state.loggedIn, userId) && this.state.loggedIn && this.displayReviewButton()) ?
-                                        (<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <Link to={`/review/add/${title}/${_id}`} className="btn_orange medium customs-margin">Leave A Review</Link>
-                                        </div>)
-                                        : ''
-                                    }
-
-                                </div>
-
-                            </div>
-
-                            <div className="col-md-6 col-sm-6 col-xs-6">
-                                {reviews ?
-                                    < PhotoReviewRatingBox avgReview={avgReview} reviewsCount={reviews.length} reviews={reviews} />
-                                    : <p> No reviews. </p>}
-                            </div>
-                        </div>
+                <div className="row">
+                    <div className="or-spacer">
+                        <div className="mask"></div>
                     </div>
                 </div>
-
-
-
-
-
-                <br />
+                <PhotoReviewHead
+                    renderNotation={this.renderNotation}
+                    loggedIn={this.state.loggedIn}
+                    isCurrentUser={this.isCurrentUser}
+                    userId={userId}
+                    displayReviewButton={this.displayReviewButton}
+                    _id={_id}
+                    title={title}
+                    category={category}
+                    userEmail={userEmail}
+                    modalOpen={this.modalOpen}
+                    modalClose={this.modalClose}
+                    modalStatus={this.state.modalStatus}
+                    deleteGallery={this.deleteGallery}
+                    reviews={reviews}
+                    goBack={this.props.history.goBack}
+                    />
+                <hr />
                 <br />
 
                 {/*Description and Tags*/}
@@ -223,7 +183,7 @@ class PhotoReview extends Component {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <label>Tags</label>
-                                        <hr/>
+                                        <hr />
                                         <div>
                                             <PhotoReviewTags tags={tags} userId={userId} photoImages={photoImages} photoId={_id} isCurrentUser={this.isCurrentUser} loggedIn={this.state.loggedIn} />
                                         </div>
@@ -238,10 +198,14 @@ class PhotoReview extends Component {
                     {/*Reviews List*/}
                     <div className="col-sm-8">
                         <div>
-                            <h4>Reviews & Ratings</h4>
+                            
+                            <div className="or-spacer">
+                                <div className="mask"></div>
+                                <span><i>Reviews & Ratings</i></span>
+                            </div>
                         </div>
                         {!this.state.reviews ?
-                            <p>There are no ratings.</p> :
+                            '' :
                             this.state.reviews.map((review, index) => {
                                 return (
                                     <PhotoReviewItem key={index} rating={review.rating} body={review.body} heading={review.heading} createdAt={review.reviewCreatedAt} reviewedBy={review.reviewedBy} />

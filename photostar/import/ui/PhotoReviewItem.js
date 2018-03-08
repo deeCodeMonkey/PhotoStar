@@ -8,7 +8,7 @@ const PhotoReviewItem = (props) => {
 
         <div className="row">
             <div className="col-sm-12">
-                <hr />
+   
                 <div className="review-block">
                     <div className="row">
                         <div className="col-sm-3">

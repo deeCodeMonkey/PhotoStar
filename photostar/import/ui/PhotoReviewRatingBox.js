@@ -25,28 +25,27 @@ const PhotoReviewRatingBox = (props) => {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-sm-3">
-                    <div className="rating-block">
-                        <h4>Average user rating</h4>
-                        <div className="row d-inline-block">
-                            <div className="col-sm-6 padding-bottom-7">
-                                <h2 className="bold">{props.avgReview(props.reviews)} <small>/ 5</small></h2>
-                            </div>
-                            <div className="col-sm-6 padding-bottom-7"><small>({props.reviewsCount}) {
+        <div className="col-sm-12">
+            <div className="rating-block">
+                <h4>Average user rating</h4>
+                <div className="row d-inline-block">
+                    <div className="col-sm-7 padding-bottom-7">
+                        <h2 className="bold">{props.avgReview(props.reviews)} <small>/ 5</small>
+                            &nbsp;&nbsp; <small>({props.reviewsCount}) {
+                            props.reviewsCount === 1 ? 'review' : 'reviews'
+                        }
+                            </small></h2>
+                    </div>
+                    {/*<div className="col-sm-6"><small>({props.reviewsCount}) {
                                 props.reviewsCount === 1 ? 'review' : 'reviews'
                             }</small>
-                            </div>
-                        </div>
-                        <div className="d-inline-block">
-                            {displayStars(Math.round(props.avgReview(props.reviews)))}
-                        </div>
-                    </div>
+                            </div>*/}
+                </div>
+                <div className="d-inline-block">
+                    {displayStars(Math.round(props.avgReview(props.reviews)))}
                 </div>
             </div>
         </div>
-
     );
 
 }

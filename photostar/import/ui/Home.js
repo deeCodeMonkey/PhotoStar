@@ -28,22 +28,26 @@ export default class Home extends Component {
         });
     }
 
-    renderTopPhotos = () => {   
+    renderTopPhotos = () => {
         return this.state.photos.slice(0, 3).map((photo) => {
             return (
-                            <div className="col-sm-6 col-md-4" key={photo._id}>
-                                <div className="thumbnail">
-                                <Link to={`/review/${photo._id}`}><img src={photo.image[0].original} alt="top photos" /></Link>
-                                <div className="caption">
-
-                                    <h4>Rating count: {photo.ratingsCount}</h4> 
-                                    <h4>Rating Avg: {photo.averageRating}</h4>
-
-                                        <p className="card-description"><strong>Bootstrap Thumbnail</strong> Customization Example. Here are customized <strong>bootstrap cards</strong>. We just apply some box shadow and remove border radius.</p>
-                                        <p><Link to={`/review/${photo._id}`} className="btn btn-primary" role="button">Button</Link></p>
-                                    </div>
+                <div className="col-sm-6 col-md-4" key={photo._id}>
+                    <Link to={`/review/${photo._id}`}>
+                        <div className="thumbnail">
+                            <img src={photo.image[0].original} alt="top photos" />
+                            <div className="caption">
+                                <div className="or-spacer">
+                                    <div className="mask"></div>
                                 </div>
-                            </div>   
+                                <h4>Rating count: {photo.ratingsCount}</h4>
+                                <h4>Rating Avg: {photo.averageRating}</h4>
+
+                                <p className="card-description"><strong>Bootstrap Thumbnail</strong> Customization Example. Here are customized <strong>bootstrap cards</strong>. We just apply some box shadow and remove border radius.</p>
+
+                            </div>
+                        </div>
+                    </Link>
+                </div>
             );
         });
     }
@@ -53,12 +57,11 @@ export default class Home extends Component {
 
         return (
             <div>
-               
-                <div className="container flex card-columns">
-                        <div className="row">
-                {this.renderTopPhotos()}
-                        </div>
+                <div className="flex card-columns">
+                    <div className="row">
+                        {this.renderTopPhotos()}
                     </div>
+                </div>
             </div>
         );
     }

@@ -19,7 +19,7 @@ const DefaultLayout = ({ component: Component, ...rest }) => {
         <Route {...rest} render={matchProps => (
             <div>
                 <Navbar />
-                <div className="container">
+                <div className="container marg-t">
                     <Component {...matchProps} />
                 </div>
                 <Footer />

@@ -1,0 +1,147 @@
+﻿/* Button Yellow Css */
+.margin-b-30 {
+    margin-bottom: 30px;
+}
+
+.btn_orange.medium, a.btn_orange.medium {
+    padding: 10px 25px;
+    font-size: 14px;
+}
+
+    .btn_orange.medium:hover {
+        box-shadow: 3px 3px 5px #c2c2c2, -3px -3px 5px #c2c2c2;
+    }
+
+.btn_orange, a.btn_orange {
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    background: #51bce6;
+    cursor: pointer;
+    padding: 7px 20px;
+    display: inline-block;
+    outline: 0;
+    font-size: 12px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+a.btn_orange, .btn_orange {
+    background: #FABC09;
+}
+
+
+
+/* Button Teal Css */
+.margin-b-30 {
+    margin-bottom: 30px;
+}
+
+.btn_teal.medium, a.btn_teal.medium {
+    padding: 10px 25px;
+    font-size: 14px;
+}
+
+    .btn_teal.medium:hover {
+        box-shadow: 3px 3px 5px #c2c2c2, -3px -3px 5px #c2c2c2;
+    }
+
+.btn_teal, a.btn_teal {
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    background: #51bce6;
+    cursor: pointer;
+    padding: 7px 20px;
+    display: inline-block;
+    outline: 0;
+    font-size: 12px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+a.btn_teal, .btn_teal {
+    background: #25bea0;
+}
+
+
+/* Button Clear Search Css */
+.btn_clear.medium, a.btn_grey.medium {
+    padding: 10px;
+    font-size: 8px;
+}
+
+.btn_clear, a.btn_clear {
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    background: #51bce6;
+    cursor: pointer;
+    padding: 7px 20px;
+    display: inline-block;
+    outline: 0;
+    font-size: 12px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+a.btn_clear, .btn_clear {
+    background: silver;
+}
+
+
+/* Button Charcoal Css */
+.margin-b-30 {
+    margin-bottom: 30px;
+}
+
+.btn_charcoal.medium, a.btn_teal.medium {
+    padding: 10px 25px;
+    font-size: 14px;
+}
+
+    .btn_charcoal.medium:hover {
+        box-shadow: 3px 3px 5px #c2c2c2, -3px -3px 5px #c2c2c2;
+    }
+
+.btn_charcoal, a.btn_charcoal {
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    background: #51bce6;
+    cursor: pointer;
+    padding: 7px 20px;
+    display: inline-block;
+    outline: 0;
+    font-size: 12px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+a.btn_charcoal, .btn_charcoal {
+    background: #374353;
+}

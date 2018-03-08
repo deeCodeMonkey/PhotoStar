@@ -206,13 +206,13 @@ class AddPhoto extends Component {
 
                             {/*Buttons*/}
                             <div className="row">
-                                <div className="col-xs-8 col-md-8 form-group">
+                                <div className="col-xs-8 col-md-8 control-label">
                                 </div>
-                                <div className="col-xs-1 col-md-1 form-group">
+                                <div className="col-xs-1 col-md-1">
                                     <Link to="/categories/All" className="btn btn-review-cancel">Cancel</Link>
                                 </div>
-                                <div className="col-xs-2 col-md-2 form-group">
-                                    <input type="submit" name="submit" className="btn btn-review pull-right" value="Submit Review" />
+                                <div className="col-xs-2 col-md-2">
+                                    <input type="submit" name="submit" className="btn btn-review pull-right" value="Submit Photo(s)" />
                                 </div>
                                 <div className="col-xs-1 col-md-1"></div>
                             </div>

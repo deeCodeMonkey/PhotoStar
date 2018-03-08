@@ -57,14 +57,18 @@ export default class MyPhotos extends Component {
                 <br />
              
                 {this.state.photos.length ?
-                    <div className="container" >
+                    <div className="col-md-12">
                         {this.renderPhotos()}
                     </div>
                     : (<div className="text-center">You have no photos. Add one now!
                         <br/>
-                        <div className="row d-inline-block">
-                            <div className="col-md-3">
-                                <button className="btn_orange medium cover-size text-center"><Link to={`/photos/${Meteor.userId()}/add`} style={style}> Add Photo</Link></button>
+                        <div className="row d-inline-block marg-t">
+                            <div className="col-md-4">
+                            </div>
+                            <div className="col-md-4">
+                                <Link to={`/photos/${Meteor.userId()}/add`} style={style}><button className="btn_charcoal medium cover-size text-center">Add Photos</button></Link>
+                            </div>
+                            <div className="col-md-4">
                             </div>
                         </div>
                     </div>

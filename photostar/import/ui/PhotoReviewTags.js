@@ -97,17 +97,17 @@ class PhotoReviewTags extends Component {
         const { loggedIn, userId, tags, photoImages, photoId, isCurrentUser } = this.props;
 
         return (
-            <div className="marg-l">
+            <div>
 
                 {(this.props.isCurrentUser(loggedIn, userId) && !tags && !this.state.tagsLoad) ?
-                    <button className="btn btn-default uplod-file" onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>
+                    <button className="uplod-file" onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>
                         Add Automated Photo Tags
                     </button>
                     : ''}
 
                     <div className="row">
                         <div className="col-md-12">
-                            {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
+                            {this.state.tagsLoad ? <div className="margin-l"> Tags Loading...</div> : ''}
                             {tags ?
                                 tags.map((tag, index) => {
                                     return (
@@ -131,7 +131,7 @@ class PhotoReviewTags extends Component {
                 <div className="row">
                     {tags ?
                         <div>{this.displayTagInput(loggedIn, isCurrentUser, userId, tags, photoId, this.addTag)}</div>
-                        : 'There are no tags.'}
+                        : <p className="marg-l">There are no tags.</p>}
                 </div>
             </div >
         );

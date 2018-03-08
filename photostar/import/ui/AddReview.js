@@ -54,15 +54,7 @@ class AddReview extends Component {
 
         return (
             <div>
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="or-spacer">
-                            <div className="mask"></div>
-                            <span><i>Leave A Review</i></span>
-                        </div>
-                        {/*<h3>Add A Review For "<strong>{this.props.match.params.photoTitle}</strong>"</h3>*/}
-                    </div>
-                </div>
+                
                 {this.state.photo ?
                     <div>
                         <PhotoItem photo={this.state.photo} />
@@ -73,6 +65,17 @@ class AddReview extends Component {
                     <p className="alert alert-danger">{this.state.errorMessage}</p>
                     : ''
                 }
+
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="or-spacer">
+                            <div className="mask"></div>
+                            <span><i>Leave A Review</i></span>
+                        </div>
+                        {/*<h3>Add A Review For "<strong>{this.props.match.params.photoTitle}</strong>"</h3>*/}
+                    </div>
+                </div>
+
                     <div className="row">
 
                         <div className="row">

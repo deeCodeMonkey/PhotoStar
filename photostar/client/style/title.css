@@ -23,16 +23,16 @@
 
     .or-spacer span {
         background-size: auto;
-        width: 130px;
+        width: 150px;
         height: 50px;
         position: absolute;
         bottom: 100%;
         margin-bottom: -25px;
         left: 45%;
         margin-left: -25px;
-        border-radius: 100%;
+        border-radius: 0%;
         box-shadow: 0 2px 4px #999;
-        background: #ffffff;
+        background: #25bea0;
         font-weight: bold;
     }
 
@@ -47,7 +47,7 @@
             text-align: center;
             line-height: 40px;
             font-style: normal;
-            color: #999;
+            color: #ffffff;
         }
 
 .or-spacer-vertical {
@@ -67,7 +67,7 @@
     .or-spacer-vertical.left .mask:after {
         content: '';
         display: block;
-        margin-left: -0px;
+        margin-left: -20px;
         width: 20px;
         height: 100%;
         border-radius: 12px / 125px;
@@ -83,3 +83,7 @@
         border-radius: 12px / 125px;
         box-shadow: 0 0 8px black;
     }
+
+
+
+  
