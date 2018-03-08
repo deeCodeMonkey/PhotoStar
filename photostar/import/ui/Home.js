@@ -29,21 +29,29 @@ export default class Home extends Component {
     }
 
     renderTopPhotos = () => {
-        return this.state.photos.slice(0, 3).map((photo) => {
+        return this.state.photos.slice(0, 3).map((photo, index) => {
             return (
                 <div className="col-sm-6 col-md-4" key={photo._id}>
                     <Link to={`/review/${photo._id}`}>
-                        <div className="thumbnail">
+                        <div className="thumbnail small-padding-bg">
                             <img src={photo.image[0].original} alt="top photos" />
                             <div className="caption">
+
+                                <h4 className="text-center"><strong>{photo.title}</strong></h4>
                                 <div className="or-spacer">
                                     <div className="mask"></div>
                                 </div>
-                                <h4>Rating count: {photo.ratingsCount}</h4>
-                                <h4>Rating Avg: {photo.averageRating}</h4>
-
-                                <p className="card-description"><strong>Bootstrap Thumbnail</strong> Customization Example. Here are customized <strong>bootstrap cards</strong>. We just apply some box shadow and remove border radius.</p>
-
+                                <div className="row">
+                                    <div className="col-md-5">
+                                        <div className="image-size-trophy text-center">
+                                            <img src={`/place${index}.png`} alt="trophy" />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-7 text-center">
+                                        <h5>Average Rating: {Math.round(photo.averageRating * 10) / 10}</h5>
+                                        <h5>From {photo.ratingsCount} rating(s)</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </Link>
@@ -53,7 +61,7 @@ export default class Home extends Component {
     }
 
     render() {
-        console.log('HOME=======', this.state.photos);
+        //console.log('HOME=======', this.state.photos);
 
         return (
             <div>

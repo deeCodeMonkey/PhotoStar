@@ -123,7 +123,7 @@ class PhotoReview extends Component {
     render() {
         if (!this.props.photoProfile || !this.state.reviews) return null;
 
-        const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags } = this.props.photoProfile;
+        const { _id, photoImages, title, description, reviews, category, userId, userEmail, tags, createdAt } = this.props.photoProfile;
 
         return (
             <div>
@@ -159,6 +159,7 @@ class PhotoReview extends Component {
                     title={title}
                     category={category}
                     userEmail={userEmail}
+                    createdAt={createdAt}
                     modalOpen={this.modalOpen}
                     modalClose={this.modalClose}
                     modalStatus={this.state.modalStatus}

@@ -28,7 +28,7 @@ class Navbar extends Component {
                 <nav className="navbar navbar-default navbar-inverse navbar-fixed-top">
                     <div className="container">
                         <div className="row">
-                            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <div className="collapse navbar-collapse" id="navbar">
                                 <ul className="nav navbar-nav">
                                     <li><Link className="navbar-brand" to="/">RateMyPet</Link></li>
                                     <li><Link to="/">Home</Link></li>

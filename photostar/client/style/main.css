@@ -20,6 +20,12 @@ a {
     font-weight: bold;
 }
 
+.font-l {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
 .review-form {
     margin-top: 35px;
 }
@@ -118,9 +124,16 @@ a {
     margin-left: 15px;
 }
 
+.image-size-trophy > img {
+    width: 80px;
+    border-radius: 3%;
+    margin-left: 15px;
+}
+
 .flex {
     display: flex;
     flex-direction: column;
+    margin: auto;
 }
 
 .img-rounded {

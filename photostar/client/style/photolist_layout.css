@@ -601,6 +601,7 @@ p span {
 .customs-p p {
     line-height: 22px;
     margin: 0px;
+    font-weight: normal;
 }
 
 .small-padding-bg {

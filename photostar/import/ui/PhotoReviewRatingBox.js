@@ -29,7 +29,7 @@ const PhotoReviewRatingBox = (props) => {
             <div className="rating-block">
                 <h4>Average user rating</h4>
                 <div className="row d-inline-block">
-                    <div className="col-sm-7 padding-bottom-7">
+                    <div className="col-sm-7">
                         <h2 className="bold">{props.avgReview(props.reviews)} <small>/ 5</small>
                             &nbsp;&nbsp; <small>({props.reviewsCount}) {
                             props.reviewsCount === 1 ? 'review' : 'reviews'

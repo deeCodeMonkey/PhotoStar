@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
+import { moment } from "meteor/momentjs:moment";
 
 import { avgReview } from '../helpers/index';
 
@@ -16,12 +17,13 @@ const PhotoReviewHead = (props) => {
 
                 <div className="row">
                     <div className="col-md-7">
-                        <h2>{props.title}</h2>
+                        <h3>{props.title}</h3>
 
                         <div className="row">
                             <div className="col-md-12">
-                                <h4>Category: {props.category}</h4>
-                                <h4>Submitted By: {props.userEmail}</h4>
+                                <h5>Category: {props.category}</h5>
+                                <h5>Submitted By: {props.userEmail}</h5>
+                                <h5>Submitted On: {moment(props.createdAt).format('LL')}</h5>
                                 <h5 className="marg-t font-italic">{props.renderNotation(props.loggedIn, props.isCurrentUser, props.userId, props.displayReviewButton)}</h5>
 
                                 <div className="row">

@@ -34,7 +34,8 @@ if (Meteor.isServer) {
                     ratingsCount: { $sum: 1 },
                     averageRating: { $avg: "$reviews.rating" },
                     image: { "$first": "$photoImages" },
-                    category: { "$first": "$category" }
+                    category: { "$first": "$category" },
+                    title: { "$first": "$title" }
                     //to get whole document 
                     //document: { "$first": "$$CURRENT" }
                 }

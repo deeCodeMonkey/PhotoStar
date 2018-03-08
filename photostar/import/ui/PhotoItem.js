@@ -20,7 +20,7 @@ const PhotoItem = (props) => {
                     <div className="or-spacer marg-t-0">
                         <div className="mask"></div>
                     </div>
-                    <h4>{title}</h4>
+                    <p className="font-l">{title}</p>
                     <p>By {userEmail} on {moment(createdAt).format('LL')}</p>
                     {props.photo.reviews ?
                         (<p>Average Rating:
@@ -29,7 +29,7 @@ const PhotoItem = (props) => {
                         </p>)
                         : <p>No Ratings.</p>
                     }
-                    <p>Description: {truncateText(description, 150)}</p>
+                    <p>Description: {truncateText(description, 100)}</p>
                    
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
