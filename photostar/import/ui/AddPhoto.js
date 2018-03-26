@@ -212,7 +212,7 @@ class AddPhoto extends Component {
                                     <Link to="/categories/All" className="btn btn-review-cancel">Cancel</Link>
                                 </div>
                                 <div className="col-xs-2 col-md-2">
-                                    <input type="submit" name="submit" className="btn btn-review pull-right" value="Submit Photo(s)" />
+                                    <input type="submit" name="submit" className="btn btn-review" value="Submit Photo(s)" />
                                 </div>
                                 <div className="col-xs-1 col-md-1"></div>
                             </div>

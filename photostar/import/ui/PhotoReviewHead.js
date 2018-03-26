@@ -24,9 +24,8 @@ const PhotoReviewHead = (props) => {
                                 <h5>Category: {props.category}</h5>
                                 <h5>Submitted By: {props.userEmail}</h5>
                                 <h5>Submitted On: {moment(props.createdAt).format('LL')}</h5>
-                                <h5 className="marg-t font-italic">{props.renderNotation(props.loggedIn, props.isCurrentUser, props.userId, props.displayReviewButton)}</h5>
 
-                                <div className="row">
+                                <div className="row marg-t">
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                         <button className="btn_charcoal" onClick={props.goBack}>Back</button>
                                     </div>
@@ -54,9 +53,16 @@ const PhotoReviewHead = (props) => {
 
                     <div className="col-md-5 marg-t">
                         <div className="row">
+                            <div className="col-md-12">
                             {props.reviews ?
                                 < PhotoReviewRatingBox avgReview={avgReview} reviewsCount={props.reviews.length} reviews={props.reviews} />
                                 : <h4> No reviews. </h4>}
+                            </div>
+                        </div>
+                            <div className="row">
+                                <div className="col-md-12">
+                                <h5 className="marg-t font-italic">{props.renderNotation(props.loggedIn, props.isCurrentUser, props.userId, props.displayReviewButton)}</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

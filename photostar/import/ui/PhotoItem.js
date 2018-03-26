@@ -11,7 +11,7 @@ const PhotoItem = (props) => {
 
     return (
         <div>
-            <Link to={`/review/${_id}`}><div className="row small-padding-bg">
+            <Link to={`/review/${_id}`}><div className="row small-padding-bg offwhite">
                 <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <div className="image-size"><img src={photoImages[0].original} /></div>
                 </div>

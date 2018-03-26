@@ -25,7 +25,6 @@ const PhotoReviewRatingBox = (props) => {
 
 
     return (
-        <div className="col-sm-12">
             <div className="rating-block">
                 <h4>Average user rating</h4>
                 <div className="row d-inline-block">
@@ -45,7 +44,6 @@ const PhotoReviewRatingBox = (props) => {
                     {displayStars(Math.round(props.avgReview(props.reviews)))}
                 </div>
             </div>
-        </div>
     );
 
 }

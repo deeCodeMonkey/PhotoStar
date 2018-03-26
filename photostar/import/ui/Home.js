@@ -48,8 +48,12 @@ export default class Home extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-7 text-center">
-                                        <h5>Average Rating: {Math.round(photo.averageRating * 10) / 10}</h5>
-                                        <h5>From {photo.ratingsCount} rating(s)</h5>
+                                        <h5>Avg Rating: {Math.round(photo.averageRating * 10) / 10} Stars</h5>
+                                        {photo.ratingsCount < 2 ?
+                                            <h5>From {photo.ratingsCount} rating</h5>
+                                            : <h5>From {photo.ratingsCount} ratings</h5>
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +67,20 @@ export default class Home extends Component {
     render() {
         //console.log('HOME=======', this.state.photos);
 
+        const style = {
+            marginRight: '10px',
+            color: '#25bea0'
+        }
+
         return (
             <div>
+                <p className="customs-p p text-center">Welcome to our Pet Photography Competition Site! Log in or create an account to add photos of your pet! You can also leave ratings for others. Weekly winners will get free pet products from our sponsors!</p>
+
+                <div className="text-center">
+                    <h3>Current Winners</h3>
+                    <i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i>
+                </div>
+
                 <div className="flex card-columns">
                     <div className="row">
                         {this.renderTopPhotos()}

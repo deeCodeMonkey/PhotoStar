@@ -1,6 +1,7 @@
 ﻿
 export const truncateText = (text, length) => {
     let newText = text.substring(0, length);
+    newText = newText.substr(0, Math.min(newText.length, newText.lastIndexOf(' ')));
     if (text.length > 150) {
         return `${newText} ...`;
     }

@@ -106,13 +106,13 @@ class PhotoReview extends Component {
 
     renderNotation = (loggedIn, isCurrentUser, userId, displayReviewButton) => {
         if (!loggedIn) {
-            return <p>Log in to rate this photo, or submit your own!</p>;
+            return <p className="red-font">Log in to rate this photo, or submit your own!</p>;
         }
         else if (isCurrentUser(loggedIn, userId) && loggedIn) {
-            return <p>Note: You cannot rate your own photo.</p>
+            return <p className="red-font">Note: You cannot rate your own photo.</p>
         }
         else if (!displayReviewButton() && loggedIn) {
-            return <p>Note: You cannot post more than one review per photo.</p>
+            return <p className="red-font">Note: You cannot post more than one review per photo.</p>
         } else {
             return null;
         }

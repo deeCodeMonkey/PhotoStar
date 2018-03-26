@@ -12,7 +12,7 @@ const PhotoReviewItem = (props) => {
                 <div className="review-block">
                     <div className="row">
                         <div className="col-sm-3">
-                            <img src="https://www.shareicon.net/download/2015/09/20/104335_avatar.svg" className="img-rounded" />
+                            <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-business-bear.png" className="img-rounded" />
                             <div className="review-block-name"><a href="#">{props.reviewedBy}</a></div>
                             <div className="review-block-date">Posted: {moment(props.createdAt).format('LL')}</div>
                         </div>

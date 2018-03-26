@@ -98,7 +98,6 @@ class PhotoReviewTags extends Component {
 
         return (
             <div>
-
                 {(this.props.isCurrentUser(loggedIn, userId) && !tags && !this.state.tagsLoad) ?
                     <button className="uplod-file" onClick={() => { this.addGoogleVisionTags(photoImages, photoId) }}>
                         Add Automated Photo Tags
@@ -107,7 +106,7 @@ class PhotoReviewTags extends Component {
 
                     <div className="row">
                         <div className="col-md-12">
-                            {this.state.tagsLoad ? <div className="margin-l"> Tags Loading...</div> : ''}
+                            {this.state.tagsLoad ? <div> Tags Loading...</div> : ''}
                             {tags ?
                                 tags.map((tag, index) => {
                                     return (

@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 body {
     margin-top: 20px;
-    background-color: #ffffff;
+    background-color: whitesmoke;
     font-family: 'Kavivanar', cursive;
 }
 
@@ -26,6 +26,10 @@ a {
     padding-bottom: 5px;
 }
 
+.offwhite {
+   background-color: whitesmoke;
+}
+
 .review-form {
     margin-top: 35px;
 }
@@ -43,6 +47,10 @@ a {
 .profile-photo {
     height: 100%;
     width: 100%;
+}
+
+.red-font {
+    color: red; 
 }
 
 .stars {
