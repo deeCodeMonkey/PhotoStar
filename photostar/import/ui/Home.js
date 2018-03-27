@@ -74,7 +74,10 @@ export default class Home extends Component {
 
         return (
             <div>
-                <p className="customs-p p text-center">Welcome to our Pet Photography Competition Site! Log in or create an account to add photos of your pet! You can also leave ratings for others. Weekly winners will get free pet products from our sponsors!</p>
+                {!Meteor.user()?
+                    <p className="customs-p p text-center">Welcome to our Pet Photography Competition Site! Log in or create an account to add photos of your pet! You can also leave ratings for others.</p> : ''
+                }
+                <p className="customs-p p text-center">Weekly winners will get free pet products from our sponsors!</p>
 
                 <div className="text-center">
                     <h3>Current Winners</h3>

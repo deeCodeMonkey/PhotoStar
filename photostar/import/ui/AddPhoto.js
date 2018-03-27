@@ -182,9 +182,9 @@ class AddPhoto extends Component {
                             <div className="row">
                                 <h4 className="col-md-2 control-label">Photos (Up to 6)</h4>
                                 <div className="col-md-1">
-                                    <div className="update-nag">
-                                        <input type="file" name="image" id="image" multiple className="hide" />
-                                        <label htmlFor="image" className="update-split update-info"><i className="glyphicon glyphicon-folder-open"></i></label>
+                                    <div className="update-nag offwhite">
+                                        <i className="glyphicon glyphicon-folder-open"></i><input type="file" name="image" id="image" multiple />
+                                        {/*<label htmlFor="image" className="update-split update-info"><i className="glyphicon glyphicon-folder-open"></i></label>*/}
                                     </div>
                                 </div>
                                 <div className="col-md-9"></div>
