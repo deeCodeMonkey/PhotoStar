@@ -21,8 +21,8 @@ shell-server@0.3.1            # Server-side component of the `meteor shell` comm
 #insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 twbs:bootstrap
 #mrt:flash-messages
-cfs:standard-packages
-cfs:gridfs
+#cfs:standard-packages
+#cfs:gridfs
 momentjs:moment
 accounts-ui
 accounts-password
