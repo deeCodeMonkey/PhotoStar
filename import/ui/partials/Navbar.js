@@ -30,7 +30,7 @@ class Navbar extends Component {
                         <div className="row">
                             <div className="collapse navbar-collapse" id="navbar">
                                 <ul className="nav navbar-nav">
-                                    <li><Link className="navbar-brand" to="/">RateMyPet</Link></li>
+                                    <li><Link className="navbar-brand" to="/">ClickArt</Link></li>
                                     <li><Link to="/">Home</Link></li>
                                     <li><Link to="/categories/All">All Photos</Link></li>
                                     {this.state.loggedIn ?

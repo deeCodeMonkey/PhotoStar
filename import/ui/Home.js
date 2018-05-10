@@ -74,14 +74,15 @@ export default class Home extends Component {
 
         return (
             <div>
-                {!Meteor.user()?
-                    <p className="customs-p p text-center">Welcome to our Pet Photography Competition Site! Log in or create an account to add photos of your pet! You can also leave ratings for others.</p> : ''
+                <p className="customs-p p text-center">ClickArt is a place to showcase photos of your personal artwork.</p>
+
+                {!Meteor.user() ?
+                    <p className="customs-p p text-center">Log in to to add or rate! </p> : ''
                 }
-                <p className="customs-p p text-center">Weekly winners will get free pet products from our sponsors!</p>
 
                 <div className="text-center">
-                    <h3>Current Winners</h3>
-                    <i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i>
+                    <h3>Top Art</h3>
+                    <i className="fa fa-camera-retro" style={style}></i><i className="	fa fa-camera-retro" style={style}></i><i className="	fa fa-camera-retro" style={style}></i>
                 </div>
 
                 <div className="flex card-columns">
