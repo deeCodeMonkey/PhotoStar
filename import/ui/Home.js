@@ -74,15 +74,16 @@ export default class Home extends Component {
 
         return (
             <div>
-                <p className="customs-p p text-center">ClickArt is a place to showcase photos of your personal artwork.</p>
+                <h3 className="customs-p p text-center">Welcome to Fanimal!</h3>
+                <h4 className="customs-p p text-center">A place where animal lovers can upload photos of their pets to compete for prizes.</h4>
 
                 {!Meteor.user() ?
-                    <p className="customs-p p text-center">Log in to to add or rate! </p> : ''
+                    <p className="customs-p p text-center">Log in to add or rate!. </p> : ''
                 }
 
                 <div className="text-center">
-                    <h3>Top Art</h3>
-                    <i className="fa fa-camera-retro" style={style}></i><i className="	fa fa-camera-retro" style={style}></i><i className="	fa fa-camera-retro" style={style}></i>
+                    <h3>Current Winners</h3>
+                    <i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i><i className="fa fa-paw" style={style}></i>
                 </div>
 
                 <div className="flex card-columns">
